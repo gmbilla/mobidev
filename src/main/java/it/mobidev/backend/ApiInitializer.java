@@ -17,8 +17,12 @@ public class ApiInitializer implements ServletContextListener {
         // request if no warmup request was invoked.
         ObjectifyService.register(Place.class);
         ObjectifyService.register(User.class);
+        ObjectifyService.register(Entry.class);
         ObjectifyService.register(Exercise.class);
+        ObjectifyService.register(Rest.class);
         ObjectifyService.register(Record.class);
+        ObjectifyService.register(ExerciseRecord.class);
+        ObjectifyService.register(RestRecord.class);
         ObjectifyService.register(Workout.class);
 
         // TODO Store an entity for rest

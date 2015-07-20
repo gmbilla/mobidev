@@ -2,8 +2,7 @@ package it.mobidev.backend;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import it.mobidev.backend.data.Rest;
-import it.mobidev.backend.data.Workout;
+import it.mobidev.backend.data.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,6 +24,23 @@ public class YourFirstAPI {
     /**
      * Stub methods
      */
+
+    @ApiMethod(httpMethod = ApiMethod.HttpMethod.DELETE, path = "clear")
+    public void deleteAll() {
+        ofy().delete().keys(ofy().load().type(Workout.class).keys().list())
+                .now();
+        ofy().delete().keys(ofy().load().type(User.class).keys().list())
+                .now();
+        ofy().delete().keys(ofy().load().type(Exercise.class).keys().list())
+                .now();
+        ofy().delete().keys(ofy().load().type(Rest.class).keys().list())
+                .now();
+        ofy().delete().keys(ofy().load().type(ExerciseRecord.class).keys().list())
+                .now();
+        ofy().delete().keys(ofy().load().type(RestRecord.class).keys().list())
+                .now();
+
+    }
 
     @ApiMethod(httpMethod = ApiMethod.HttpMethod.GET, path = "workout/all")
     public List<Workout> getWorkouts() {

@@ -2,21 +2,25 @@ package it.mobidev.backend.data;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Subclass;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
- * Entry for a single exercise.
+ * Class representing an exercise
  */
-@Entity
+@Subclass(index = true)
 @Data
-public class Exercise {
+public class Exercise extends Entry {
 
-    @Id String name;
+    private static final Logger Log = Logger.getLogger("Exercise");
+
     String description;
 
     /**
@@ -36,6 +40,8 @@ public class Exercise {
             ofy().save().entity(e).now();
         }
 
+        List<Exercise> inserted = ofy().load().type(Exercise.class).list();
+        Log.info(inserted.size() + " exercise inserted");
     }
 
 }
