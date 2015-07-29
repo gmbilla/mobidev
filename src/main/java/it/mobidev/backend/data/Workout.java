@@ -2,18 +2,13 @@ package it.mobidev.backend.data;
 
 import com.google.api.server.spi.response.ConflictException;
 import com.google.common.base.Joiner;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Load;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Index;
+import it.mobidev.backend.Constants.Rank;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -29,20 +24,18 @@ public class Workout {
 
     @Id Long id;
     /** User that created the workout */
-    @Parent Key<User> creator;
+    @Index String creatorId;
     /** Workout name */
-    String name;
-    /**
-     * Store the place where the workout was done.
-     * Note: only for completed workouts
-     */
-    Ref<Place> where = null;
-    @Load List<Ref<? extends Record>> exerciseList = new ArrayList();
+    @Index String name;
+    Date dateCreated = null;
+    List<Record> exerciseList = new ArrayList();
 
+    // TODO remove stub method
     public static void storeTestWorkout() {
         Workout w = new Workout();
         w.setName("My test workout");
-        w.setCreator(Key.create(User.class, User.TEST_USER_EMAIL));
+        w.setCreatorId(User.TEST_USER_EMAIL);
+        w.setDateCreated(new Date());
 
         // Create test exercise list
         List<Exercise> exercises = Arrays.asList(
@@ -53,17 +46,17 @@ public class Workout {
         Log.info("Sample exercises: " + Joiner.on('\n').join(exercises));
         int[] sampleRests = new int[] {0, 10, 30};
 
-        List<ExerciseRecord> recordList = new ArrayList<>();
+        List<Record> recordList = new ArrayList<>();
         int[] rests = new int[exercises.size()];
         // Populate record list
-        ExerciseRecord r;
+        Record r;
         Random rand = new Random();
-        long recordId = 1;
+        int index = 0;
         for (Exercise e : exercises) {
-            r = new ExerciseRecord();
-            // Fake the record ID
-            r.setId(recordId);
-            r.setExercise(e);
+            ofy().save().entity(e).now();
+
+            r = new Record();
+            r.setExercise(e.getName());
             // "Randomly" create an exercise of one type or another
             if (rand.nextInt(10) % 2 == 0)
                 r.setHitsPerRep(rand.nextInt(20) + 1);
@@ -71,10 +64,7 @@ public class Workout {
                 r.setDuration((rand.nextBoolean() ? 30 : 20));
 
             recordList.add(r);
-            rests[((int) (recordId - 1))] = sampleRests[rand.nextInt
-                    (sampleRests.length)];
-
-            recordId++;
+            rests[index++] = sampleRests[rand.nextInt(sampleRests.length)];
         }
         String recordToString = "";
         for (int i = 0; i < recordList.size(); i++)
@@ -117,6 +107,14 @@ public class Workout {
         Log.info("Exercise list:\n" + Joiner.on('\n').join(w.exerciseList));
 
         ofy().save().entity(w).now();
+
+        // Add test Session for this workout
+        Session session = new Session();
+        session.setUserId(User.TEST_USER_EMAIL);
+        session.setWorkoutId(w.getId());
+        session.setVote(Rank.NORMAL);
+
+        ofy().save().entity(session).now();
     }
 
     //==========================================================================
@@ -129,8 +127,8 @@ public class Workout {
      * @param ex a {@link it.mobidev.backend.data.Record} describing the
      *           exercise to be added to the list
      */
-    public void addExercise(ExerciseRecord ex) {
-        exerciseList.add(Ref.create(ex));
+    public void addExercise(Record ex) {
+        exerciseList.add(ex);
     }
 
     /**
@@ -139,7 +137,7 @@ public class Workout {
      * @param duration duration, in seconds, of rest period
      */
     public void addRest(int duration) {
-        exerciseList.add(Ref.create(new RestRecord(duration)));
+        exerciseList.add(Record.recordForRest(duration));
     }
 
     /**
@@ -157,7 +155,7 @@ public class Workout {
                                    int hitsPerRep, int restDuration)
             throws ConflictException {
         for (int i = 0; i < reps; i++) {
-            addExercise(ExerciseRecord.recordForExercise(exercise,
+            addExercise(Record.recordForExercise(exercise.getName(),
                     duration, hitsPerRep));
             if (restDuration > 0)
                 addRest(restDuration);
@@ -174,8 +172,7 @@ public class Workout {
      *                      of 0 are skipped
      * @throws ConflictException
      */
-    public void addSuperSet(
-            List<ExerciseRecord> exerciseList, int[] rests)
+    public void addSuperSet(List<Record> exerciseList, int[] rests)
             throws ConflictException {
         if (exerciseList.size() != rests.length)
             throw new ConflictException(String.format("Wrong rest time list " +
@@ -183,7 +180,7 @@ public class Workout {
                     rests.length));
 
         int index = 0;
-        for (ExerciseRecord record : exerciseList) {
+        for (Record record : exerciseList) {
             addExercise(record);
             if (rests[index] != 0)
                 addRest(rests[index]);

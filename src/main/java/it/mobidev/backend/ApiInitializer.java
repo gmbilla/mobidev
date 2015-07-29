@@ -20,10 +20,8 @@ public class ApiInitializer implements ServletContextListener {
         ObjectifyService.register(Entry.class);
         ObjectifyService.register(Exercise.class);
         ObjectifyService.register(Rest.class);
-        ObjectifyService.register(Record.class);
-        ObjectifyService.register(ExerciseRecord.class);
-        ObjectifyService.register(RestRecord.class);
         ObjectifyService.register(Workout.class);
+        ObjectifyService.register(Session.class);
 
         // TODO Store an entity for rest
         // Not working!!

@@ -1,33 +1,54 @@
 package it.mobidev.backend.data;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
+import com.google.api.server.spi.response.ConflictException;
 import lombok.Data;
 
 import java.util.logging.Logger;
 
 /**
- * Record of an exercise/rest inside a workout
+ * Exercise record inside a workout
  */
-@Entity
 @Data
-public abstract class Record {
+public class Record {
 
     protected static final Logger Log = Logger.getLogger("Record");
 
-    @Id Long id;
     /** Exercise entry for this record */
-    Key<? extends Entry> exercise;
+    private String exercise;
     /** Duration in second of the exercise in each rep */
-    int duration;
+    private int duration = 0;
+    /** How many times should the exercise be done in each rep */
+    private int hitsPerRep = 0;
 
-    public void setExercise(Exercise e) {
-        exercise = Key.create(e);
+    public static Record recordForExercise(String exerciseName,
+                                                   int duration, int hitsPerRep)
+            throws ConflictException {
+        if (duration != 0 && hitsPerRep != 0)
+            throw new ConflictException("An exercise can either have a " +
+                    "duration value or number of hit per reps.");
+
+        Record record = new Record();
+        record.setExercise(exerciseName);
+        if (duration != 0)
+            record.setDuration(duration);
+        else
+            record.setHitsPerRep(hitsPerRep);
+
+        return record;
     }
 
-    public void setExercise(String exerciseName) {
-        exercise = Key.create(Exercise.class, exerciseName);
+    public static Record recordForRest(int duration) {
+        Record record = new Record();
+        record.setExercise(Rest.KEY_ID);
+        record.setDuration(duration);
+
+        return record;
+    }
+
+    @Override
+    public String toString() {
+        return exercise + " " +
+                (duration != 0 ? duration + "s" : "x" + hitsPerRep);
     }
 
 }

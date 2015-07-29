@@ -3,8 +3,10 @@ package it.mobidev.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.ConflictException;
 import it.mobidev.backend.data.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -22,9 +24,9 @@ public class YourFirstAPI {
 
     private static final Logger Log = Logger.getLogger("YourFirstTestApi");
 
-    /**
-     * Stub methods
-     */
+    //==========================================================================
+    // Admin methods
+    //==========================================================================
 
     @ApiMethod(httpMethod = ApiMethod.HttpMethod.DELETE, path = "clear")
     public void deleteAll() {
@@ -42,6 +44,24 @@ public class YourFirstAPI {
         return ofy().load().type(Workout.class).list();
     }
 
+    /**
+     * <p>List all registered sessions.</p>
+     *
+     * @return
+     */
+    @ApiMethod(httpMethod = ApiMethod.HttpMethod.GET, path = "session/all")
+    public List<Session> getSessions() {
+        return ofy().load().type(Session.class).list();
+    }
+
+    //==========================================================================
+    // Post methods
+    //==========================================================================
+
+    /**
+     * <p>Insert fake entries to test.</p>
+     */
+    // TODO remove me
     public void insertTestRecords() {
         // TODO Not the right place!!
         Rest rest = new Rest();
@@ -54,10 +74,29 @@ public class YourFirstAPI {
         Workout.storeTestWorkout();
     }
 
-    /**
-     * POST
-     */
+    public void createUser(@Named("token") String token,
+                           @Named("email") String email,
+                           @Named("sns") short sns,
+                           @Named("first_name") String firstName,
+                           @Named("last_name") String lastName,
+                           @Named("image_url") String imageUrl) {
+        User user = new User();
+        user.setToken(token);
+        user.setSignUpSns(sns);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setImageUrl(imageUrl);
 
+        ofy().save().entity(user).now();
+    }
+
+    /**
+     * <p>Create a new exercise.</p>
+     *
+     * @param name           exercise name
+     * @param description    exercise description
+     */
     @ApiMethod(path = "exercise/add")
     public void insertExercise(@Named("name") String name,
                                @Named("description") String description) {
@@ -65,6 +104,63 @@ public class YourFirstAPI {
         e.setName(name);
         e.setDescription(description);
         ofy().save().entity(e).now();
+    }
+
+    @ApiMethod(
+            name = "workout.new",
+            path = "workout/new",
+            httpMethod = ApiMethod.HttpMethod.POST
+    )
+    public void createWorkout(@Named("user") String userId,
+                              @Named("name") String name,
+                              @Named("exercises") List<Record> exerciseList)
+            throws ConflictException {
+        if (ofy().load().type(Workout.class).filter("name", name)
+                .filter("creatorId", userId).count() > 0) {
+            throw new ConflictException("Workout " + name + " already exists " +
+                    "for user " + userId);
+        }
+
+        Workout workout = new Workout();
+        workout.setCreatorId(userId);
+        workout.setName(name);
+        workout.setDateCreated(new Date());
+        workout.setExerciseList(exerciseList);
+
+        ofy().save().entity(workout).now();
+    }
+
+    @ApiMethod(
+        name = "workoud.new",
+        path = "workout/new",
+        httpMethod = ApiMethod.HttpMethod.POST
+    )
+    public void createEmptyWorkout(@Named("user") String userId,
+                                   @Named("name") String name) {
+        Workout workout = new Workout();
+        workout.setCreatorId(userId);
+        workout.setName(name);
+        workout.setDateCreated(new Date());
+
+        ofy().save().entity(workout).now();
+    }
+
+    //==========================================================================
+    // Put methods
+    //==========================================================================
+
+    @ApiMethod(
+        name = "workout.add",
+        path = "workout/{id}/add",
+        httpMethod = ApiMethod.HttpMethod.PUT
+    )
+    public void addExerciseToWorkout(@Named("id") String workoutId,
+                                     @Named("exercise") Record exercise) {
+        Workout workout = ofy().load().type(Workout.class).id(workoutId).now();
+
+        workout.addExercise(exercise);
+
+        ofy().save().entity(workout).now();
     }
 
 }
