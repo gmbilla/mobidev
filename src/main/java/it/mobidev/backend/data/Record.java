@@ -1,5 +1,6 @@
 package it.mobidev.backend.data;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import lombok.Data;
@@ -17,8 +18,16 @@ public abstract class Record {
 
     @Id Long id;
     /** Exercise entry for this record */
-    Entry exercise;
+    Key<? extends Entry> exercise;
     /** Duration in second of the exercise in each rep */
     int duration;
+
+    public void setExercise(Exercise e) {
+        exercise = Key.create(e);
+    }
+
+    public void setExercise(String exerciseName) {
+        exercise = Key.create(Exercise.class, exerciseName);
+    }
 
 }

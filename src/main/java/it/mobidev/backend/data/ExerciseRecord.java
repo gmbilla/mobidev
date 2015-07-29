@@ -1,63 +1,42 @@
 package it.mobidev.backend.data;
 
+import com.google.api.server.spi.response.ConflictException;
 import com.googlecode.objectify.annotation.Subclass;
-import lombok.Data;
-
-import java.util.List;
-import java.util.Random;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Exercise record inside a workout
  */
 @Subclass(index = true)
-@Data
+@EqualsAndHashCode(callSuper = false)
 public class ExerciseRecord extends Record {
 
-//    Key<? extends Exercise> exercise;
-    /** The number of total repetitions that should be done to complete the
-     * exercise set */
-    int numberOfReps;
     /** How many times should the exercise be done in each rep */
-    int hitPerRep;
-    /** Rest between each series. Note: may be 0 */
-    int rest;
+    @Getter @Setter int hitsPerRep;
 
-    /**
-     * Stub methoed to store some "random" records of exercises
-     */
-    public static void storeTestRecords() {
-        // Fetch defined exercises
-        Iterable<Exercise> exercises = ofy().load().type(Exercise.class)
-                .list();
-        Random rand = new Random();
-        long recordId = 1;
+    public static ExerciseRecord recordForExercise(Exercise exercise,
+                                                   int duration, int hitsPerRep)
+            throws ConflictException {
+        if (duration != 0 && hitsPerRep != 0)
+            throw new ConflictException("An exercise can either have a " +
+                    "duration value or number of hit per reps.");
 
-        for (Exercise e : exercises) {
-            Log.info("Inserting record for exercise " + e.getName());
+        ExerciseRecord record = new ExerciseRecord();
+        record.setExercise(exercise);
+        if (duration != 0)
+            record.setDuration(duration);
+        else
+            record.setHitsPerRep(hitsPerRep);
 
-            ExerciseRecord r = new ExerciseRecord();
-            // Fake the record ID
-            r.setId(recordId);
-            r.setExercise(e);
-            r.setNumberOfReps(rand.nextInt(5) + 1);
-            // "Randomly" create an exercise of one type or another
-            if (rand.nextInt(10) % 2 == 0)
-                r.setHitPerRep(rand.nextInt(20) + 1);
-            else
-                r.setDuration((rand.nextBoolean() ? 30 : 20));
-            if (r.getNumberOfReps() > 1)
-                r.setRest(rand.nextBoolean() ? 10: 20);
-            // Store exercise record
-            ofy().save().entity(r).now();
+        return record;
+    }
 
-            recordId++;
-        }
-
-        List<ExerciseRecord> insertedRecords = ofy().load()
-                .type(ExerciseRecord.class).list();
-        Log.info(insertedRecords.size() + " exercise records inserted");
+    @Override
+    public String toString() {
+        return exercise.getName() + " " +
+                (duration != 0 ? duration + "s" : "x" + hitsPerRep);
     }
 
 }

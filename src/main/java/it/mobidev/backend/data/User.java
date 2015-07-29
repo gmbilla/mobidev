@@ -31,7 +31,7 @@ public class User {
     String imageUrl;
     /** Which SNS the user used to sign up */
     short signUpSns = SNS_NONE;
-    List<Place> createdPlaces = new ArrayList<>();
+    List<Key<Place>> createdPlaces = new ArrayList<>();
 
     /**
      * Stub method to insert a test user
