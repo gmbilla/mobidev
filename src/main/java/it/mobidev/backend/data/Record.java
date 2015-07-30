@@ -1,6 +1,8 @@
 package it.mobidev.backend.data;
 
+import com.google.api.server.spi.config.ApiTransformer;
 import com.google.api.server.spi.response.ConflictException;
+import it.mobidev.backend.data.transformer.RecordTransformer;
 import lombok.Data;
 
 import java.util.logging.Logger;
@@ -9,6 +11,7 @@ import java.util.logging.Logger;
  * Exercise record inside a workout
  */
 @Data
+@ApiTransformer(RecordTransformer.class)
 public class Record {
 
     protected static final Logger Log = Logger.getLogger("Record");
