@@ -3,6 +3,7 @@ package it.mobidev.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import it.mobidev.backend.data.*;
@@ -82,24 +83,44 @@ public class YourFirstAPI {
     }
 
     //==========================================================================
-    // Post methods
+    // GET methods
     //==========================================================================
 
     /**
-     * <p>Insert fake entries to test.</p>
+     * <p>List all the stored exercise.</p>
+     *
+     * @return a list of {@link it.mobidev.backend.data.Exercise}
      */
-    // TODO remove me
-    public void insertTestRecords() {
-        // TODO Not the right place!!
-        Rest rest = new Rest();
-        ofy().save().entity(rest).now();
-
-        // Store test user
-        User.storeTestUser();
-
-        Log.info("Inserting test records");
-        Workout.storeTestWorkout();
+    public List<Exercise> getExerciseList() {
+        return ofy().load().type(Exercise.class).list();
     }
+
+    /**
+     * <p>Fetch all workout created by the given user.</p>
+     *
+     * @param userId    ID of the user
+     * @return a list of {@link it.mobidev.backend.data.Workout}, if any has
+     * been stored for the given user
+     */
+    public List<Workout> getUserWorkouts(@Named("user") String userId) {
+        return ofy().load().type(Workout.class).filter("creatorId", userId)
+                .list();
+    }
+
+    /**
+     * <p>Fetch all the session stored by the given user.</p>
+     *
+     * @param userId    ID of the user
+     * @return a list of {@link it.mobidev.backend.data.Session}, if any has
+     * been stored for the given user
+     */
+    public List<Session> getUserSessions(@Named("user") String userId) {
+        return ofy().load().type(Session.class).filter("userId", userId).list();
+    }
+
+    //==========================================================================
+    // POST methods
+    //==========================================================================
 
     /**
      * <p>Register a new user.</p>
@@ -113,17 +134,18 @@ public class YourFirstAPI {
      */
     @ApiMethod(
         name = "user.new",
-        path = "user/new"
+        path = "user/new",
+        httpMethod = ApiMethod.HttpMethod.POST
     )
     public void createUser(@Named("token") String token,
                            @Named("email") String email,
-                           @Named("sns") int sns,
+                           @Named("sns") User.Social sns,
                            @Named("first_name") String firstName,
                            @Named("last_name") String lastName,
                            @Named("image_url") String imageUrl) {
         User user = new User();
         user.setToken(token);
-        user.setSignUpSns((short) sns);
+        user.setSignUpSns(sns);
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -140,7 +162,8 @@ public class YourFirstAPI {
      */
     @ApiMethod(
         name = "exercise.new",
-        path = "exercise/new"
+        path = "exercise/new",
+        httpMethod = ApiMethod.HttpMethod.POST
     )
     public void insertExercise(@Named("name") String name,
                                @Named("description") String description) {
@@ -217,14 +240,15 @@ public class YourFirstAPI {
         path = "workout/{id}/add",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void addExercisesToWorkout(@Named("id") String workoutId,
+    public void addExercisesToWorkout(@Named("user") String userId,
+                                      @Named("id") Long workoutId,
                                       @Named("exercises") Collection<Record>
                                               records)
             throws NotFoundException {
         // Check if given workout exists, otherwise raise a 404 error.
-        Workout workout = ofy().load().type(Workout.class).id(workoutId).now();
+        Workout workout = getWorkout(workoutId, userId);
         if (workout == null)
-            throw new NotFoundException("Workout " + workoutId + " not found");
+            throw new NotFoundException("Workout " + workoutId + " not found!");
 
         for (Record r : records) {
             // Check if the exercise in current record exists, otherwise raise
@@ -238,6 +262,115 @@ public class YourFirstAPI {
         }
 
         ofy().save().entity(workout).now();
+    }
+
+    /**
+     * <p>Store a new training session for a user on a workout</p>
+     * @param userId       user ID
+     * @param workoutId    ID of the workout -- may be created by a different
+     *                     user
+     * @param when         when the session was taken -- new Date() if null
+     * @param where        where the session has been taken -- may be null
+     * @param userVote     user rank for the session -- may be null
+     * @throws NotFoundException
+     */
+    @ApiMethod(
+        name = "session.new",
+        path = "session/new",
+        httpMethod = ApiMethod.HttpMethod.POST
+    )
+    public void storeSession(@Named("user") String userId,
+                             @Named("workout") Long workoutId,
+                             @Named("date") @Nullable Date when,
+                             @Named("place") @Nullable Long where,
+                             @Named("vote") @Nullable Constants.Rank userVote)
+            throws NotFoundException {
+        // Check if user exists
+        if (!userExists(userId))
+            throw new NotFoundException("User " + userId + " not found!");
+        // Check if workout exists
+        if (!workoutExists(workoutId))
+            throw new NotFoundException("Workout " + workoutId + " not found!");
+
+        Session session = new Session();
+        session.setUserId(userId);
+        session.setWorkoutId(workoutId);
+        if (when != null)
+            session.setWhen(when);
+        else
+            session.setWhen(new Date());
+        session.setWhere(where);
+        session.setVote(userVote);
+
+        ofy().save().entity(session).now();
+    }
+
+    //==========================================================================
+    // Helpers
+    //==========================================================================
+
+    /**
+     * <p>Fetch from datastore the user with the
+     * given ID.</p>
+     *
+     * @param userId    user ID
+     * @return a {@link it.mobidev.backend.data.User} instance if exists,
+     * null otherwise
+     */
+    private User getUser(String userId) {
+        return ofy().load().type(User.class).id(userId).now();
+    }
+
+    /**
+     * <p>Fetch from datastore the workout with the given ID.</p>
+     *
+     * @param workoutId    workout ID
+     * @return a workout instance if exists, null otherwise
+     */
+    private Workout getWorkout(Long workoutId) {
+        return ofy().load().type(Workout.class).id(workoutId).now();
+    }
+
+    /**
+     * <p>Fetch from datastore the workout with the given ID.</p>
+     *
+     * @param workoutId    workout ID
+     * @param userId       workout creator user ID
+     * @return a workout instance if exists, null otherwise
+     */
+    private Workout getWorkout(Long workoutId, String userId) {
+        return ofy().load().type(Workout.class).filter("creatorId", userId)
+                .filter("id", workoutId).first().now();
+    }
+
+    private boolean userExists(String userId) {
+        return ofy().load().type(User.class).filter("email", userId).keys()
+                .first() != null;
+    }
+
+    /**
+     * <p>Check if given workout ID exists in datastore.</p>
+     *
+     * @param workoutId    workout ID
+     * @return  true if workout actually exists, false otherwise
+     */
+    private boolean workoutExists(Long workoutId) {
+        return ofy().load().type(Workout.class)
+                .filterKey("id", workoutId).count() > 0;
+    }
+
+    /**
+     * <p>Check if given workout ID exists in datastore and was created by
+     * the given user.</p>
+     *
+     * @param workoutId    workout ID
+     * @param userId       user ID
+     * @return  true if workout actually exists and was created by the
+     * current user, false otherwise
+     */
+    private boolean workoutExists(Long workoutId, String userId) {
+        return ofy().load().type(Workout.class).filter("id", workoutId)
+                .filter("creatorId", userId).keys().first() != null;
     }
 
 }

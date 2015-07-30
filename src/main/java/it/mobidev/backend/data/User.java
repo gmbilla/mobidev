@@ -8,8 +8,6 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 /**
  * <p>Entity representing a user that logged in with a SNS.</p>
  */
@@ -17,34 +15,21 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 @Data
 public class User {
 
-    public static final short SNS_NONE = -1;
-    public static final short SNS_FACEBOOK = 0;
-    public static final short SNS_GOOGLE_PLUS = 1;
-    // TODO remove stub code
-    public static final String TEST_USER_EMAIL = "pippo@calippo.com";
-
     @Id String email;
     @Index String token;
     String firstName;
     String lastName;
     String imageUrl;
     /** Which SNS the user used to sign up */
-    short signUpSns = SNS_NONE;
+    Social signUpSns = Social.NONE;
     List<Long> createdPlaces = new ArrayList<>();
 
     /**
-     * Stub method to insert a test user
+     * Enum representing the list of possible Social network sites a user can
+     * use to register
      */
-    public static void storeTestUser() {
-        User u = new User();
-        u.setEmail(TEST_USER_EMAIL);
-        u.setToken("abc123");
-        u.setFirstName("Pippo");
-        u.setLastName("Calippo");
-        u.setImageUrl("http://img2.wikia.nocookie.net/__cb20130521020830/" +
-                "disney/images/3/3f/Stitch_Render.png");
-
-        ofy().save().entity(u).now();
+    public enum Social {
+        NONE, FACEBOOK, GOOGLE_PLUS
     }
 
 }

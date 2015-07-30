@@ -1,17 +1,15 @@
 package it.mobidev.backend.data;
 
 import com.google.api.server.spi.response.ConflictException;
-import com.google.common.base.Joiner;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import it.mobidev.backend.Constants.Rank;
 import lombok.Data;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * Workout entity containing the list of exercise it's composed of.
@@ -28,94 +26,7 @@ public class Workout {
     /** Workout name */
     @Index String name;
     Date dateCreated = null;
-    List<Record> exerciseList = new ArrayList();
-
-    // TODO remove stub method
-    public static void storeTestWorkout() {
-        Workout w = new Workout();
-        w.setName("My test workout");
-        w.setCreatorId(User.TEST_USER_EMAIL);
-        w.setDateCreated(new Date());
-
-        // Create test exercise list
-        List<Exercise> exercises = Arrays.asList(
-                new Exercise("Test Push Up", "Push it up from the ground man!"),
-                new Exercise("Test Jumping jack", "Jump bitch"),
-                new Exercise("Test Crunch", "For your 6pack")
-        );
-        Log.info("Sample exercises: " + Joiner.on('\n').join(exercises));
-        int[] sampleRests = new int[] {0, 10, 30};
-
-        List<Record> recordList = new ArrayList<>();
-        int[] rests = new int[exercises.size()];
-        // Populate record list
-        Record r;
-        Random rand = new Random();
-        int index = 0;
-        for (Exercise e : exercises) {
-            ofy().save().entity(e).now();
-
-            r = new Record();
-            r.setExercise(e.getName());
-            // "Randomly" create an exercise of one type or another
-            if (rand.nextInt(10) % 2 == 0)
-                r.setHitsPerRep(rand.nextInt(20) + 1);
-            else
-                r.setDuration((rand.nextBoolean() ? 30 : 20));
-
-            recordList.add(r);
-            rests[index++] = sampleRests[rand.nextInt(sampleRests.length)];
-        }
-        String recordToString = "";
-        for (int i = 0; i < recordList.size(); i++)
-            recordToString += recordList.get(i).toString() + " - rest sec " +
-                    rests[i] + "\n";
-        Log.info("Sample superset:\n" + recordToString);
-
-        try {
-            // Insert created superset
-            Log.info("Inserting superset with a list of exercise");
-            w.addSuperSet(recordList, rests);
-
-            // Insert the same exercised but as single one with multiple reps
-            for (Exercise e : exercises) {
-                int duration = 0, hitsPerRep = 0;
-                // Randomly choose # of reps
-                int reps = rand.nextInt(5) + 1;
-                int rest = sampleRests[rand.nextInt(sampleRests.length)];
-                // Chose number of seconds or hits for current exercise
-                if (rand.nextInt(10) % 2 == 0)
-                    hitsPerRep = rand.nextInt(20) + 1;
-                else
-                    duration = rand.nextBoolean() ? 30 : 20;
-                Log.info(String.format("Adding %d reps for '%s' with %ds rest" +
-                        " - duration = %d, hitsPerRep = %d", reps, e.getName(),
-                        rest, duration, hitsPerRep));
-
-                w.addRepsForExercise(
-                        e,
-                        reps,
-                        duration,
-                        hitsPerRep,
-                        rest
-                );
-            }
-        } catch (ConflictException e) {
-            Log.severe("Error adding exercise set: " + e.getMessage());
-        }
-
-        Log.info("Exercise list:\n" + Joiner.on('\n').join(w.exerciseList));
-
-        ofy().save().entity(w).now();
-
-        // Add test Session for this workout
-        Session session = new Session();
-        session.setUserId(User.TEST_USER_EMAIL);
-        session.setWorkoutId(w.getId());
-        session.setVote(Rank.NORMAL);
-
-        ofy().save().entity(session).now();
-    }
+    List<Record> exerciseList = new ArrayList<>();
 
     //==========================================================================
     // Helpers
