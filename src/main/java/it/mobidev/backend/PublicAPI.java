@@ -12,75 +12,21 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
-  * Add your first API methods in this class, or you may create another class. In that case, please
-  * update your web.xml accordingly.
- **/
+ * <p>Class holding all exposed methods of public API.</p>
+ */
 @Api(
-    name = "test",
-    version = "v1"
+    name = "public",
+    version = "v1",
+    scopes = {Constants.EMAIL_SCOPE},
+    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID,
+            Constants.IOS_CLIENT_ID},
+    audiences = {Constants.ANDROID_AUDIENCE}
 )
-public class YourFirstAPI {
-
-    private static final Logger Log = Logger.getLogger("YourFirstTestApi");
-
-    //==========================================================================
-    // Admin methods
-    //==========================================================================
-
-    /**
-     * <p>List all registered {@link it.mobidev.backend.data.User}s.</p>
-     * @return
-     */
-    @ApiMethod(
-        path = "user/all",
-        httpMethod = ApiMethod.HttpMethod.GET
-    )
-    public List<User> getAllUser() {
-        return ofy().load().type(User.class).list();
-    }
-
-    /**
-     * <p>List all registered {@link it.mobidev.backend.data.Workout}s.</p>
-     */
-    @ApiMethod(
-        path = "workout/all",
-        httpMethod = ApiMethod.HttpMethod.GET
-    )
-    public List<Workout> getAllWorkout() {
-        return ofy().load().type(Workout.class).list();
-    }
-
-    /**
-     * <p>List all registered workout {@link it.mobidev.backend.data.Session}s.
-     * </p>
-     */
-    @ApiMethod(
-        path = "session/all",
-        httpMethod = ApiMethod.HttpMethod.GET
-    )
-    public List<Session> getAllSession() {
-        return ofy().load().type(Session.class).list();
-    }
-
-    /**
-     * <p>Delete all stored stuff.</p>
-     */
-    @ApiMethod(
-        path = "clear",
-        httpMethod = ApiMethod.HttpMethod.DELETE
-    )
-    public void deleteAll() {
-        ofy().delete().keys(ofy().load().type(User.class).keys().list()).now();
-        ofy().delete().keys(ofy().load().type(Place.class).keys().list()).now();
-        ofy().delete().keys(ofy().load().type(Entry.class).keys().list()).now();
-        ofy().delete().keys(ofy().load().type(Workout.class).keys().list())
-                .now();
-    }
+public class PublicAPI {
 
     //==========================================================================
     // GET methods
@@ -137,14 +83,12 @@ public class YourFirstAPI {
         path = "user/new",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void createUser(@Named("token") String token,
-                           @Named("email") String email,
+    public void createUser(@Named("email") String email,
                            @Named("sns") User.Social sns,
                            @Named("first_name") String firstName,
                            @Named("last_name") String lastName,
                            @Named("image_url") String imageUrl) {
         User user = new User();
-        user.setToken(token);
         user.setSignUpSns(sns);
         user.setEmail(email);
         user.setFirstName(firstName);

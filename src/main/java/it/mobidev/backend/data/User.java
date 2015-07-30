@@ -2,7 +2,6 @@ package it.mobidev.backend.data;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.List;
 public class User {
 
     @Id String email;
-    @Index String token;
     String firstName;
     String lastName;
     String imageUrl;
