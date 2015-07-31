@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		215156D41B69298200654CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156D31B69298200654CEA /* main.m */; };
+		215156D71B69298200654CEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156D61B69298200654CEA /* AppDelegate.m */; };
+		215156DD1B69298200654CEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 215156DB1B69298200654CEA /* Main.storyboard */; };
+		215156DF1B69298200654CEA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 215156DE1B69298200654CEA /* Images.xcassets */; };
+		215156E21B69298200654CEA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 215156E01B69298200654CEA /* LaunchScreen.xib */; };
+		215156EE1B69298200654CEA /* kalestenikaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156ED1B69298200654CEA /* kalestenikaTests.m */; };
+		21A83AFD1B6B69C60095DFB8 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */; };
+		21A83B001B6B6A070095DFB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		215156E81B69298200654CEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 215156C61B69298200654CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 215156CD1B69298200654CEA;
+			remoteInfo = kalestenika;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		215156CE1B69298200654CEA /* kalestenika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kalestenika.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		215156D21B69298200654CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		215156D31B69298200654CEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		215156D51B69298200654CEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		215156D61B69298200654CEA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		215156DC1B69298200654CEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		215156DE1B69298200654CEA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		215156E11B69298200654CEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		215156E71B69298200654CEA /* kalestenikaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kalestenikaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		215156EC1B69298200654CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		215156ED1B69298200654CEA /* kalestenikaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kalestenikaTests.m; sourceTree = "<group>"; };
+		21A83AFB1B6B69C60095DFB8 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = ViewControllers/HomeViewController.h; sourceTree = "<group>"; };
+		21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = ViewControllers/HomeViewController.m; sourceTree = "<group>"; };
+		21A83AFE1B6B6A070095DFB8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ViewControllers/LoginViewController.h; sourceTree = "<group>"; };
+		21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ViewControllers/LoginViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		215156CB1B69298200654CEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		215156E41B69298200654CEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		215156C51B69298200654CEA = {
+			isa = PBXGroup;
+			children = (
+				215156D01B69298200654CEA /* kalestenika */,
+				215156EA1B69298200654CEA /* kalestenikaTests */,
+				215156CF1B69298200654CEA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		215156CF1B69298200654CEA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				215156CE1B69298200654CEA /* kalestenika.app */,
+				215156E71B69298200654CEA /* kalestenikaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		215156D01B69298200654CEA /* kalestenika */ = {
+			isa = PBXGroup;
+			children = (
+				215156D51B69298200654CEA /* AppDelegate.h */,
+				215156D61B69298200654CEA /* AppDelegate.m */,
+				21A83AFA1B6B695C0095DFB8 /* ViewControllers */,
+				215156DB1B69298200654CEA /* Main.storyboard */,
+				215156DE1B69298200654CEA /* Images.xcassets */,
+				215156E01B69298200654CEA /* LaunchScreen.xib */,
+				215156D11B69298200654CEA /* Supporting Files */,
+			);
+			path = kalestenika;
+			sourceTree = "<group>";
+		};
+		215156D11B69298200654CEA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				215156D21B69298200654CEA /* Info.plist */,
+				215156D31B69298200654CEA /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		215156EA1B69298200654CEA /* kalestenikaTests */ = {
+			isa = PBXGroup;
+			children = (
+				215156ED1B69298200654CEA /* kalestenikaTests.m */,
+				215156EB1B69298200654CEA /* Supporting Files */,
+			);
+			path = kalestenikaTests;
+			sourceTree = "<group>";
+		};
+		215156EB1B69298200654CEA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				215156EC1B69298200654CEA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		21A83AFA1B6B695C0095DFB8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				21A83AFE1B6B6A070095DFB8 /* LoginViewController.h */,
+				21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */,
+				21A83AFB1B6B69C60095DFB8 /* HomeViewController.h */,
+				21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		215156CD1B69298200654CEA /* kalestenika */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 215156F11B69298200654CEA /* Build configuration list for PBXNativeTarget "kalestenika" */;
+			buildPhases = (
+				215156CA1B69298200654CEA /* Sources */,
+				215156CB1B69298200654CEA /* Frameworks */,
+				215156CC1B69298200654CEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kalestenika;
+			productName = kalestenika;
+			productReference = 215156CE1B69298200654CEA /* kalestenika.app */;
+			productType = "com.apple.product-type.application";
+		};
+		215156E61B69298200654CEA /* kalestenikaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 215156F41B69298200654CEA /* Build configuration list for PBXNativeTarget "kalestenikaTests" */;
+			buildPhases = (
+				215156E31B69298200654CEA /* Sources */,
+				215156E41B69298200654CEA /* Frameworks */,
+				215156E51B69298200654CEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				215156E91B69298200654CEA /* PBXTargetDependency */,
+			);
+			name = kalestenikaTests;
+			productName = kalestenikaTests;
+			productReference = 215156E71B69298200654CEA /* kalestenikaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		215156C61B69298200654CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Gian Marco Sibilla";
+				TargetAttributes = {
+					215156CD1B69298200654CEA = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					215156E61B69298200654CEA = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 215156CD1B69298200654CEA;
+					};
+				};
+			};
+			buildConfigurationList = 215156C91B69298200654CEA /* Build configuration list for PBXProject "kalestenika" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 215156C51B69298200654CEA;
+			productRefGroup = 215156CF1B69298200654CEA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				215156CD1B69298200654CEA /* kalestenika */,
+				215156E61B69298200654CEA /* kalestenikaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		215156CC1B69298200654CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				215156DD1B69298200654CEA /* Main.storyboard in Resources */,
+				215156E21B69298200654CEA /* LaunchScreen.xib in Resources */,
+				215156DF1B69298200654CEA /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		215156E51B69298200654CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		215156CA1B69298200654CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				215156D71B69298200654CEA /* AppDelegate.m in Sources */,
+				215156D41B69298200654CEA /* main.m in Sources */,
+				21A83AFD1B6B69C60095DFB8 /* HomeViewController.m in Sources */,
+				21A83B001B6B6A070095DFB8 /* LoginViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		215156E31B69298200654CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				215156EE1B69298200654CEA /* kalestenikaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		215156E91B69298200654CEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 215156CD1B69298200654CEA /* kalestenika */;
+			targetProxy = 215156E81B69298200654CEA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		215156DB1B69298200654CEA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				215156DC1B69298200654CEA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		215156E01B69298200654CEA /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				215156E11B69298200654CEA /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		215156EF1B69298200654CEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		215156F01B69298200654CEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		215156F21B69298200654CEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = kalestenika/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		215156F31B69298200654CEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = kalestenika/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		215156F51B69298200654CEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = kalestenikaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kalestenika.app/kalestenika";
+			};
+			name = Debug;
+		};
+		215156F61B69298200654CEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = kalestenikaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kalestenika.app/kalestenika";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		215156C91B69298200654CEA /* Build configuration list for PBXProject "kalestenika" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				215156EF1B69298200654CEA /* Debug */,
+				215156F01B69298200654CEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		215156F11B69298200654CEA /* Build configuration list for PBXNativeTarget "kalestenika" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				215156F21B69298200654CEA /* Debug */,
+				215156F31B69298200654CEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		215156F41B69298200654CEA /* Build configuration list for PBXNativeTarget "kalestenikaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				215156F51B69298200654CEA /* Debug */,
+				215156F61B69298200654CEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 215156C61B69298200654CEA /* Project object */;
+}
