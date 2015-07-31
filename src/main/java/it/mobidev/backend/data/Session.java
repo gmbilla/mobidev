@@ -2,6 +2,7 @@ package it.mobidev.backend.data;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import it.mobidev.backend.Constants.Rank;
 import lombok.Data;
 
@@ -18,11 +19,11 @@ public class Session {
     /**
      * The user that did the workout
      */
-    String userId;
+    @Index String userId;
     /**
      * Workout completed in the session.
      */
-    Long workoutId;
+    @Index Long workoutId;
     /**
      * Date and time when the workout was done.
      */

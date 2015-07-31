@@ -24,7 +24,7 @@ public class Workout {
     /** User that created the workout */
     @Index String creatorId;
     /** Workout name */
-    @Index String name;
+    String name;
     Date dateCreated = null;
     List<Record> exerciseList = new ArrayList<>();
 

@@ -5,7 +5,9 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.ConflictException;
+import com.google.api.server.spi.response.ForbiddenException;
 import com.google.api.server.spi.response.NotFoundException;
+import com.googlecode.objectify.Key;
 import it.mobidev.backend.data.*;
 
 import java.util.Arrays;
@@ -28,6 +30,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 )
 public class PublicAPI {
 
+    private static final String CANT_TOUCH_THIS = "U Can't Touch This!";
+
     //==========================================================================
     // GET methods
     //==========================================================================
@@ -37,6 +41,11 @@ public class PublicAPI {
      *
      * @return a list of {@link it.mobidev.backend.data.Exercise}
      */
+    @ApiMethod(
+        name = "exercise.list",
+        path = "exercise/list",
+        httpMethod = ApiMethod.HttpMethod.GET
+    )
     public List<Exercise> getExerciseList() {
         return ofy().load().type(Exercise.class).list();
     }
@@ -48,7 +57,16 @@ public class PublicAPI {
      * @return a list of {@link it.mobidev.backend.data.Workout}, if any has
      * been stored for the given user
      */
-    public List<Workout> getUserWorkouts(@Named("user") String userId) {
+    @ApiMethod(
+        name = "workout.list",
+        path = "workout/{user}",
+        httpMethod = ApiMethod.HttpMethod.GET
+    )
+    public List<Workout> getUserWorkouts(@Named("user") String userId)
+            throws NotFoundException {
+        if (!userExists(userId))
+            throw new NotFoundException("User " + userId + " not found");
+
         return ofy().load().type(Workout.class).filter("creatorId", userId)
                 .list();
     }
@@ -60,7 +78,16 @@ public class PublicAPI {
      * @return a list of {@link it.mobidev.backend.data.Session}, if any has
      * been stored for the given user
      */
-    public List<Session> getUserSessions(@Named("user") String userId) {
+    @ApiMethod(
+        name = "session.list",
+        path = "session/{user}",
+        httpMethod = ApiMethod.HttpMethod.GET
+    )
+    public List<Session> getUserSessions(@Named("user") String userId)
+            throws NotFoundException {
+        if (!userExists(userId))
+            throw new NotFoundException("User " + userId + " not found");
+
         return ofy().load().type(Session.class).filter("userId", userId).list();
     }
 
@@ -71,7 +98,6 @@ public class PublicAPI {
     /**
      * <p>Register a new user.</p>
      *
-     * @param token        token generated with SNS oAuth process
      * @param email        user e-mail address
      * @param sns          which SNS the user used to register
      * @param firstName    user first name
@@ -87,7 +113,11 @@ public class PublicAPI {
                            @Named("sns") User.Social sns,
                            @Named("first_name") String firstName,
                            @Named("last_name") String lastName,
-                           @Named("image_url") String imageUrl) {
+                           @Named("image_url") String imageUrl)
+            throws ConflictException {
+        if (userExists(email))
+            throw new ConflictException("User already registered");
+
         User user = new User();
         user.setSignUpSns(sns);
         user.setEmail(email);
@@ -110,10 +140,15 @@ public class PublicAPI {
         httpMethod = ApiMethod.HttpMethod.POST
     )
     public void insertExercise(@Named("name") String name,
-                               @Named("description") String description) {
+                               @Named("description") String description)
+            throws ConflictException {
+        if (ofy().load().type(Exercise.class).id(name) != null)
+            throw new ConflictException("Exercise '" + name + "' already exists");
+
         Exercise e = new Exercise();
         e.setName(name);
         e.setDescription(description);
+
         ofy().save().entity(e).now();
     }
 
@@ -134,7 +169,11 @@ public class PublicAPI {
     public void createWorkout(@Named("user") String userId,
                               @Named("name") String name,
                               @Named("exercises") Record[] exercises)
-            throws ConflictException {
+            throws ConflictException, NotFoundException {
+        // Check if user exists
+        if (!userExists(userId))
+            throw new NotFoundException("User " + userId + " not found");
+
         // Check if current user already have a workout with the given name
         if (ofy().load().type(Workout.class).filter("creatorId", userId)
                 .filter("name", name).count() > 0)
@@ -164,7 +203,11 @@ public class PublicAPI {
     )
     public void createEmptyWorkout(@Named("user") String userId,
                                    @Named("name") String name)
-            throws ConflictException {
+            throws ConflictException, NotFoundException {
+        // Check if user exists
+        if (!userExists(userId))
+            throw new NotFoundException("User " + userId + " not found");
+
         // Check if current user already have a workout with the given name
         if (ofy().load().type(Workout.class).filter("creatorId", userId)
                 .filter("name", name).count() > 0)
@@ -188,11 +231,15 @@ public class PublicAPI {
                                       @Named("id") Long workoutId,
                                       @Named("exercises") Collection<Record>
                                               records)
-            throws NotFoundException {
+            throws NotFoundException, ForbiddenException {
         // Check if given workout exists, otherwise raise a 404 error.
-        Workout workout = getWorkout(workoutId, userId);
+        Workout workout = getWorkout(workoutId);
         if (workout == null)
             throw new NotFoundException("Workout " + workoutId + " not found!");
+
+        // Check if user if creator of the workout
+        if (!workout.getCreatorId().equals(userId))
+            throw new ForbiddenException(CANT_TOUCH_THIS);
 
         for (Record r : records) {
             // Check if the exercise in current record exists, otherwise raise
@@ -232,6 +279,7 @@ public class PublicAPI {
         // Check if user exists
         if (!userExists(userId))
             throw new NotFoundException("User " + userId + " not found!");
+
         // Check if workout exists
         if (!workoutExists(workoutId))
             throw new NotFoundException("Workout " + workoutId + " not found!");
@@ -247,6 +295,91 @@ public class PublicAPI {
         session.setVote(userVote);
 
         ofy().save().entity(session).now();
+    }
+
+    //==========================================================================
+    // DELETE methods
+    //==========================================================================
+
+    @ApiMethod(
+        name = "exercise.delete",
+        path = "exercise/{name}/delete",
+        httpMethod = ApiMethod.HttpMethod.DELETE
+    )
+    public void removeExercise(@Named("name") String name)
+            throws NotFoundException {
+        Exercise e = ofy().load().type(Exercise.class).id(name).now();
+        if (e == null)
+            throw new NotFoundException("Exercise '" + name + "' not found");
+
+        ofy().delete().entity(e).now();
+        // Clear Objectify cache
+        ofy().clear();
+    }
+
+    /**
+     * <p>Allow a user to delete one of her workout.</p>
+     *
+     * @param userId       user ID -- creator of the workout
+     * @param workoutId    ID of the workout
+     * @throws NotFoundException
+     * @throws ForbiddenException
+     */
+    @ApiMethod(
+        name = "workout.delete",
+        path = "workout/{workoutId}/delete",
+        httpMethod = ApiMethod.HttpMethod.DELETE
+    )
+    public void removeWorkout(@Named("user") String userId,
+                              @Named("workout") Long workoutId)
+            throws NotFoundException, ForbiddenException {
+        // Check if workout exists
+        Workout workout = getWorkout(workoutId);
+        if (workout == null)
+            throw new NotFoundException("Workout " + workoutId + " not found");
+
+        // Check if workout creator is the current user
+        if (!workout.getCreatorId().equals(userId))
+            throw new ForbiddenException(CANT_TOUCH_THIS);
+
+        // Check if current workout is referenced by any session
+        if (ofy().load().type(Session.class).filter("workoutId", workoutId)
+                .count() > 0)
+            throw new ForbiddenException("Workout is referenced by a session");
+
+        ofy().delete().entity(workout).now();
+        // Clear Objectify cache
+        ofy().clear();
+    }
+
+    /**
+     * <p>Allow a user to delete one of her sessions.</p>
+     *
+     * @param userId       user ID -- creator of the session
+     * @param sessionId    ID of the session
+     * @throws NotFoundException
+     * @throws ForbiddenException
+     */
+    @ApiMethod(
+        name = "session.delete",
+        path = "session/{sessionId}/delete",
+        httpMethod = ApiMethod.HttpMethod.DELETE
+    )
+    public void removeSession(@Named("user") String userId,
+                              @Named("session") Long sessionId)
+            throws NotFoundException, ForbiddenException {
+        // Check if the session exists
+        Session session = ofy().load().type(Session.class).id(sessionId).now();
+        if (session == null)
+            throw new NotFoundException("Session " + sessionId + " not found");
+
+        // Check is user is the creator of the session
+        if (!session.getUserId().equals(userId))
+            throw new ForbiddenException(CANT_TOUCH_THIS);
+
+        ofy().delete().entity(session).now();
+        // Clear Objectify cache
+        ofy().clear();
     }
 
     //==========================================================================
@@ -275,21 +408,8 @@ public class PublicAPI {
         return ofy().load().type(Workout.class).id(workoutId).now();
     }
 
-    /**
-     * <p>Fetch from datastore the workout with the given ID.</p>
-     *
-     * @param workoutId    workout ID
-     * @param userId       workout creator user ID
-     * @return a workout instance if exists, null otherwise
-     */
-    private Workout getWorkout(Long workoutId, String userId) {
-        return ofy().load().type(Workout.class).filter("creatorId", userId)
-                .filter("id", workoutId).first().now();
-    }
-
     private boolean userExists(String userId) {
-        return ofy().load().type(User.class).filter("email", userId).keys()
-                .first() != null;
+        return ofy().load().type(User.class).id(userId).now() != null;
     }
 
     /**
@@ -300,21 +420,7 @@ public class PublicAPI {
      */
     private boolean workoutExists(Long workoutId) {
         return ofy().load().type(Workout.class)
-                .filterKey("id", workoutId).count() > 0;
-    }
-
-    /**
-     * <p>Check if given workout ID exists in datastore and was created by
-     * the given user.</p>
-     *
-     * @param workoutId    workout ID
-     * @param userId       user ID
-     * @return  true if workout actually exists and was created by the
-     * current user, false otherwise
-     */
-    private boolean workoutExists(Long workoutId, String userId) {
-        return ofy().load().type(Workout.class).filter("id", workoutId)
-                .filter("creatorId", userId).keys().first() != null;
+                .filterKey(Key.create(Workout.class, workoutId)).count() > 0;
     }
 
 }
