@@ -98,7 +98,7 @@ public class PublicAPI {
     /**
      * <p>Register a new user.</p>
      *
-     * @param email        user e-mail address
+     * @param id           the user ID, from the chosen SNS
      * @param sns          which SNS the user used to register
      * @param firstName    user first name
      * @param lastName     user last name
@@ -109,18 +109,18 @@ public class PublicAPI {
         path = "user/new",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void createUser(@Named("email") String email,
+    public void createUser(@Named("id") String id,
                            @Named("sns") User.Social sns,
                            @Named("first_name") String firstName,
                            @Named("last_name") String lastName,
                            @Named("image_url") String imageUrl)
             throws ConflictException {
-        if (userExists(email))
+        if (userExists(id))
             throw new ConflictException("User already registered");
 
         User user = new User();
+        user.setId(id);
         user.setSignUpSns(sns);
-        user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setImageUrl(imageUrl);
@@ -201,8 +201,8 @@ public class PublicAPI {
         path = "workout/empty",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void createEmptyWorkout(@Named("user") String userId,
-                                   @Named("name") String name)
+    public Workout createEmptyWorkout(@Named("user") String userId,
+                                      @Named("name") String name)
             throws ConflictException, NotFoundException {
         // Check if user exists
         if (!userExists(userId))
@@ -220,6 +220,8 @@ public class PublicAPI {
         workout.setDateCreated(new Date());
 
         ofy().save().entity(workout).now();
+
+        return workout;
     }
 
     @ApiMethod(
@@ -270,11 +272,11 @@ public class PublicAPI {
         path = "session/new",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void storeSession(@Named("user") String userId,
-                             @Named("workout") Long workoutId,
-                             @Named("date") @Nullable Date when,
-                             @Named("place") @Nullable Long where,
-                             @Named("vote") @Nullable Constants.Rank userVote)
+    public Session storeSession(@Named("user") String userId,
+                                @Named("workout") Long workoutId,
+                                @Named("date") @Nullable Date when,
+                                @Named("place") @Nullable Long where,
+                                @Named("vote") @Nullable Constants.Rank userVote)
             throws NotFoundException {
         // Check if user exists
         if (!userExists(userId))
@@ -291,10 +293,17 @@ public class PublicAPI {
             session.setWhen(when);
         else
             session.setWhen(new Date());
+
+        if (where != null &&
+                ofy().load().type(Place.class).id(where).now() == null)
+            throw new NotFoundException("Place " + where + " not found!");
+
         session.setWhere(where);
         session.setVote(userVote);
 
         ofy().save().entity(session).now();
+
+        return session;
     }
 
     //==========================================================================
@@ -416,7 +425,7 @@ public class PublicAPI {
      * <p>Check if given workout ID exists in datastore.</p>
      *
      * @param workoutId    workout ID
-     * @return  true if workout actually exists, false otherwise
+     * @return true if workout actually exists, false otherwise
      */
     private boolean workoutExists(Long workoutId) {
         return ofy().load().type(Workout.class)

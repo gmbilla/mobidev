@@ -14,7 +14,8 @@ import java.util.List;
 @Data
 public class User {
 
-    @Id String email;
+    /** The ID the user has on the SNS used for sign up */
+    @Id String id;
     String firstName;
     String lastName;
     String imageUrl;
