@@ -1,7 +1,7 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 import com.googlecode.objectify.ObjectifyService;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -22,11 +22,6 @@ public class ApiInitializer implements ServletContextListener {
         ObjectifyService.register(Rest.class);
         ObjectifyService.register(Workout.class);
         ObjectifyService.register(Session.class);
-
-        // TODO Store an entity for rest
-        // Not working!!
-        // Rest rest = new Rest();
-        // ofy().save().entity(rest).now();
     }
 
     @Override

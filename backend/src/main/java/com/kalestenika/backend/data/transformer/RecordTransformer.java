@@ -1,14 +1,14 @@
-package it.mobidev.backend.data.transformer;
+package com.kalestenika.backend.data.transformer;
 
 import com.google.api.server.spi.config.Transformer;
 import com.google.gson.Gson;
-import it.mobidev.backend.data.Record;
+import com.kalestenika.backend.data.Record;
 
 /**
  * <p>Class implementing {@link com.google.api.server.spi.config.Transformer} to
  * allow to/from string (JSON) serialization.</p>
  *
- * <p><b>N.B.</b> {@link it.mobidev.backend.data.Record} cannot be used as a
+ * <p><b>N.B.</b> {@link Record} cannot be used as a
  * return type for an API method, but can be used as a parameter.</p>
  */
 public class RecordTransformer implements Transformer<Record, String> {

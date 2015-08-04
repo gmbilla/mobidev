@@ -1,4 +1,4 @@
-package it.mobidev.backend.data;
+package com.kalestenika.backend.data;
 
 import com.google.api.server.spi.response.ConflictException;
 import com.googlecode.objectify.annotation.Entity;
@@ -35,7 +35,7 @@ public class Workout {
     /**
      * <p>Add given exercise to exercise list.</p>
      *
-     * @param ex a {@link it.mobidev.backend.data.Record} describing the
+     * @param ex a {@link Record} describing the
      *           exercise to be added to the list
      */
     public void addExercise(Record ex) {

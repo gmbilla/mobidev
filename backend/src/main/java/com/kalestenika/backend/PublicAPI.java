@@ -1,4 +1,4 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -8,7 +8,7 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.ForbiddenException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.googlecode.objectify.Key;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class PublicAPI {
     /**
      * <p>List all the stored exercise.</p>
      *
-     * @return a list of {@link it.mobidev.backend.data.Exercise}
+     * @return a list of {@link Exercise}
      */
     @ApiMethod(
         name = "exercise.list",
@@ -54,7 +54,7 @@ public class PublicAPI {
      * <p>Fetch all workout created by the given user.</p>
      *
      * @param userId    ID of the user
-     * @return a list of {@link it.mobidev.backend.data.Workout}, if any has
+     * @return a list of {@link Workout}, if any has
      * been stored for the given user
      */
     @ApiMethod(
@@ -75,7 +75,7 @@ public class PublicAPI {
      * <p>Fetch all the session stored by the given user.</p>
      *
      * @param userId    ID of the user
-     * @return a list of {@link it.mobidev.backend.data.Session}, if any has
+     * @return a list of {@link Session}, if any has
      * been stored for the given user
      */
     @ApiMethod(
@@ -98,7 +98,7 @@ public class PublicAPI {
     /**
      * <p>Register a new user.</p>
      *
-     * @param id           the user ID, from the chosen SNS
+     * @param userId       the user ID, from the chosen SNS
      * @param sns          which SNS the user used to register
      * @param firstName    user first name
      * @param lastName     user last name
@@ -109,17 +109,17 @@ public class PublicAPI {
         path = "user/new",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void createUser(@Named("id") String id,
+    public void createUser(@Named("user_id") String userId,
                            @Named("sns") User.Social sns,
                            @Named("first_name") String firstName,
                            @Named("last_name") String lastName,
                            @Named("image_url") String imageUrl)
             throws ConflictException {
-        if (userExists(id))
+        if (userExists(userId))
             throw new ConflictException("User already registered");
 
         User user = new User();
-        user.setId(id);
+        user.setId(userId);
         user.setSignUpSns(sns);
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -226,11 +226,11 @@ public class PublicAPI {
 
     @ApiMethod(
         name = "workout.add",
-        path = "workout/{id}/add",
+        path = "workout/{workout}/add",
         httpMethod = ApiMethod.HttpMethod.POST
     )
     public void addExercisesToWorkout(@Named("user") String userId,
-                                      @Named("id") Long workoutId,
+                                      @Named("workout") Long workoutId,
                                       @Named("exercises") Collection<Record>
                                               records)
             throws NotFoundException, ForbiddenException {
@@ -336,7 +336,7 @@ public class PublicAPI {
      */
     @ApiMethod(
         name = "workout.delete",
-        path = "workout/{workoutId}/delete",
+        path = "workout/{workout}/delete",
         httpMethod = ApiMethod.HttpMethod.DELETE
     )
     public void removeWorkout(@Named("user") String userId,
@@ -371,7 +371,7 @@ public class PublicAPI {
      */
     @ApiMethod(
         name = "session.delete",
-        path = "session/{sessionId}/delete",
+        path = "session/{session}/delete",
         httpMethod = ApiMethod.HttpMethod.DELETE
     )
     public void removeSession(@Named("user") String userId,
@@ -400,7 +400,7 @@ public class PublicAPI {
      * given ID.</p>
      *
      * @param userId    user ID
-     * @return a {@link it.mobidev.backend.data.User} instance if exists,
+     * @return a {@link User} instance if exists,
      * null otherwise
      */
     private User getUser(String userId) {

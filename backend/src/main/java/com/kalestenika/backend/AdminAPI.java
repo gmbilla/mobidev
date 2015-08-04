@@ -1,4 +1,4 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -6,7 +6,7 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 public class AdminAPI {
 
     /**
-     * <p>List all registered {@link it.mobidev.backend.data.User}s.</p>
+     * <p>List all registered {@link User}s.</p>
      *
-     * @return a list of {@link it.mobidev.backend.data.User}
+     * @return a list of {@link User}
      */
     @ApiMethod(
         name = "user.all",
@@ -43,7 +43,7 @@ public class AdminAPI {
     }
 
     /**
-     * <p>List all registered {@link it.mobidev.backend.data.Workout}s.</p>
+     * <p>List all registered {@link Workout}s.</p>
      */
     @ApiMethod(
         name = "workout.all",
@@ -60,7 +60,7 @@ public class AdminAPI {
     }
 
     /**
-     * <p>List all registered workout {@link it.mobidev.backend.data.Session}s.
+     * <p>List all registered workout {@link Session}s.
      * </p>
      */
     @ApiMethod(

@@ -1,4 +1,4 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 /**
  * Contains the client IDs and scopes for allowed clients consuming your API.
