@@ -1,5 +1,5 @@
 //
-//  HomeViewController.h
+//  WorkoutViewController.h
 //  kalestenika
 //
 //  Created by Gian Marco Sibilla on 31/07/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UITabBarController
+@interface TestWorkoutViewController : UITableViewController
 
 @end

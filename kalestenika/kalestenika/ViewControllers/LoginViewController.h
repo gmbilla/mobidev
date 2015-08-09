@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <GooglePlus/GooglePlus.h>
 
-@interface LoginViewController : UIViewController
+@class GPPSignInButton;
 
+@interface LoginViewController : UIViewController <FBSDKLoginButtonDelegate, GPPSignInDelegate>
+
+@property (weak, nonatomic) IBOutlet GPPSignInButton *googlePlusSignInButton;
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 
 @end
 

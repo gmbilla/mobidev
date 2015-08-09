@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211440B61B70BC9300609D60 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440B41B70BC9300609D60 /* GoogleOpenSource.framework */; };
+		211440B71B70BC9300609D60 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440B51B70BC9300609D60 /* GooglePlus.framework */; };
+		211440BA1B70BD1B00609D60 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 211440B91B70BD1B00609D60 /* GooglePlus.bundle */; };
+		211440BC1B70D26900609D60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440BB1B70D26900609D60 /* CoreGraphics.framework */; };
+		211440C71B70D2D000609D60 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440BD1B70D2D000609D60 /* AddressBook.framework */; };
+		211440C81B70D2D000609D60 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440BE1B70D2D000609D60 /* AssetsLibrary.framework */; };
+		211440C91B70D2D000609D60 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440BF1B70D2D000609D60 /* CoreLocation.framework */; };
+		211440CA1B70D2D000609D60 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C01B70D2D000609D60 /* CoreMotion.framework */; };
+		211440CB1B70D2D000609D60 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C11B70D2D000609D60 /* CoreText.framework */; };
+		211440CC1B70D2D000609D60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C21B70D2D000609D60 /* Foundation.framework */; };
+		211440CD1B70D2D100609D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C31B70D2D000609D60 /* MediaPlayer.framework */; };
+		211440CE1B70D2D100609D60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C41B70D2D000609D60 /* Security.framework */; };
+		211440CF1B70D2D100609D60 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C51B70D2D000609D60 /* SystemConfiguration.framework */; };
+		211440D01B70D2D100609D60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211440C61B70D2D000609D60 /* UIKit.framework */; };
+		211440F41B70F6D000609D60 /* TestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 211440F31B70F6D000609D60 /* TestUser.m */; };
+		211B85B01B6BC059006411BE /* TestWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 211B85AF1B6BC059006411BE /* TestWorkoutViewController.m */; };
+		211B85B31B6BC3B5006411BE /* WorkoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 211B85B21B6BC3B5006411BE /* WorkoutCell.m */; };
 		215156D41B69298200654CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156D31B69298200654CEA /* main.m */; };
 		215156D71B69298200654CEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156D61B69298200654CEA /* AppDelegate.m */; };
 		215156DD1B69298200654CEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 215156DB1B69298200654CEA /* Main.storyboard */; };
@@ -15,6 +32,19 @@
 		215156EE1B69298200654CEA /* kalestenikaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 215156ED1B69298200654CEA /* kalestenikaTests.m */; };
 		21A83AFD1B6B69C60095DFB8 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */; };
 		21A83B001B6B6A070095DFB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */; };
+		21A83B051B6B92F70095DFB8 /* muscle.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B021B6B92F70095DFB8 /* muscle.png */; };
+		21A83B061B6B92F70095DFB8 /* muscle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B031B6B92F70095DFB8 /* muscle@2x.png */; };
+		21A83B071B6B92F70095DFB8 /* muscle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B041B6B92F70095DFB8 /* muscle@3x.png */; };
+		21A83B0B1B6B94440095DFB8 /* chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B081B6B94440095DFB8 /* chart.png */; };
+		21A83B0C1B6B94440095DFB8 /* chart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B091B6B94440095DFB8 /* chart@2x.png */; };
+		21A83B0D1B6B94440095DFB8 /* chart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B0A1B6B94440095DFB8 /* chart@3x.png */; };
+		21A83B0F1B6B9BB70095DFB8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83B0E1B6B9BB70095DFB8 /* Constants.m */; };
+		21B300AC1B7250A800CB18B6 /* Kalestenika.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21B300AA1B7250A800CB18B6 /* Kalestenika.xcdatamodeld */; };
+		21B9E78E1B6F5EA40067C4D8 /* WorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B9E78D1B6F5EA40067C4D8 /* WorkoutViewController.m */; };
+		21B9E7901B6F93FE0067C4D8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */; };
+		21B9E7921B6F94450067C4D8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */; };
+		21BA94A21B7620050025AC97 /* PersistentStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BA94A11B7620050025AC97 /* PersistentStack.m */; };
+		21BA94AB1B7643EB0025AC97 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BA94AA1B7643EB0025AC97 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +58,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		211440B41B70BC9300609D60 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "../../../lib/google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
+		211440B51B70BC9300609D60 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../../lib/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
+		211440B91B70BD1B00609D60 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "../../../../lib/google-plus-ios-sdk-1.7.1/GooglePlus.bundle"; sourceTree = "<group>"; };
+		211440BB1B70D26900609D60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		211440BD1B70D2D000609D60 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		211440BE1B70D2D000609D60 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		211440BF1B70D2D000609D60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		211440C01B70D2D000609D60 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		211440C11B70D2D000609D60 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		211440C21B70D2D000609D60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		211440C31B70D2D000609D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		211440C41B70D2D000609D60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		211440C51B70D2D000609D60 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		211440C61B70D2D000609D60 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		211440F21B70F6D000609D60 /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
+		211440F31B70F6D000609D60 /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
+		211B85AE1B6BC059006411BE /* TestWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWorkoutViewController.h; sourceTree = "<group>"; };
+		211B85AF1B6BC059006411BE /* TestWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWorkoutViewController.m; sourceTree = "<group>"; };
+		211B85B11B6BC3B5006411BE /* WorkoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutCell.h; sourceTree = "<group>"; };
+		211B85B21B6BC3B5006411BE /* WorkoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutCell.m; sourceTree = "<group>"; };
 		215156CE1B69298200654CEA /* kalestenika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kalestenika.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		215156D21B69298200654CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		215156D31B69298200654CEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -39,10 +89,28 @@
 		215156E71B69298200654CEA /* kalestenikaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kalestenikaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		215156EC1B69298200654CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		215156ED1B69298200654CEA /* kalestenikaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kalestenikaTests.m; sourceTree = "<group>"; };
-		21A83AFB1B6B69C60095DFB8 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = ViewControllers/HomeViewController.h; sourceTree = "<group>"; };
-		21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = ViewControllers/HomeViewController.m; sourceTree = "<group>"; };
-		21A83AFE1B6B6A070095DFB8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ViewControllers/LoginViewController.h; sourceTree = "<group>"; };
-		21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ViewControllers/LoginViewController.m; sourceTree = "<group>"; };
+		21A83AFB1B6B69C60095DFB8 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		21A83AFE1B6B6A070095DFB8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		21A83B021B6B92F70095DFB8 /* muscle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = muscle.png; sourceTree = "<group>"; };
+		21A83B031B6B92F70095DFB8 /* muscle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "muscle@2x.png"; sourceTree = "<group>"; };
+		21A83B041B6B92F70095DFB8 /* muscle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "muscle@3x.png"; sourceTree = "<group>"; };
+		21A83B081B6B94440095DFB8 /* chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chart.png; sourceTree = "<group>"; };
+		21A83B091B6B94440095DFB8 /* chart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chart@2x.png"; sourceTree = "<group>"; };
+		21A83B0A1B6B94440095DFB8 /* chart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chart@3x.png"; sourceTree = "<group>"; };
+		21A83B0E1B6B9BB70095DFB8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		21A83B101B6B9D2D0095DFB8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		21B300AB1B7250A800CB18B6 /* Kalestenika.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kalestenika.xcdatamodel; sourceTree = "<group>"; };
+		21B9E78C1B6F5EA40067C4D8 /* WorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutViewController.h; sourceTree = "<group>"; };
+		21B9E78D1B6F5EA40067C4D8 /* WorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutViewController.m; sourceTree = "<group>"; };
+		21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		21BA949F1B761F5E0025AC97 /* Storable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storable.h; sourceTree = "<group>"; };
+		21BA94A01B7620050025AC97 /* PersistentStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStack.h; sourceTree = "<group>"; };
+		21BA94A11B7620050025AC97 /* PersistentStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStack.m; sourceTree = "<group>"; };
+		21BA94A91B7643EB0025AC97 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		21BA94AA1B7643EB0025AC97 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +118,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211440C71B70D2D000609D60 /* AddressBook.framework in Frameworks */,
+				211440C81B70D2D000609D60 /* AssetsLibrary.framework in Frameworks */,
+				211440C91B70D2D000609D60 /* CoreLocation.framework in Frameworks */,
+				211440CA1B70D2D000609D60 /* CoreMotion.framework in Frameworks */,
+				211440CB1B70D2D000609D60 /* CoreText.framework in Frameworks */,
+				211440CC1B70D2D000609D60 /* Foundation.framework in Frameworks */,
+				211440CD1B70D2D100609D60 /* MediaPlayer.framework in Frameworks */,
+				211440CE1B70D2D100609D60 /* Security.framework in Frameworks */,
+				211440CF1B70D2D100609D60 /* SystemConfiguration.framework in Frameworks */,
+				211440D01B70D2D100609D60 /* UIKit.framework in Frameworks */,
+				211440BC1B70D26900609D60 /* CoreGraphics.framework in Frameworks */,
+				21B9E7921B6F94450067C4D8 /* FBSDKLoginKit.framework in Frameworks */,
+				211440B71B70BC9300609D60 /* GooglePlus.framework in Frameworks */,
+				211440B61B70BC9300609D60 /* GoogleOpenSource.framework in Frameworks */,
+				21B9E7901B6F93FE0067C4D8 /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,9 +146,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211440B81B70BCA800609D60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				211440BD1B70D2D000609D60 /* AddressBook.framework */,
+				211440BE1B70D2D000609D60 /* AssetsLibrary.framework */,
+				211440BF1B70D2D000609D60 /* CoreLocation.framework */,
+				211440C01B70D2D000609D60 /* CoreMotion.framework */,
+				211440C11B70D2D000609D60 /* CoreText.framework */,
+				211440C21B70D2D000609D60 /* Foundation.framework */,
+				211440C31B70D2D000609D60 /* MediaPlayer.framework */,
+				211440C41B70D2D000609D60 /* Security.framework */,
+				211440C51B70D2D000609D60 /* SystemConfiguration.framework */,
+				211440C61B70D2D000609D60 /* UIKit.framework */,
+				211440BB1B70D26900609D60 /* CoreGraphics.framework */,
+				211440B41B70BC9300609D60 /* GoogleOpenSource.framework */,
+				211440B51B70BC9300609D60 /* GooglePlus.framework */,
+				21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */,
+				21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		211440F11B70F60100609D60 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				211440F21B70F6D000609D60 /* TestUser.h */,
+				211440F31B70F6D000609D60 /* TestUser.m */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		215156C51B69298200654CEA = {
 			isa = PBXGroup;
 			children = (
+				211440B81B70BCA800609D60 /* Frameworks */,
 				215156D01B69298200654CEA /* kalestenika */,
 				215156EA1B69298200654CEA /* kalestenikaTests */,
 				215156CF1B69298200654CEA /* Products */,
@@ -84,10 +199,16 @@
 		215156D01B69298200654CEA /* kalestenika */ = {
 			isa = PBXGroup;
 			children = (
+				215156DB1B69298200654CEA /* Main.storyboard */,
 				215156D51B69298200654CEA /* AppDelegate.h */,
 				215156D61B69298200654CEA /* AppDelegate.m */,
+				21A83B101B6B9D2D0095DFB8 /* Constants.h */,
+				21A83B0E1B6B9BB70095DFB8 /* Constants.m */,
+				21B300A91B72509800CB18B6 /* DataModel */,
 				21A83AFA1B6B695C0095DFB8 /* ViewControllers */,
-				215156DB1B69298200654CEA /* Main.storyboard */,
+				21A83B141B6BB6740095DFB8 /* CustomViews */,
+				211440F11B70F60100609D60 /* Data */,
+				21A83B011B6B926E0095DFB8 /* Images */,
 				215156DE1B69298200654CEA /* Images.xcassets */,
 				215156E01B69298200654CEA /* LaunchScreen.xib */,
 				215156D11B69298200654CEA /* Supporting Files */,
@@ -100,6 +221,7 @@
 			children = (
 				215156D21B69298200654CEA /* Info.plist */,
 				215156D31B69298200654CEA /* main.m */,
+				211440B91B70BD1B00609D60 /* GooglePlus.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -128,8 +250,47 @@
 				21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */,
 				21A83AFB1B6B69C60095DFB8 /* HomeViewController.h */,
 				21A83AFC1B6B69C60095DFB8 /* HomeViewController.m */,
+				211B85AE1B6BC059006411BE /* TestWorkoutViewController.h */,
+				211B85AF1B6BC059006411BE /* TestWorkoutViewController.m */,
+				21B9E78C1B6F5EA40067C4D8 /* WorkoutViewController.h */,
+				21B9E78D1B6F5EA40067C4D8 /* WorkoutViewController.m */,
 			);
-			name = ViewControllers;
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		21A83B011B6B926E0095DFB8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				21A83B081B6B94440095DFB8 /* chart.png */,
+				21A83B091B6B94440095DFB8 /* chart@2x.png */,
+				21A83B0A1B6B94440095DFB8 /* chart@3x.png */,
+				21A83B021B6B92F70095DFB8 /* muscle.png */,
+				21A83B031B6B92F70095DFB8 /* muscle@2x.png */,
+				21A83B041B6B92F70095DFB8 /* muscle@3x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		21A83B141B6BB6740095DFB8 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				211B85B11B6BC3B5006411BE /* WorkoutCell.h */,
+				211B85B21B6BC3B5006411BE /* WorkoutCell.m */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		21B300A91B72509800CB18B6 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				21BA94A91B7643EB0025AC97 /* User.h */,
+				21BA94AA1B7643EB0025AC97 /* User.m */,
+				21B300AA1B7250A800CB18B6 /* Kalestenika.xcdatamodeld */,
+				21BA949F1B761F5E0025AC97 /* Storable.h */,
+				21BA94A01B7620050025AC97 /* PersistentStack.h */,
+				21BA94A11B7620050025AC97 /* PersistentStack.m */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +375,14 @@
 			files = (
 				215156DD1B69298200654CEA /* Main.storyboard in Resources */,
 				215156E21B69298200654CEA /* LaunchScreen.xib in Resources */,
+				21A83B051B6B92F70095DFB8 /* muscle.png in Resources */,
+				21A83B0C1B6B94440095DFB8 /* chart@2x.png in Resources */,
+				21A83B061B6B92F70095DFB8 /* muscle@2x.png in Resources */,
+				21A83B071B6B92F70095DFB8 /* muscle@3x.png in Resources */,
+				211440BA1B70BD1B00609D60 /* GooglePlus.bundle in Resources */,
+				21A83B0B1B6B94440095DFB8 /* chart.png in Resources */,
 				215156DF1B69298200654CEA /* Images.xcassets in Resources */,
+				21A83B0D1B6B94440095DFB8 /* chart@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,10 +400,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21A83B0F1B6B9BB70095DFB8 /* Constants.m in Sources */,
+				211B85B31B6BC3B5006411BE /* WorkoutCell.m in Sources */,
+				211440F41B70F6D000609D60 /* TestUser.m in Sources */,
 				215156D71B69298200654CEA /* AppDelegate.m in Sources */,
 				215156D41B69298200654CEA /* main.m in Sources */,
+				21B9E78E1B6F5EA40067C4D8 /* WorkoutViewController.m in Sources */,
 				21A83AFD1B6B69C60095DFB8 /* HomeViewController.m in Sources */,
+				21B300AC1B7250A800CB18B6 /* Kalestenika.xcdatamodeld in Sources */,
+				21BA94AB1B7643EB0025AC97 /* User.m in Sources */,
 				21A83B001B6B6A070095DFB8 /* LoginViewController.m in Sources */,
+				211B85B01B6BC059006411BE /* TestWorkoutViewController.m in Sources */,
+				21BA94A21B7620050025AC97 /* PersistentStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,8 +539,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/gmbilla/Documents/FacebookSDK,
+					"/Users/gmbilla/Developer/lib/google-plus-ios-sdk-1.7.1",
+				);
 				INFOPLIST_FILE = kalestenika/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -373,8 +558,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/gmbilla/Documents/FacebookSDK,
+					"/Users/gmbilla/Developer/lib/google-plus-ios-sdk-1.7.1",
+				);
 				INFOPLIST_FILE = kalestenika/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -444,6 +638,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		21B300AA1B7250A800CB18B6 /* Kalestenika.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				21B300AB1B7250A800CB18B6 /* Kalestenika.xcdatamodel */,
+			);
+			currentVersion = 21B300AB1B7250A800CB18B6 /* Kalestenika.xcdatamodel */;
+			path = Kalestenika.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 215156C61B69298200654CEA /* Project object */;
 }

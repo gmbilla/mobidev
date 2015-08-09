@@ -14,6 +14,21 @@
 
 @implementation HomeViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    // Style tab bar
+    NSLog(@"tabBarItem: %@", self.tabBarItem.title);
+    
+    NSLog(@"tabBar tint color: %@", self.tabBar.tintColor);
+    self.tabBar.tintColor = [UIColor orangeColor];
+    
+    UIImage *selectedImage = self.tabBar.selectedItem.image;
+    self.tabBar.selectedItem.image = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    for (UITabBarItem *item in self.tabBar.items) {
+        NSLog(@"%@: %@", item.title, item.image);
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
