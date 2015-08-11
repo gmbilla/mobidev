@@ -13,6 +13,7 @@
 
 static NSString *const EntityName = @"User";
 static NSString *const ObjectIdKey = @"userObjectId";
+static NSString *const GuestUserId = @"guest";
 
 
 @implementation User
@@ -70,6 +71,17 @@ static NSString *const ObjectIdKey = @"userObjectId";
     }
     
     return [entities lastObject];
+}
+
++ (instancetype)getOrCreateGuestUser:(BOOL)save {
+    // Check if guest user already exists
+    User *user = [self fetchUserWithUserId:GuestUserId];
+    
+    if (user == nil)
+        // Create it otherwise
+        user = [self insertUserWithUserId:GuestUserId firstName:NSLocalizedString(@"GuestFirstName", nil) lastName:@"" signUpSns:0 imageURL:nil thenSaveIt:save];
+    
+    return user;
 }
 
 + (instancetype)insertUserWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname signUpSns:(int)sns imageURL:(NSString *)image thenSaveIt:(BOOL)save {

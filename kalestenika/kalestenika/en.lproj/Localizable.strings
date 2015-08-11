@@ -8,3 +8,5 @@
 AlertTitleFacebookLoginError = "Facebook login error";
 AlertMessageFacebookLoginError = "There was an error in the Facebook login procedure! Please try again.";
 AlertMessageFacebookLoginMissingPermission = "You should grant kalestenica the permission to read your profile info. Please login again grantig the permission";
+
+GuestFirstName = "Guest";

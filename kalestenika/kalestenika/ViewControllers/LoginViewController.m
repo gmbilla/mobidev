@@ -41,7 +41,11 @@
 #pragma mark IB actions
 
 - (IBAction)continueAsGuestButtonPressed:(UIButton *)sender {
+    // Get guest user and dismiss modal VC
+    User *user = [User getOrCreateGuestUser:YES];
+    NSLog(@"Guest user: %@", user);
     
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Facebook

@@ -27,6 +27,10 @@
  */
 + (instancetype)fetchUserWithUserId:(NSString *)userId;
 /**
+ * Try to fetch guest user, and insert it if it doesn't exists
+ */
++ (instancetype)getOrCreateGuestUser:(BOOL)save;
+/**
  * Store locally (in SQLite) a new user
  */
 + (instancetype)insertUserWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname signUpSns:(int)sns imageURL:(NSString *)image thenSaveIt:(BOOL)save;
