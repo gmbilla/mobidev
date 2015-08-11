@@ -18,6 +18,8 @@ static NSString *const GuestUserId = @"guest";
 
 @implementation User
 
+static User *_current = nil;
+
 @dynamic firstName;
 @dynamic imageURL;
 @dynamic lastName;
@@ -27,17 +29,23 @@ static NSString *const GuestUserId = @"guest";
 #pragma mark - Constructors
 
 + (instancetype)fetchCurrentUser {
+    // Try to avoid useless fetches
+    if (_current != nil) {
+        NSLog(@"Already got current user: %@", _current);
+        return _current;
+    }
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSURL *uri = [defaults URLForKey:ObjectIdKey];
-    // Check if objectID URI is defined
-    if (uri == nil)
-        return nil;
-    NSLog(@"Fetching user from URI %@", uri);
     NSError *error;
-    User *user = [[PersistentStack sharedInstance]fetchObjectFromURI:uri error:&error];
+    if (uri != nil)
+        _current = [[PersistentStack sharedInstance]fetchObjectFromURI:uri error:&error];
+    else {
+        error = [[NSError alloc] initWithDomain:@"" code:500 userInfo:@{NSLocalizedDescriptionKey: @"No user objectID found in NSUserDefaults"}];
+    }
     
     if (error) {
-        NSLog(@"Error fetching user (%@) from local memory: %@", user, [error localizedDescription]);
+        NSLog(@"Error fetching user (%@) from local memory: %@", uri, [error localizedDescription]);
         
         // Try to fetch last inserted user
         NSManagedObjectContext *context = [PersistentStack sharedInstance].managedObjectContext;
@@ -45,18 +53,16 @@ static NSString *const GuestUserId = @"guest";
         
         if ([users count] > 0) {
             NSLog(@"Returning last found user");
-            return [users lastObject];
-        }
-        
-        // Look for a valid Facebook or Google+ token
-        if ([FBSDKAccessToken currentAccessToken] != nil) {
-            user = [User fetchUserWithUserId:[[FBSDKAccessToken currentAccessToken] userID]];
+            _current = [users lastObject];
+        } else if ([FBSDKAccessToken currentAccessToken] != nil) {
+            // Look for a valid Facebook or Google+ token
+            _current = [User fetchUserWithUserId:[[FBSDKAccessToken currentAccessToken] userID]];
         }
         
         // TODO check for Google+ token
     }
     
-    return user;
+    return _current;
 }
 
 + (instancetype)fetchUserWithUserId:(NSString *)userId {
@@ -77,7 +83,10 @@ static NSString *const GuestUserId = @"guest";
     // Check if guest user already exists
     User *user = [self fetchUserWithUserId:GuestUserId];
     
-    if (user == nil)
+    if (user != nil)
+        // And store its objectID
+        [user storeObjectID];
+    else
         // Create it otherwise
         user = [self insertUserWithUserId:GuestUserId firstName:NSLocalizedString(@"GuestFirstName", nil) lastName:@"" signUpSns:0 imageURL:nil thenSaveIt:save];
     
@@ -99,6 +108,8 @@ static NSString *const GuestUserId = @"guest";
     user.imageURL = image;
     // Store the user objectID for faster retrieval
     [user storeObjectID];
+    // Store inserted user as current user
+    _current = user;
     
     if (save)
         [[PersistentStack sharedInstance] saveContext];
@@ -138,9 +149,13 @@ static NSString *const GuestUserId = @"guest";
 }
 
 - (void)storeObjectID {
+    // Save user objectID to NSUserDefaults for faster retrieval
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setURL:[[self objectID] URIRepresentation] forKey:ObjectIdKey];
     [defaults synchronize];
+    
+    // Try to avoid useless fetches by setting current user
+    _current = self;
 }
 
 @end
