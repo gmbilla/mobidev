@@ -8,17 +8,36 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Storable.h"
 
 
-@interface User : NSManagedObject <Storable>
+@interface User : NSManagedObject
 
-@property (nonatomic, retain) NSString * firstName;
-@property (nonatomic, retain) NSString * imageURL;
-@property (nonatomic, retain) NSString * lastName;
-@property (nonatomic, retain) NSNumber * sns;
-@property (nonatomic, retain) NSString * userId;
+@property (nonatomic, retain) NSString *firstName;
+@property (nonatomic, retain) NSString *imageURL;
+@property (nonatomic, retain) NSString *lastName;
+@property (nonatomic, retain) NSNumber *sns;
+@property (nonatomic, retain) NSString *userId;
 
-- (instancetype)initWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname socialNetworkSite:(int)sns imageURL:(NSString *)image;
+/**
+ * Fetch user from the stored user objectID
+ */
++ (instancetype)fetchCurrentUser;
+/**
+ * Query the SQLite db for a user with given user ID
+ */
++ (instancetype)fetchUserWithUserId:(NSString *)userId;
+/**
+ * Store locally (in SQLite) a new user
+ */
++ (instancetype)insertUserWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname signUpSns:(int)sns imageURL:(NSString *)image thenSaveIt:(BOOL)save;
+/**
+ * Call Facebook GraphAPI to get user info and create a new user. If given, call the block after creating the user callback
+ */
++ (void)createUserFromFacebookProfile:(void (^)(User *))created;
+
+/**
+ * Save the current user objectID
+ */
+- (void)storeObjectID;
 
 @end

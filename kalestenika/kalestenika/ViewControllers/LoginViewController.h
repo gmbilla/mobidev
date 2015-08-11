@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet GPPSignInButton *googlePlusSignInButton;
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 
+- (IBAction)continueAsGuestButtonPressed:(UIButton *)sender;
+
 @end
 

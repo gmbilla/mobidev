@@ -10,9 +10,9 @@
 #import "PersistentStack.h"
 
 
-#define MODEL_RESOURCE  "Kalestenika"
-#define MODEL_EXTENSION "momd"
-#define SQLITE_DB_FILE  "Kalestenika.sqlite"
+static NSString *const ModelResource = @"Kalestenika";
+static NSString *const ModelExtension = @"momd";
+static NSString *const SQLiteDbFile = @"Kalestenika.sqlite";
 
 
 @interface PersistentStack()
@@ -28,8 +28,8 @@
 
 + (instancetype)sharedInstance {
     static PersistentStack *_instance = nil;
-    static dispatch_once_t *predicate;
-    dispatch_once(predicate, ^{
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
         // Alloc a new PersistentStack and initialize CoreData context;
         _instance = [[PersistentStack alloc] init];
         NSLog(@"Setting up managed object context");
@@ -39,19 +39,21 @@
     return _instance;
 }
 
-- (BOOL)insertStorable:(id <Storable>)entity andSave:(BOOL)save {
-    if (![entity conformsToProtocol:@protocol(Storable)]) {
-        NSLog(@"Class %@ doesn't conform to Storable protocol", NSStringFromClass([entity class]));
-        return NO;
-    }
-    
-    NSLog(@"Inserting entity %@", [entity entityName]);
-    NSEntityDescription *description = [self populateDescriptionFromObject:entity];
-    
-    if (save)
-        return description != nil && [self saveContext];
-    else
-        return description != nil;
+- (NSEntityDescription *)entityDescriptionForEntityNamed:(NSString *)name {
+    return [NSEntityDescription entityForName:name inManagedObjectContext:_managedObjectContext];
+}
+
+- (NSArray *)executeFetchRequest:(NSFetchRequest *)request error:(NSError *__autoreleasing *)error {
+    return [_managedObjectContext executeFetchRequest:request error:error];
+}
+
+- (id)fetchObjectFromURI:(NSURL *)uri error:(NSError *__autoreleasing *)error {
+    NSManagedObjectID *moid = [_coordinator managedObjectIDForURIRepresentation:uri];
+    return [_managedObjectContext existingObjectWithID:moid error:error];
+}
+
+- (id)insertNewEntityWithName:(NSString *)name {
+    return [NSEntityDescription insertNewObjectForEntityForName:name inManagedObjectContext:_managedObjectContext];
 }
 
 - (BOOL)saveContext {
@@ -88,11 +90,11 @@
         return _coordinator;
     
     // Init the app managed object model
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@MODEL_RESOURCE withExtension:@MODEL_EXTENSION];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:ModelResource withExtension:ModelExtension];
     NSManagedObjectModel *objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
     // URL of the Core Data store file -- stored in a directory named "com.kalestenika.ios" in the application's documents directory
-    NSURL *sqliteFileURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:@SQLITE_DB_FILE];
+    NSURL *sqliteFileURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:SQLiteDbFile];
     
     
     _coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:objectModel];
@@ -104,19 +106,6 @@
     }
     
     return _coordinator;
-}
-
-- (NSEntityDescription *)populateDescriptionFromObject:(id<Storable>)object {
-    NSEntityDescription *entity = [NSEntityDescription entityForName:[object entityName] inManagedObjectContext:_managedObjectContext];
-
-    SEL selector;
-    for (NSString *attribute in [object entityAttributes]) {
-        selector = NSSelectorFromString([NSString stringWithFormat:@"get%@", [attribute capitalizedString]]);
-        NSLog(@"Performing %@: %@", [NSString stringWithFormat:@"get%@", [attribute capitalizedString]], [object performSelector:selector]);
-        [entity setValue:[object performSelector:selector] forKey:attribute];
-    }
-    
-    return entity;
 }
 
 @end

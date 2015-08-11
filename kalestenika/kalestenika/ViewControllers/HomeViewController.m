@@ -7,12 +7,25 @@
 //
 
 #import "HomeViewController.h"
+#import "User.h"
+
 
 @interface HomeViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation HomeViewController {
+    User *user;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    // Fetch current logged in user if any
+    user = [User fetchCurrentUser];
+    NSLog(@"Current user: %@", user);
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     // Style tab bar
@@ -29,9 +42,11 @@
     }
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)viewDidAppear:(BOOL)animated {
+    if (user == nil) {
+        // User must login, show login modal
+        [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

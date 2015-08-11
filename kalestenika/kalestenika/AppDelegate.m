@@ -34,10 +34,12 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
     // [[UINavigationBar appearance] setBarTintColor:ColorTeal];
     // [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     
-    // Insert test user
-    User *user = [[User alloc] initWithUserId:@"1234" firstName:@"Pippo" lastName:@"Calippo" socialNetworkSite:1 imageURL:@"http://google.com" ];
-    [[PersistentStack sharedInstance] insertStorable:user andSave:YES];
-    
+    // TEST list inserted user
+    NSManagedObjectContext *context = [PersistentStack sharedInstance].managedObjectContext;
+    NSArray *users = [context executeFetchRequest:[NSFetchRequest fetchRequestWithEntityName:@"User"] error:nil];
+    for (User *u in users) {
+        NSLog(@"%@", u);
+    }
     
     // Config Google+ sign in
     GPPSignIn *googlePlusSignIn = [GPPSignIn sharedInstance];
@@ -80,13 +82,12 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
  * Listen for Facebook and Google+ login response
  */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSLog(@"openURL received with url %@, sourceApp %@ and annotation %@", url, sourceApplication, annotation);
-    
+    // Forward to correct callback handler the URL
     if ([[url scheme] isEqualToString:FacebookURLScheme]) {
         return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+                                                              openURL:url
+                                                    sourceApplication:sourceApplication
+                                                           annotation:annotation];
     } else {
         return [GPPURLHandler handleURL:url
                       sourceApplication:sourceApplication

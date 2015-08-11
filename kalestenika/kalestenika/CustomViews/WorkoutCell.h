@@ -10,7 +10,10 @@
 
 @interface WorkoutCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *exerciseNrLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *requirementsScrollView;
+@property (weak, nonatomic) IBOutlet UIView *testRequirementView;
 
 @end

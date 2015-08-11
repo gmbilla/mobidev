@@ -10,4 +10,14 @@
 
 @implementation WorkoutCell
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    NSLog(@"initWithFrame");
+    return [super initWithFrame:frame];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    NSLog(@"initWithCoder");
+    return [super initWithCoder:aDecoder];
+}
+
 @end

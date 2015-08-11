@@ -1,0 +1,42 @@
+
+/* Class = "UIViewController"; title = "History"; ObjectID = "5SS-Jf-PR8"; */
+"5SS-Jf-PR8.title" = "History";
+
+/* Class = "UINavigationItem"; title = "Workout"; ObjectID = "B9y-rm-FY6"; */
+"B9y-rm-FY6.title" = "Workout";
+
+/* Class = "UIViewController"; title = "Login"; ObjectID = "BYZ-38-t0r"; */
+"BYZ-38-t0r.title" = "Login";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "GSa-yY-yQd"; */
+"GSa-yY-yQd.text" = "Name";
+
+/* Class = "UILabel"; text = "kalestenika"; ObjectID = "JXk-RV-WYN"; */
+"JXk-RV-WYN.text" = "kalestenika";
+
+/* Class = "UITabBarItem"; title = "Workout"; ObjectID = "Jhd-vW-Mso"; */
+"Jhd-vW-Mso.title" = "Workout";
+
+/* Class = "UILabel"; text = "# exercise"; ObjectID = "Mcs-cw-Tgs"; */
+"Mcs-cw-Tgs.text" = "# exercise";
+
+/* Class = "UITabBarItem"; title = "Dashboard"; ObjectID = "QEV-vw-Qtz"; */
+"QEV-vw-Qtz.title" = "Dashboard";
+
+/* Class = "UINavigationItem"; title = "Dashboard"; ObjectID = "S9F-Cz-sJu"; */
+"S9F-Cz-sJu.title" = "Dashboard";
+
+/* Class = "UITabBarController"; title = "Home"; ObjectID = "ZD5-nC-oX8"; */
+"ZD5-nC-oX8.title" = "Home";
+
+/* Class = "UIViewController"; title = "Workout"; ObjectID = "dNa-uc-fTu"; */
+"dNa-uc-fTu.title" = "Workout";
+
+/* Class = "UIViewController"; title = "Dashboard"; ObjectID = "h34-Oa-eHE"; */
+"h34-Oa-eHE.title" = "Dashboard";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "nlg-il-43L"; */
+"nlg-il-43L.title" = "History";
+
+/* Class = "UILabel"; text = "Duration"; ObjectID = "zlc-DC-Gtg"; */
+"zlc-DC-Gtg.text" = "Duration";

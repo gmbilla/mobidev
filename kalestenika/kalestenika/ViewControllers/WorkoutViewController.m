@@ -8,6 +8,8 @@
 
 #import "WorkoutViewController.h"
 #import "WorkoutCell.h"
+#import "User.h"
+
 
 static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 
@@ -17,14 +19,18 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 
 @implementation WorkoutViewController {
     NSArray *workouts;
-    
+    User *user;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+ 
+    NSLog(@"WorkoutViewController fetching user");
+    user = [User fetchCurrentUser];
     
-    workouts = @[@"Test 1", @"My strong workout", @"porco dio"];
+    // TODO remove debug stuff
+    workouts = @[@"Test 1", @"My strong workout", @"Corri porco!!"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,6 +41,8 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 #pragma UITableView protocol
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (user == nil)
+        return 0;
     return [workouts count];
 }
 
@@ -62,8 +70,9 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
  */
 - (void)configureBasicCell:(WorkoutCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSString *item = workouts[indexPath.row];
-    [cell.titleLabel setText:item];
-    [cell.subtitleLabel setText:[NSString stringWithFormat:@"Subtitle for cell %lu, with title %@", indexPath.row, item]];
+    [cell.nameLabel setText:item];
+    [cell.durationLabel setText:[NSString stringWithFormat:@"1m : %lus", (indexPath.row * 15) % 60]];
+    [cell.exerciseNrLabel setText:[NSString stringWithFormat:@"%lu", indexPath.row]];
 }
 
 /**
