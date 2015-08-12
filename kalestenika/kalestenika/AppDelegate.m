@@ -30,9 +30,8 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // Tint status bar
-    // [[UINavigationBar appearance] setBarTintColor:ColorTeal];
-    // [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    // Set status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     // TEST list inserted user
     NSManagedObjectContext *context = [PersistentStack sharedInstance].managedObjectContext;

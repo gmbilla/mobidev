@@ -25,12 +25,15 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
- 
-    NSLog(@"WorkoutViewController fetching user");
-    user = [User fetchCurrentUser];
     
     // TODO remove debug stuff
+    NSLog(@"WorkoutVC did LOAD");
     workouts = @[@"Test 1", @"My strong workout", @"Corri porco!!"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"WorkoutViewController fetching user");
+    user = [User fetchCurrentUser];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +44,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 #pragma UITableView protocol
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"Got the user? %@", (user != nil)? @"YAAY!!" : @"nope");
     if (user == nil)
         return 0;
     return [workouts count];
@@ -82,6 +86,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     static WorkoutCell *sizingCell = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        NSLog(@"Getting a test cell to compute the size");
         sizingCell = [self.workoutTableView dequeueReusableCellWithIdentifier:WorkoutCellIdentifier];
     });
     
@@ -97,6 +102,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     [sizingCell layoutIfNeeded];
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    NSLog(@"Computed cell height: %f", size.height);
     return size.height + 1.0f; // Add 1.0f for the cell separator height
 }
 

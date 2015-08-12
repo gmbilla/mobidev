@@ -19,7 +19,7 @@
 
 @implementation LoginViewController
 
-#pragma mark - View lifecycle
+#pragma mark - ViewController lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,6 +31,10 @@
     GPPSignIn *googlePlusSignIn = [GPPSignIn sharedInstance];
     googlePlusSignIn.shouldFetchGooglePlusUser = YES;
     googlePlusSignIn.delegate = self;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)didReceiveMemoryWarning {
