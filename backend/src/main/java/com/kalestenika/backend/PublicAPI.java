@@ -149,6 +149,8 @@ public class PublicAPI {
         e.setDescription(description);
 
         ofy().save().entity(e).now();
+        // Clear Objectify cache
+        ofy().clear();
     }
 
     /**
@@ -167,7 +169,8 @@ public class PublicAPI {
     )
     public void createWorkout(@Named("user") String userId,
                               @Named("name") String name,
-                              @Named("exercises") Record[] exercises)
+                              @Named("exercises") Record[] exercises,
+                              @Named("schedule") boolean[] scheduledOnDays)
             throws ConflictException, NotFoundException {
         // Check if user exists
         if (!userExists(userId))
@@ -179,11 +182,17 @@ public class PublicAPI {
             throw new ConflictException("User already has a workout named '"
                     + name + "'");
 
+        // Check that given schedule is for 7 days
+        if (scheduledOnDays.length != 7)
+            throw new ConflictException(String.format("Schedule expected to " +
+                    "be week based, only %d days given", scheduledOnDays.length));
+
         Workout workout = new Workout();
         workout.setCreatorId(userId);
         workout.setName(name);
         workout.setDateCreated(new Date());
         workout.setExerciseList(Arrays.asList(exercises));
+        workout.setScheduledOnDays(scheduledOnDays);
 
         ofy().save().entity(workout).now();
     }
@@ -252,6 +261,29 @@ public class PublicAPI {
 
             workout.addExercise(r);
         }
+
+        ofy().save().entity(workout).now();
+    }
+
+    @ApiMethod(
+            name = "workout.schedule",
+            path = "workout/{id}/schedule",
+            httpMethod = ApiMethod.HttpMethod.POST
+    )
+    public void setScheduleForWorkout(@Named("user") String userId,
+                                      @Named("id") Long workoutId,
+                                      @Named("schedule") boolean[] days)
+            throws NotFoundException, ForbiddenException {
+        // Check if given workout exists, otherwise raise a 404 error.
+        Workout workout = getWorkout(workoutId);
+        if (workout == null)
+            throw new NotFoundException("Workout " + workoutId + " not found!");
+
+        // Check if user if creator of the workout
+        if (!workout.getCreatorId().equals(userId))
+            throw new ForbiddenException(CANT_TOUCH_THIS);
+
+        workout.setScheduledOnDays(days);
 
         ofy().save().entity(workout).now();
     }

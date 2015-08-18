@@ -27,6 +27,7 @@ public class Workout {
     String name;
     Date dateCreated = null;
     List<Record> exerciseList = new ArrayList<>();
+    boolean[] scheduledOnDays = new boolean[7];
 
     //==========================================================================
     // Helpers
