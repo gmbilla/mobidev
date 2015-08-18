@@ -1,14 +1,11 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.config.Nullable;
+import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.ForbiddenException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.googlecode.objectify.Key;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,9 +18,11 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * <p>Class holding all exposed methods of public API.</p>
  */
 @Api(
-    name = "public",
+    name = "kalestenika",
     version = "v1",
-    scopes = {Constants.EMAIL_SCOPE},
+    scopes = {Constants.EMAIL_SCOPE}
+)
+@ApiClass(
     clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID,
             Constants.IOS_CLIENT_ID},
     audiences = {Constants.ANDROID_AUDIENCE}
@@ -39,7 +38,7 @@ public class PublicAPI {
     /**
      * <p>List all the stored exercise.</p>
      *
-     * @return a list of {@link it.mobidev.backend.data.Exercise}
+     * @return a list of {@link com.kalestenika.backend.data.Exercise}
      */
     @ApiMethod(
         name = "exercise.list",
@@ -54,7 +53,7 @@ public class PublicAPI {
      * <p>Fetch all workout created by the given user.</p>
      *
      * @param userId    ID of the user
-     * @return a list of {@link it.mobidev.backend.data.Workout}, if any has
+     * @return a list of {@link com.kalestenika.backend.data.Workout}, if any has
      * been stored for the given user
      */
     @ApiMethod(
@@ -75,7 +74,7 @@ public class PublicAPI {
      * <p>Fetch all the session stored by the given user.</p>
      *
      * @param userId    ID of the user
-     * @return a list of {@link it.mobidev.backend.data.Session}, if any has
+     * @return a list of {@link com.kalestenika.backend.data.Session}, if any has
      * been stored for the given user
      */
     @ApiMethod(
@@ -400,7 +399,7 @@ public class PublicAPI {
      * given ID.</p>
      *
      * @param userId    user ID
-     * @return a {@link it.mobidev.backend.data.User} instance if exists,
+     * @return a {@link com.kalestenika.backend.data.User} instance if exists,
      * null otherwise
      */
     private User getUser(String userId) {

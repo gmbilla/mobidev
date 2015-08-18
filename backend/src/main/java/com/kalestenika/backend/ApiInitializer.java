@@ -1,7 +1,7 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 import com.googlecode.objectify.ObjectifyService;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

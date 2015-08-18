@@ -1,10 +1,10 @@
-package it.mobidev.backend.data;
+package com.kalestenika.backend.data;
 
 import com.googlecode.objectify.annotation.Subclass;
 
 /**
- * Custom version of an {@link it.mobidev.backend.data.Entry} to represent
- * the pause between two {@link it.mobidev.backend.data.Exercise}.
+ * Custom version of an {@link com.kalestenika.backend.data.Entry} to represent
+ * the pause between two {@link com.kalestenika.backend.data.Exercise}.
  */
 @Subclass(index=true)
 public class Rest extends Entry {

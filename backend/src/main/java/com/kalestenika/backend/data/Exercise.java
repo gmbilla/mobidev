@@ -1,4 +1,4 @@
-package it.mobidev.backend.data;
+package com.kalestenika.backend.data;
 
 import com.googlecode.objectify.annotation.Subclass;
 import lombok.Getter;

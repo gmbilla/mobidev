@@ -1,12 +1,13 @@
-package it.mobidev.backend;
+package com.kalestenika.backend;
 
 import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiClass;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import it.mobidev.backend.data.*;
+import com.kalestenika.backend.data.*;
 
 import java.util.List;
 
@@ -16,17 +17,19 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * <p>Class holding API methods exposed only to admin users.</p>
  */
 @Api(
-    name = "admin",
+    name = "kalestenika",
     version = "v1",
-    scopes = {Constants.EMAIL_SCOPE},
+    scopes = {Constants.EMAIL_SCOPE}
+)
+@ApiClass(
     clientIds = {Constants.WEB_CLIENT_ID}
 )
 public class AdminAPI {
 
     /**
-     * <p>List all registered {@link it.mobidev.backend.data.User}s.</p>
+     * <p>List all registered {@link com.kalestenika.backend.data.User}s.</p>
      *
-     * @return a list of {@link it.mobidev.backend.data.User}
+     * @return a list of {@link com.kalestenika.backend.data.User}
      */
     @ApiMethod(
         name = "user.all",
@@ -43,7 +46,7 @@ public class AdminAPI {
     }
 
     /**
-     * <p>List all registered {@link it.mobidev.backend.data.Workout}s.</p>
+     * <p>List all registered {@link com.kalestenika.backend.data.Workout}s.</p>
      */
     @ApiMethod(
         name = "workout.all",
@@ -60,7 +63,7 @@ public class AdminAPI {
     }
 
     /**
-     * <p>List all registered workout {@link it.mobidev.backend.data.Session}s.
+     * <p>List all registered workout {@link com.kalestenika.backend.data.Session}s.
      * </p>
      */
     @ApiMethod(

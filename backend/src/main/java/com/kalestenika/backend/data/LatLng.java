@@ -1,4 +1,4 @@
-package it.mobidev.backend.data;
+package com.kalestenika.backend.data;
 
 /**
  * Created by gmbilla on 17/07/15.
