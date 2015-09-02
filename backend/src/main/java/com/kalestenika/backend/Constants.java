@@ -17,7 +17,7 @@ public class Constants {
     }
 
     public enum Requirement {
-
+        BARBELL, BAR, ROPE, KETTLEBELL, RINGS, RUNNING
     }
 
 }
