@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -22,19 +20,15 @@ public class Exercise extends Entry {
     @Getter @Setter String description;
     @Getter @Setter String videoURL;
     @Getter @Setter int estDuration;
-    @Getter @Setter List<Constants.Requirement> requirements = new ArrayList<>();
+    @Getter @Setter Constants.Requirement requirement;
 
     public Exercise(String name, String description, String videoURL,
-                    int estDuration, List<Constants.Requirement> requirements) {
+                    int estDuration, Constants.Requirement requirement) {
         this.name = name;
         this.description = description;
         this.videoURL = videoURL;
         this.estDuration = estDuration;
-        this.requirements = requirements;
-    }
-
-    public void addRequirement(Constants.Requirement requirement) {
-        requirements.add(requirement);
+        this.requirement = requirement;
     }
 
 }
