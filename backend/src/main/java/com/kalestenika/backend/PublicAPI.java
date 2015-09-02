@@ -159,7 +159,7 @@ public class PublicAPI {
     public void insertExercise(@Named("name") String name,
                                @Named("description") String description,
                                @Named("video") @Nullable String videoURL,
-                               @Named("duration") @Nullable int estDuration,
+                               @Named("duration") @Nullable Integer estDuration,
                                @Named("requirement") @Nullable
                                    Constants.Requirement requirement)
             throws ConflictException {

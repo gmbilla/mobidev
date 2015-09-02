@@ -19,11 +19,11 @@ public class Exercise extends Entry {
 
     @Getter @Setter String description;
     @Getter @Setter String videoURL;
-    @Getter @Setter int estDuration;
+    @Getter @Setter Integer estDuration;
     @Getter @Setter Constants.Requirement requirement;
 
     public Exercise(String name, String description, String videoURL,
-                    int estDuration, Constants.Requirement requirement) {
+                    Integer estDuration, Constants.Requirement requirement) {
         this.name = name;
         this.description = description;
         this.videoURL = videoURL;
