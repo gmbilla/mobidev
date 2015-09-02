@@ -5,8 +5,6 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * Entity representing a training place signaled by a user
  */
@@ -19,7 +17,8 @@ public class Place {
     @Index String address;
     LatLng position;
     String name;
-    /** Available structures */
-    List<String> structures;
+    // TODO add available facilities (requirements)
+    ///** Available structures */
+    //List<String> structures;
 
 }

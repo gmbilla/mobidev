@@ -50,6 +50,21 @@ public class PublicAPI {
     }
 
     /**
+     * <p>Return a list of all stored places.</p>
+     *
+     * @return all stored places
+     */
+    @ApiMethod(
+        name = "place.list",
+        path = "place/list",
+        httpMethod = ApiMethod.HttpMethod.GET
+    )
+    public List<Place> getAllPlaces() {
+        // TODO filter by current user position
+        return ofy().load().type(Place.class).list();
+    }
+
+    /**
      * <p>Fetch all workout created by the given user.</p>
      *
      * @param userId    ID of the user
@@ -155,6 +170,35 @@ public class PublicAPI {
                 requirement);
 
         ofy().save().entity(e).now();
+        // Clear Objectify cache
+        ofy().clear();
+    }
+
+    /**
+     * <p>Insert a new place</p>
+     *
+     * @param creator    user that created the place
+     * @param address    string representation of the address
+     * @param latLng     {@link com.kalestenika.backend.data.LatLng} location
+     *                                                              the place
+     * @param name       given name
+     */
+    @ApiMethod(
+        name = "place.new",
+        path = "place/new",
+        httpMethod = ApiMethod.HttpMethod.POST
+    )
+    public void insertPlace(@Named("creator") String creator,
+                            @Named("address") String address,
+                            @Named("position") String latLng,
+                            @Named("name") String name) {
+        Place place = new Place();
+        place.setCreator(creator);
+        place.setAddress(address);
+        place.setPosition(LatLng.fromString(latLng));
+        place.setName(name);
+
+        ofy().save().entity(place).now();
         // Clear Objectify cache
         ofy().clear();
     }
