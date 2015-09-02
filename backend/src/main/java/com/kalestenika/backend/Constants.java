@@ -13,7 +13,11 @@ public class Constants {
     public static final String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 
     public enum Rank {
-    VERY_BAD, BAD, NORMAL, GOOD, VERY_GOOD
+        VERY_BAD, BAD, NORMAL, GOOD, VERY_GOOD
+    }
+
+    public enum Requirement {
+
     }
 
 }

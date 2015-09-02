@@ -129,8 +129,12 @@ public class PublicAPI {
 
     /**
      * <p>Create a new exercise.</p>
+     *
      * @param name           exercise name
      * @param description    exercise description
+     * @param videoURL       URL of a video showing the exercise
+     * @param estDuration    the estimated duration of the exercise
+     * @param requirements   list of exercise requirements
      */
     @ApiMethod(
         name = "exercise.new",
@@ -138,14 +142,17 @@ public class PublicAPI {
         httpMethod = ApiMethod.HttpMethod.POST
     )
     public void insertExercise(@Named("name") String name,
-                               @Named("description") String description)
+                               @Named("description") String description,
+                               @Named("video") @Nullable String videoURL,
+                               @Named("duration") @Nullable int estDuration,
+                               @Named("requirements") @Nullable
+                                   Constants.Requirement[] requirements)
             throws ConflictException {
         if (ofy().load().type(Exercise.class).id(name).now() != null)
             throw new ConflictException("Exercise '" + name + "' already exists");
 
-        Exercise e = new Exercise();
-        e.setName(name);
-        e.setDescription(description);
+        Exercise e = new Exercise(name, description, videoURL, estDuration,
+                Arrays.asList(requirements));
 
         ofy().save().entity(e).now();
         // Clear Objectify cache
