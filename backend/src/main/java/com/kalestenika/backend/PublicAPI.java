@@ -129,7 +129,6 @@ public class PublicAPI {
 
     /**
      * <p>Create a new exercise.</p>
-     *
      * @param name           exercise name
      * @param description    exercise description
      */
@@ -141,7 +140,7 @@ public class PublicAPI {
     public void insertExercise(@Named("name") String name,
                                @Named("description") String description)
             throws ConflictException {
-        if (ofy().load().type(Exercise.class).id(name) != null)
+        if (ofy().load().type(Exercise.class).id(name).now() != null)
             throw new ConflictException("Exercise '" + name + "' already exists");
 
         Exercise e = new Exercise();

@@ -17,10 +17,14 @@ public class Exercise extends Entry {
     private static final Logger Log = Logger.getLogger("Exercise");
 
     @Getter @Setter String description;
+    @Getter @Setter String link;
+    @Getter @Setter int estDuration;
 
-    public Exercise(String name, String description) {
+    public Exercise(String name, String description, String link, int estDuration) {
         this.name = name;
         this.description = description;
+        this.link = link;
+        this.estDuration = estDuration;
     }
 
 }
