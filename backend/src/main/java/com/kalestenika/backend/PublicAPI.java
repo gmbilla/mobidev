@@ -210,6 +210,7 @@ public class PublicAPI {
      * @param name         workout name
      * @param exercises    list of workout exercise -- single exercise
      *                     entry must already exists in datastore
+     * @return created workout (with Datastore ID set)
      * @throws ConflictException
      */
     @ApiMethod(
@@ -217,10 +218,10 @@ public class PublicAPI {
         path = "workout/new",
         httpMethod = ApiMethod.HttpMethod.POST
     )
-    public void createWorkout(@Named("user") String userId,
-                              @Named("name") String name,
-                              @Named("exercises") Record[] exercises,
-                              @Named("schedule") boolean[] scheduledOnDays)
+    public Workout createWorkout(@Named("user") String userId,
+                                 @Named("name") String name,
+                                 @Named("exercises") Record[] exercises,
+                                 @Named("schedule") boolean[] scheduledOnDays)
             throws ConflictException, NotFoundException {
         // Check if user exists
         if (!userExists(userId))
@@ -245,6 +246,8 @@ public class PublicAPI {
         workout.setScheduledOnDays(scheduledOnDays);
 
         ofy().save().entity(workout).now();
+
+        return workout;
     }
 
     /**
@@ -252,6 +255,7 @@ public class PublicAPI {
      *
      * @param userId    workout creator ID
      * @param name      workout name
+     * @return created workout (with Datastore ID set)
      * @throws ConflictException
      */
     @ApiMethod(
