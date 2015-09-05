@@ -61,24 +61,18 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Workout *workout = workouts[indexPath.row];
-    NSLog(@"Cell %ld for workout %@", (long)indexPath.row, workout.name);
-    
     WorkoutCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WorkoutCell"];
     
     if (cell == nil) {
         cell = [WorkoutCell new];
     }
-    
-    [cell.nameLabel setText:workout.name];
-    [cell.durationLabel setText:[workout.estimatedDuration stringValue]];
+    [cell populateFromWorkout:workouts[indexPath.row]];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return [self heightForBasicCellAtIndexPath:indexPath];
-    return 188;
+    return [((Workout *)workouts[indexPath.row]).requirements count] > 0 ? 134.0 : 90.0;
 }
 
 #pragma mark Table view editing

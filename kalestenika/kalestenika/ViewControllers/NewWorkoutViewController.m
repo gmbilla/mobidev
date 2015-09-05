@@ -89,6 +89,15 @@
 
 #pragma mark - UITableView delegate
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [recordList count];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
     
@@ -99,7 +108,6 @@
         [cell.textLabel setText:[Constants secondsToString:[record.duration intValue]]];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"ExerciseCell"];
-        NSLog(@"Exercise %@ - hits %@ - duration %@", record.exercise.name, record.hitsPerRep, record.duration);
         [cell.textLabel setText:record.exercise.name];
         NSString *detail = (record.hitsPerRep.intValue > 0 ?
                             [NSString stringWithFormat:@"x%@", [record.hitsPerRep stringValue]] :
@@ -110,12 +118,7 @@
     return cell;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [recordList count];
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Height for %@", ((Record *)recordList[indexPath.row]).exercise);
     if ([((Record *)recordList[indexPath.row]).exercise.name isEqualToString:IdRest])
         return 27.0;
     else
@@ -133,6 +136,39 @@
         return 0.0;
     return 20.0;
 }
+
+#pragma mark - UITableView editing
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+// Override to support editing the table view -- must be there otherwise the actions method isn't working
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [recordList removeObjectAtIndex:indexPath.row];
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self updateFooterRecap];
+    }
+}
+
+//- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+//        [recordList removeObjectAtIndex:indexPath.row];
+//        // Delete the row from the data source
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        
+//        [self updateFooterRecap];
+//    }];
+//    
+//    return @[deleteAction];
+//}
 
 #pragma mark - UIAlertView delegate
 
@@ -155,6 +191,7 @@
     
     Workout *workout = [Workout new];
     workout.name = [self.workoutNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSLog(@"Removing whitespace from string '%@': '%@'", self.workoutNameTextField.text, [self.workoutNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]);
     workout.dateCreated = [NSDate date];
     for (Record *r in recordList)
         r.workout = workout;
@@ -268,8 +305,10 @@
 
 - (void)updateFooterRecap {
     [self updateTotals];
-    footerView.text = [NSString stringWithFormat:@"%d exercise%@, %@", totalExerciseNr, totalExerciseNr > 1 ? @"s" : @"", [Constants secondsToString:totalDuration]];
-    [self.exerciseTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    footerView.text = [NSString stringWithFormat:@"%d exercise%@, ~%@", totalExerciseNr, totalExerciseNr > 1 ? @"s" : @"", [Constants secondsToString:totalDuration]];
+//    [self.exerciseTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    // Scroll 1 point to allow footer refresh
+    [self.exerciseTableView setContentOffset:CGPointMake(0, self.exerciseTableView.contentOffset.y + 1) animated:NO];
 }
 
 - (void)updateTotals {

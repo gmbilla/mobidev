@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WorkoutCell : UITableViewCell
+
+@class Workout;
+
+@interface WorkoutCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *exerciseNrLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView *requirementsScrollView;
-@property (weak, nonatomic) IBOutlet UIView *testRequirementView;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *requirementsCollectionView;
+
+- (void)populateFromWorkout:(Workout *)workout;
 
 @end

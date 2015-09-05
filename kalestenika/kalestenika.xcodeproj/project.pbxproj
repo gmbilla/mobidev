@@ -71,6 +71,12 @@
 		21A83B0D1B6B94440095DFB8 /* chart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A83B0A1B6B94440095DFB8 /* chart@3x.png */; };
 		21A83B0F1B6B9BB70095DFB8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A83B0E1B6B9BB70095DFB8 /* Constants.m */; };
 		21B300AC1B7250A800CB18B6 /* Kalestenika.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21B300AA1B7250A800CB18B6 /* Kalestenika.xcdatamodeld */; };
+		21B82E5D1B9B8FDA004C05B5 /* requirement_running.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E5A1B9B8FDA004C05B5 /* requirement_running.png */; };
+		21B82E5E1B9B8FDA004C05B5 /* requirement_running@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E5B1B9B8FDA004C05B5 /* requirement_running@2x.png */; };
+		21B82E5F1B9B8FDA004C05B5 /* requirement_running@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E5C1B9B8FDA004C05B5 /* requirement_running@3x.png */; };
+		21B82E631B9B914F004C05B5 /* requirement_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E601B9B914F004C05B5 /* requirement_bar.png */; };
+		21B82E641B9B914F004C05B5 /* requirement_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */; };
+		21B82E651B9B914F004C05B5 /* requirement_bar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */; };
 		21B9E78E1B6F5EA40067C4D8 /* WorkoutsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B9E78D1B6F5EA40067C4D8 /* WorkoutsViewController.m */; };
 		21B9E7901B6F93FE0067C4D8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */; };
 		21B9E7921B6F94450067C4D8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */; };
@@ -181,6 +187,12 @@
 		21A83B101B6B9D2D0095DFB8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		21B300AB1B7250A800CB18B6 /* Kalestenika.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kalestenika.xcdatamodel; sourceTree = "<group>"; };
 		21B82E561B9B02B3004C05B5 /* WaitingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingData.h; sourceTree = "<group>"; };
+		21B82E5A1B9B8FDA004C05B5 /* requirement_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_running.png; sourceTree = "<group>"; };
+		21B82E5B1B9B8FDA004C05B5 /* requirement_running@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_running@2x.png"; sourceTree = "<group>"; };
+		21B82E5C1B9B8FDA004C05B5 /* requirement_running@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_running@3x.png"; sourceTree = "<group>"; };
+		21B82E601B9B914F004C05B5 /* requirement_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_bar.png; sourceTree = "<group>"; };
+		21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_bar@2x.png"; sourceTree = "<group>"; };
+		21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_bar@3x.png"; sourceTree = "<group>"; };
 		21B9E78C1B6F5EA40067C4D8 /* WorkoutsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutsViewController.h; sourceTree = "<group>"; };
 		21B9E78D1B6F5EA40067C4D8 /* WorkoutsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsViewController.m; sourceTree = "<group>"; };
 		21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -369,6 +381,7 @@
 		21A83B011B6B926E0095DFB8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				21B82E661B9B9154004C05B5 /* requirements */,
 				21103F6E1B978E0D00273976 /* zzz.png */,
 				21103F6F1B978E0D00273976 /* zzz@2x.png */,
 				21103F701B978E0D00273976 /* zzz@3x.png */,
@@ -429,6 +442,19 @@
 				21103F811B97C04A00273976 /* ApiDelegate.h */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		21B82E661B9B9154004C05B5 /* requirements */ = {
+			isa = PBXGroup;
+			children = (
+				21B82E601B9B914F004C05B5 /* requirement_bar.png */,
+				21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */,
+				21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */,
+				21B82E5A1B9B8FDA004C05B5 /* requirement_running.png */,
+				21B82E5B1B9B8FDA004C05B5 /* requirement_running@2x.png */,
+				21B82E5C1B9B8FDA004C05B5 /* requirement_running@3x.png */,
+			);
+			name = requirements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -513,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21103F551B97467100273976 /* schedule_tab@3x.png in Resources */,
+				21B82E5D1B9B8FDA004C05B5 /* requirement_running.png in Resources */,
 				215156DD1B69298200654CEA /* Main.storyboard in Resources */,
 				21103F581B97467100273976 /* schedule_toolbar@3x.png in Resources */,
 				21103F711B978E0D00273976 /* zzz.png in Resources */,
@@ -520,6 +547,7 @@
 				21103F731B978E0D00273976 /* zzz@3x.png in Resources */,
 				21367DBD1B7B62AC00A9E356 /* places@3x.png in Resources */,
 				215156E21B69298200654CEA /* LaunchScreen.xib in Resources */,
+				21B82E5F1B9B8FDA004C05B5 /* requirement_running@3x.png in Resources */,
 				21103F601B9776CE00273976 /* add@2x.png in Resources */,
 				21367DBC1B7B62AC00A9E356 /* places@2x.png in Resources */,
 				21103F571B97467100273976 /* schedule_toolbar@2x.png in Resources */,
@@ -528,7 +556,9 @@
 				21A83B051B6B92F70095DFB8 /* muscle.png in Resources */,
 				21103F721B978E0D00273976 /* zzz@2x.png in Resources */,
 				21A83B0C1B6B94440095DFB8 /* chart@2x.png in Resources */,
+				21B82E651B9B914F004C05B5 /* requirement_bar@3x.png in Resources */,
 				21367DBB1B7B62AC00A9E356 /* places.png in Resources */,
+				21B82E5E1B9B8FDA004C05B5 /* requirement_running@2x.png in Resources */,
 				21103F541B97467100273976 /* schedule_tab@2x.png in Resources */,
 				21103F611B9776CE00273976 /* add@3x.png in Resources */,
 				21103F531B97467100273976 /* schedule_tab.png in Resources */,
@@ -536,10 +566,12 @@
 				21A83B061B6B92F70095DFB8 /* muscle@2x.png in Resources */,
 				21A83B071B6B92F70095DFB8 /* muscle@3x.png in Resources */,
 				21367DB41B7B5CB100A9E356 /* home@3x.png in Resources */,
+				21B82E631B9B914F004C05B5 /* requirement_bar.png in Resources */,
 				211440BA1B70BD1B00609D60 /* GooglePlus.bundle in Resources */,
 				21A83B0B1B6B94440095DFB8 /* chart.png in Resources */,
 				215156DF1B69298200654CEA /* Images.xcassets in Resources */,
 				21367DB21B7B5CB100A9E356 /* home.png in Resources */,
+				21B82E641B9B914F004C05B5 /* requirement_bar@2x.png in Resources */,
 				21A83B0D1B6B94440095DFB8 /* chart@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
