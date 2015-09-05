@@ -10,4 +10,10 @@
 
 @implementation Constants
 
++ (NSString *)secondsToString:(int)seconds {
+    int min = (int)(seconds / 60);
+    int sec = seconds % 60;
+    return [NSString stringWithFormat:@"%@%@", min > 0 ? [NSString stringWithFormat:@" %dm", min] : @"", sec > 0 ? [NSString stringWithFormat:@" %ds", sec] : @""];
+}
+
 @end

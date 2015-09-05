@@ -13,4 +13,6 @@
 
 @interface Constants : NSObject
 
++ (NSString *)secondsToString:(int)seconds
+
 @end

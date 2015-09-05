@@ -10,7 +10,7 @@
 #import "WaitingData.h"
 
 
-@interface NewWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, WaitingData>
+@interface NewWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, WaitingData>
 
 @property (weak, nonatomic) UIViewController <WaitingData> *origin;
 
@@ -26,5 +26,7 @@
 - (IBAction)scheduleSwitchChanged:(id)sender;
 - (IBAction)scheduleDayButtonPressed:(UIButton *)sender;
 - (IBAction)workoutNameEditingDidBegin:(UITextField *)sender;
+- (IBAction)addExerciseBarButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)addRestBarButtonPressed:(UIBarButtonItem *)sender;
 
 @end

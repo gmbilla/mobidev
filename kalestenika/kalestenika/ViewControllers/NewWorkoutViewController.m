@@ -21,10 +21,12 @@
 
 @implementation NewWorkoutViewController {
     NSMutableArray *recordList;
-    UIButton *footerAddExerciseButton;
+    UILabel *footerView;
+    UIAlertView *addRestAlert;
     float scheduleViewHeightCollapsed, scheduleViewHeightExpanded;
     NSMutableArray *scheduledDays;
     UITapGestureRecognizer *tapGesture;
+    int totalExerciseNr, totalDuration;
 }
 
 - (void)viewDidLoad {
@@ -38,6 +40,7 @@
     // Setup view
     scheduleViewHeightCollapsed = 2.0;
     scheduleViewHeightExpanded = self.separatorViewConstraintHeight.constant;
+    [self setupAddRestAlert];
     [self setupFooterView];
     [self.scheduleSwitch setOn:NO];
     [self collapseScheduleView];
@@ -72,8 +75,7 @@
     [self.exerciseTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.exerciseTableView endUpdates];
     
-    // Scroll of 1 point to force footer view position refresh
-    [self.exerciseTableView setContentOffset:CGPointMake(0, self.exerciseTableView.contentOffset.y + 1) animated:NO];
+    [self updateFooterRecap];
     
     [self enableSaveButton];
 }
@@ -81,6 +83,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Set origin to have back data
     ((AddExerciseViewController *) [segue destinationViewController]).origin = self;
+    // Scroll to bottom to show animation of new records
+    //[self.exerciseTableView setContentOffset:CGPointMake(0, MAXFLOAT) animated:NO];
 }
 
 #pragma mark - UITableView delegate
@@ -92,14 +96,14 @@
     Record *record = recordList[indexPath.row];
     if ([record.exercise.name isEqualToString:IdRest]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"RestCell"];
-        [cell.textLabel setText:[NSString stringWithFormat:@"%@s", [record.duration stringValue]]];
+        [cell.textLabel setText:[Constants secondsToString:[record.duration intValue]]];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"ExerciseCell"];
         NSLog(@"Exercise %@ - hits %@ - duration %@", record.exercise.name, record.hitsPerRep, record.duration);
         [cell.textLabel setText:record.exercise.name];
         NSString *detail = (record.hitsPerRep.intValue > 0 ?
-                            [NSString stringWithFormat:@"%@x", [record.hitsPerRep stringValue]] :
-                            [NSString stringWithFormat:@"%@s", [record.duration stringValue]]);
+                            [NSString stringWithFormat:@"x%@", [record.hitsPerRep stringValue]] :
+                            [Constants secondsToString:[record.duration intValue]]);
         [cell.detailTextLabel setText:detail];
     }
     
@@ -107,7 +111,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"numberOfRowsInSection: %ld", (long)[recordList count]);
     return [recordList count];
 }
 
@@ -120,11 +123,25 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return footerAddExerciseButton;
+    if ([recordList count] == 0)
+        return nil;
+    return footerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 44.0;
+    if ([recordList count] == 0)
+        return 0.0;
+    return 20.0;
+}
+
+#pragma mark - UIAlertView delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        int duration = [[addRestAlert textFieldAtIndex:0].text intValue];
+        NSLog(@"Rest with duration *duration");
+        [self sendBackData:@[[Record createRestRecordWithDuration:duration inWorkout:nil]]];
+    }
 }
 
 #pragma mark - Interface Builder actions
@@ -146,22 +163,15 @@
     workout.creator = [User fetchCurrentUser];
     
     // Compute derivated properties
-    workout.nrOfExercise = [NSNumber numberWithInteger:[recordList count]];
+    workout.nrOfExercise = [NSNumber numberWithInteger:totalExerciseNr];
     // Create a set of requirements from the exercise list
     //  && Compute the extimated total duration
     NSMutableSet *requirementSet = [NSMutableSet new];
-    int totalDuration = 0;
-    for (Record *r in recordList) {
-        NSLog(@"Requirement: %@ - totalDuration: %d", r.exercise.requirement, totalDuration);
+    for (Record *r in recordList)
         if (nil != r.exercise.requirement)
             [requirementSet addObject:r.exercise.requirement];
-        // Add to total duration either the exercise duration or the estimated duration for the number of hits
-        totalDuration += r.hitsPerRep > 0 ? [r.hitsPerRep intValue] * [r.exercise.estimatedDuration intValue] : [r.duration intValue];
-    }
     workout.requirements = [requirementSet allObjects];
-    NSLog(@"Requirement list: %@", [[requirementSet allObjects] componentsJoinedByString:@", "]);
     workout.estimatedDuration = [NSNumber numberWithInt:totalDuration];
-    NSLog(@"Estimated duration: %d", totalDuration);
     
     [workout save];
     // Send back to caller VC the new workout
@@ -187,17 +197,17 @@
     [self.view addGestureRecognizer:tapGesture];
 }
 
-#pragma mark - Private methods
-
-- (void)addExercisePressed:(id)sender {
+- (IBAction)addExerciseBarButtonPressed:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"AddExerciseSegue" sender:self];
 }
 
-- (void)addRestPressed:(id)sender {
+- (IBAction)addRestBarButtonPressed:(UIBarButtonItem *)sender {
     NSLog(@"Add Rest");
     
-//    [self performSegueWithIdentifier:@"AddExerciseSegue" sender:self];
+    [addRestAlert show];
 }
+
+#pragma mark - Private methods
 
 
 - (void)collapseScheduleView {
@@ -230,15 +240,18 @@
         [self.saveButton setEnabled:NO];
 }
 
+- (void)setupAddRestAlert {
+    addRestAlert = [[UIAlertView alloc] initWithTitle:@"Add rest" message:@"Set rest duration (in seconds)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+    addRestAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [[addRestAlert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+}
+
 - (void)setupFooterView {
-    // Create button to add exercise
-    footerAddExerciseButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [footerAddExerciseButton addTarget:self action:@selector(addExercisePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [footerAddExerciseButton setTitle:NSLocalizedString(@"ButtonAddExercise", nil) forState:UIControlStateNormal];
-    [footerAddExerciseButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    // Add left padding to text
-    [footerAddExerciseButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 16.0, 0.0, 0.0)];
-//    footerAddExerciseButton.frame = CGRectOffset(footerAddExerciseButton.frame, 0, 32.0);
+    footerView = [UILabel new];
+    [footerView setFont:[UIFont systemFontOfSize:12.0]];
+    [footerView setBackgroundColor:ColorTeal];
+    [footerView setTextColor:[UIColor whiteColor]];
+    [footerView setTextAlignment:NSTextAlignmentCenter];
 }
 
 - (void)workoutNameChanged:(id)sender {
@@ -251,6 +264,23 @@
     
     // Remove tap gesture
     [self.view removeGestureRecognizer:tapGesture];
+}
+
+- (void)updateFooterRecap {
+    [self updateTotals];
+    footerView.text = [NSString stringWithFormat:@"%d exercise%@, %@", totalExerciseNr, totalExerciseNr > 1 ? @"s" : @"", [Constants secondsToString:totalDuration]];
+    [self.exerciseTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)updateTotals {
+    totalDuration = 0;
+    totalExerciseNr = 0;
+    for (Record *r in recordList) {
+        // Add to total duration either the exercise duration or the estimated duration for the number of hits
+        totalDuration += [r.hitsPerRep intValue] > 0 ? [r.hitsPerRep intValue] * [r.exercise.estimatedDuration intValue] : [r.duration intValue];
+        // Increment count only for exercises, not rests
+        if (![r.exercise.name isEqualToString:IdRest]) totalExerciseNr++;
+    }
 }
 
 @end
