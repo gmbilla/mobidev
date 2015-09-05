@@ -12,7 +12,14 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     NSLog(@"initWithFrame");
-    return [super initWithFrame:frame];
+    
+    self = [super initWithFrame:frame];
+    [self.nameLabel setText:@"nameLabel"];
+    [self.exerciseNrLabel setText:@"exerciseNrLabel"];
+    
+    [self setBackgroundColor:[UIColor purpleColor]];
+    
+    return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

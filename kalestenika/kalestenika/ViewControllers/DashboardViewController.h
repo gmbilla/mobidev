@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController
+@interface DashboardViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *homeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+
+- (IBAction)segmentedControlAction:(UISegmentedControl *)sender;
 
 @end

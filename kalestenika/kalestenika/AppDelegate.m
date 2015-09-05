@@ -12,6 +12,9 @@
 #import "AppDelegate.h"
 #import "PersistentStack.h"
 #import "User.h"
+#import "Exercise.h"
+#import "NSManagedObject+Local.h"
+#import "NSManagedObject+Remote.h"
 
 
 @interface AppDelegate ()
@@ -25,6 +28,35 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
 
 + (void)initialize {
     [FBSDKLoginButton class];
+    
+    // Fetch new exercises
+    // TODO check for modification in exercise
+    [Exercise fetchAsync:^(NSArray *items) {
+        int newExercises = 0;
+        for (NSDictionary *item in items) {
+            if ([Exercise fetchEntityWithFormat:[NSString stringWithFormat:@"name = '%@'", [item valueForKey:KeyName]]] == nil) {
+                // Create new entity to be inserted in local db
+                Exercise *exercise = [Exercise new];
+                [exercise populateFromDictionary:item];
+                newExercises++;
+            }
+        }
+        
+        NSLog(@"Saving %d new exercise(s)", newExercises);
+        [[PersistentStack sharedInstance] saveContext];
+    }];
+    
+    // Check once in app lifetime to have Rest record in db
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults valueForKey:@"init"]) {
+        Exercise *rest = [Exercise new];
+        rest.name = IdRest;
+        [rest save];
+        NSLog(@"Inserting REST record: %@", rest);
+        
+        // Add token for init key
+        [userDefaults setBool:YES forKey:@"init"];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

@@ -52,6 +52,10 @@ static NSString *const SQLiteDbFile = @"Kalestenika.sqlite";
     return [_managedObjectContext existingObjectWithID:moid error:error];
 }
 
+- (id)fetchObjectFromId:(NSManagedObjectID *)objectId error:(NSError *__autoreleasing *)error {
+    return [_managedObjectContext existingObjectWithID:objectId error:error];
+}
+
 - (id)insertNewEntityWithName:(NSString *)name {
     return [NSEntityDescription insertNewObjectForEntityForName:name inManagedObjectContext:_managedObjectContext];
 }
@@ -66,6 +70,10 @@ static NSString *const SQLiteDbFile = @"Kalestenika.sqlite";
     }
     
     return YES;
+}
+
+- (void)undoContext {
+    [_managedObjectContext undo];
 }
 
 # pragma mark - Private methods

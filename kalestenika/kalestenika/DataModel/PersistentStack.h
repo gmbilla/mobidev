@@ -18,7 +18,9 @@
 - (NSEntityDescription *)entityDescriptionForEntityNamed:(NSString *)name;
 - (NSArray *)executeFetchRequest:(NSFetchRequest *)request error:(NSError *__autoreleasing *)error;
 - (id)fetchObjectFromURI:(NSURL *)uri error:(NSError *__autoreleasing *)error;
+- (id)fetchObjectFromId:(NSManagedObjectID *)objectId error:(NSError *__autoreleasing *)error;
 - (id)insertNewEntityWithName:(NSString *)name;
 - (BOOL)saveContext;
+- (void)undoContext;
 
 @end

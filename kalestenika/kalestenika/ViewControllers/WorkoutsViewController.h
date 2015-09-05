@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WaitingData.h"
 
 
-@interface WorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WorkoutsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, WaitingData>
 
 @property (weak, nonatomic) IBOutlet UITableView *workoutTableView;
+@property (weak, nonatomic) IBOutlet UIView *emptyView;
 
 @end

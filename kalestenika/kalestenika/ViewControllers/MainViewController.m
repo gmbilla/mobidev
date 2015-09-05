@@ -24,18 +24,15 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // Style tab bar
-    NSLog(@"tabBarItem: %@", self.tabBarItem.title);
-    
-    NSLog(@"tabBar tint color: %@", self.tabBar.tintColor);
+    // Set UITabBar tint color to orange
     self.tabBar.tintColor = [UIColor orangeColor];
     
-    UIImage *selectedImage = self.tabBar.selectedItem.image;
-    self.tabBar.selectedItem.image = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIImage *selectedImage = self.tabBar.selectedItem.image;
+//    self.tabBar.selectedItem.image = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    for (UITabBarItem *item in self.tabBar.items) {
-        NSLog(@"%@: %@", item.title, item.image);
-    }
+//    for (UITabBarItem *item in self.tabBar.items) {
+//        NSLog(@"%@: %@", item.title, item.image);
+//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -25,6 +25,7 @@ static User *_current = nil;
 @dynamic lastName;
 @dynamic sns;
 @dynamic userId;
+@dynamic workoutList;
 
 #pragma mark - Constructors
 
@@ -39,9 +40,9 @@ static User *_current = nil;
     NSURL *uri = [defaults URLForKey:ObjectIdKey];
     NSError *error;
     if (uri != nil)
-        _current = [[PersistentStack sharedInstance]fetchObjectFromURI:uri error:&error];
+        _current = [[PersistentStack sharedInstance] fetchObjectFromURI:uri error:&error];
     else {
-        error = [[NSError alloc] initWithDomain:@"" code:500 userInfo:@{NSLocalizedDescriptionKey: @"No user objectID found in NSUserDefaults"}];
+        error = [[NSError alloc] initWithDomain:@"kalestenika" code:500 userInfo:@{NSLocalizedDescriptionKey: @"No user objectID found in NSUserDefaults"}];
     }
     
     if (error) {
@@ -88,12 +89,12 @@ static User *_current = nil;
         [user storeObjectID];
     else
         // Create it otherwise
-        user = [self insertUserWithUserId:GuestUserId firstName:NSLocalizedString(@"GuestFirstName", nil) lastName:@"" signUpSns:0 imageURL:nil thenSaveIt:save];
+        user = [self insertUserWithUserId:GuestUserId firstName:NSLocalizedString(@"GuestFirstName", nil) lastName:@"" signUpSns:none imageURL:nil thenSaveIt:save];
     
     return user;
 }
 
-+ (instancetype)insertUserWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname signUpSns:(int)sns imageURL:(NSString *)image thenSaveIt:(BOOL)save {
++ (instancetype)insertUserWithUserId:(NSString *)userId firstName:(NSString *)fname lastName:(NSString *)lname signUpSns:(SNS)sns imageURL:(NSString *)image thenSaveIt:(BOOL)save {
     // Check if given user ID was already saved, and use it if so
     User *user = [self fetchUserWithUserId:userId];
     
@@ -131,7 +132,7 @@ static User *_current = nil;
                  NSLog(@"[DEBUG] Fetched stuff:%@", result);
                  
                  // Save logged in user
-                 User *user = [User insertUserWithUserId:result[@"id"] firstName:result[@"first_name"] lastName:result[@"last_name"] signUpSns:1 imageURL:result[@"picture"][@"data"][@"url"] thenSaveIt:YES];
+                 User *user = [User insertUserWithUserId:result[@"id"] firstName:result[@"first_name"] lastName:result[@"last_name"] signUpSns:facebook imageURL:result[@"picture"][@"data"][@"url"] thenSaveIt:YES];
                  
                  NSLog(@"[DEBUG] Saving user to disk: %@", user);
                  

@@ -1,18 +1,18 @@
 //
-//  HomeViewController.m
+//  PlacesViewController.m
 //  kalestenika
 //
-//  Created by Gian Marco Sibilla on 12/08/15.
+//  Created by Gian Marco Sibilla on 01/09/15.
 //  Copyright (c) 2015 Gian Marco Sibilla. All rights reserved.
 //
 
-#import "HomeViewController.h"
+#import "PlacesViewController.h"
 
-@interface HomeViewController ()
+@interface PlacesViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation PlacesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
