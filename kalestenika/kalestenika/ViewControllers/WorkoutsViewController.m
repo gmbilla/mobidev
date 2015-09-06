@@ -8,6 +8,7 @@
 
 #import "WorkoutsViewController.h"
 #import "NewWorkoutViewController.h"
+#import "WorkoutDetailViewController.h"
 #import "WorkoutCell.h"
 #import "User.h"
 #import "Workout.h"
@@ -24,6 +25,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     NSMutableArray *workouts;
     UILongPressGestureRecognizer *longPressGestureRecognizer;
     UITapGestureRecognizer *tapGestureRecognizer;
+    Workout *selectedWorkout;
 }
 
 - (void)viewDidLoad {
@@ -73,6 +75,11 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [((Workout *)workouts[indexPath.row]).requirements count] > 0 ? 134.0 : 90.0;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    selectedWorkout = workouts[indexPath.row];
+    [self performSegueWithIdentifier:@"WorkoutDetail" sender:self];
 }
 
 #pragma mark Table view editing
@@ -157,8 +164,12 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Set origin to have back data
-    ((NewWorkoutViewController *)[[segue destinationViewController] topViewController]).origin = self;
+    if ([segue.identifier isEqualToString:@"AddWorkout"])
+        // Set origin to have back data
+        ((NewWorkoutViewController *)[[segue destinationViewController] topViewController]).origin = self;
+    else if ([segue.identifier isEqualToString:@"WorkoutDetail"])
+        ((WorkoutDetailViewController *)[segue destinationViewController]).workout = selectedWorkout;
+        
 }
 
 #pragma mark - Private methods

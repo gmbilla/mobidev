@@ -77,6 +77,17 @@
 		21B82E631B9B914F004C05B5 /* requirement_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E601B9B914F004C05B5 /* requirement_bar.png */; };
 		21B82E641B9B914F004C05B5 /* requirement_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */; };
 		21B82E651B9B914F004C05B5 /* requirement_bar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */; };
+		21B82E701B9B9C11004C05B5 /* requirement_kettlebell.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E671B9B9C11004C05B5 /* requirement_kettlebell.png */; };
+		21B82E711B9B9C11004C05B5 /* requirement_kettlebell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E681B9B9C11004C05B5 /* requirement_kettlebell@2x.png */; };
+		21B82E721B9B9C11004C05B5 /* requirement_kettlebell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E691B9B9C11004C05B5 /* requirement_kettlebell@3x.png */; };
+		21B82E731B9B9C11004C05B5 /* requirement_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6A1B9B9C11004C05B5 /* requirement_rings.png */; };
+		21B82E741B9B9C11004C05B5 /* requirement_rings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6B1B9B9C11004C05B5 /* requirement_rings@2x.png */; };
+		21B82E751B9B9C11004C05B5 /* requirement_rings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6C1B9B9C11004C05B5 /* requirement_rings@3x.png */; };
+		21B82E761B9B9C11004C05B5 /* requirement_rope.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6D1B9B9C11004C05B5 /* requirement_rope.png */; };
+		21B82E771B9B9C11004C05B5 /* requirement_rope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6E1B9B9C11004C05B5 /* requirement_rope@2x.png */; };
+		21B82E781B9B9C11004C05B5 /* requirement_rope@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B82E6F1B9B9C11004C05B5 /* requirement_rope@3x.png */; };
+		21B82E7B1B9BA149004C05B5 /* WorkoutDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B82E7A1B9BA149004C05B5 /* WorkoutDetailViewController.m */; };
+		21B82E7E1B9BC686004C05B5 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B82E7D1B9BC686004C05B5 /* SessionViewController.m */; };
 		21B9E78E1B6F5EA40067C4D8 /* WorkoutsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B9E78D1B6F5EA40067C4D8 /* WorkoutsViewController.m */; };
 		21B9E7901B6F93FE0067C4D8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */; };
 		21B9E7921B6F94450067C4D8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */; };
@@ -193,6 +204,19 @@
 		21B82E601B9B914F004C05B5 /* requirement_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_bar.png; sourceTree = "<group>"; };
 		21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_bar@2x.png"; sourceTree = "<group>"; };
 		21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_bar@3x.png"; sourceTree = "<group>"; };
+		21B82E671B9B9C11004C05B5 /* requirement_kettlebell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_kettlebell.png; sourceTree = "<group>"; };
+		21B82E681B9B9C11004C05B5 /* requirement_kettlebell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_kettlebell@2x.png"; sourceTree = "<group>"; };
+		21B82E691B9B9C11004C05B5 /* requirement_kettlebell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_kettlebell@3x.png"; sourceTree = "<group>"; };
+		21B82E6A1B9B9C11004C05B5 /* requirement_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_rings.png; sourceTree = "<group>"; };
+		21B82E6B1B9B9C11004C05B5 /* requirement_rings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_rings@2x.png"; sourceTree = "<group>"; };
+		21B82E6C1B9B9C11004C05B5 /* requirement_rings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_rings@3x.png"; sourceTree = "<group>"; };
+		21B82E6D1B9B9C11004C05B5 /* requirement_rope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = requirement_rope.png; sourceTree = "<group>"; };
+		21B82E6E1B9B9C11004C05B5 /* requirement_rope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_rope@2x.png"; sourceTree = "<group>"; };
+		21B82E6F1B9B9C11004C05B5 /* requirement_rope@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requirement_rope@3x.png"; sourceTree = "<group>"; };
+		21B82E791B9BA149004C05B5 /* WorkoutDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutDetailViewController.h; sourceTree = "<group>"; };
+		21B82E7A1B9BA149004C05B5 /* WorkoutDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutDetailViewController.m; sourceTree = "<group>"; };
+		21B82E7C1B9BC686004C05B5 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionViewController.h; sourceTree = "<group>"; };
+		21B82E7D1B9BC686004C05B5 /* SessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
 		21B9E78C1B6F5EA40067C4D8 /* WorkoutsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutsViewController.h; sourceTree = "<group>"; };
 		21B9E78D1B6F5EA40067C4D8 /* WorkoutsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsViewController.m; sourceTree = "<group>"; };
 		21B9E78F1B6F93FE0067C4D8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -245,6 +269,8 @@
 				21103F5A1B975A6100273976 /* NewWorkoutViewController.m */,
 				21103F781B97AC4B00273976 /* AddExerciseViewController.h */,
 				21103F791B97AC4B00273976 /* AddExerciseViewController.m */,
+				21B82E791B9BA149004C05B5 /* WorkoutDetailViewController.h */,
+				21B82E7A1B9BA149004C05B5 /* WorkoutDetailViewController.m */,
 			);
 			name = Workout;
 			sourceTree = "<group>";
@@ -366,6 +392,8 @@
 				21A83AFE1B6B6A070095DFB8 /* LoginViewController.h */,
 				21A83AFF1B6B6A070095DFB8 /* LoginViewController.m */,
 				21103F771B97AC0F00273976 /* Workout */,
+				21B82E7C1B9BC686004C05B5 /* SessionViewController.h */,
+				21B82E7D1B9BC686004C05B5 /* SessionViewController.m */,
 				21367DAC1B7B406E00A9E356 /* DashboardViewController.h */,
 				21367DAD1B7B406E00A9E356 /* DashboardViewController.m */,
 				21491F921B78F140006A7FBE /* DashboardTabs */,
@@ -447,6 +475,15 @@
 		21B82E661B9B9154004C05B5 /* requirements */ = {
 			isa = PBXGroup;
 			children = (
+				21B82E671B9B9C11004C05B5 /* requirement_kettlebell.png */,
+				21B82E681B9B9C11004C05B5 /* requirement_kettlebell@2x.png */,
+				21B82E691B9B9C11004C05B5 /* requirement_kettlebell@3x.png */,
+				21B82E6A1B9B9C11004C05B5 /* requirement_rings.png */,
+				21B82E6B1B9B9C11004C05B5 /* requirement_rings@2x.png */,
+				21B82E6C1B9B9C11004C05B5 /* requirement_rings@3x.png */,
+				21B82E6D1B9B9C11004C05B5 /* requirement_rope.png */,
+				21B82E6E1B9B9C11004C05B5 /* requirement_rope@2x.png */,
+				21B82E6F1B9B9C11004C05B5 /* requirement_rope@3x.png */,
 				21B82E601B9B914F004C05B5 /* requirement_bar.png */,
 				21B82E611B9B914F004C05B5 /* requirement_bar@2x.png */,
 				21B82E621B9B914F004C05B5 /* requirement_bar@3x.png */,
@@ -538,12 +575,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B82E741B9B9C11004C05B5 /* requirement_rings@2x.png in Resources */,
 				21103F551B97467100273976 /* schedule_tab@3x.png in Resources */,
 				21B82E5D1B9B8FDA004C05B5 /* requirement_running.png in Resources */,
 				215156DD1B69298200654CEA /* Main.storyboard in Resources */,
 				21103F581B97467100273976 /* schedule_toolbar@3x.png in Resources */,
 				21103F711B978E0D00273976 /* zzz.png in Resources */,
 				21103F5F1B9776CE00273976 /* add.png in Resources */,
+				21B82E771B9B9C11004C05B5 /* requirement_rope@2x.png in Resources */,
+				21B82E761B9B9C11004C05B5 /* requirement_rope.png in Resources */,
 				21103F731B978E0D00273976 /* zzz@3x.png in Resources */,
 				21367DBD1B7B62AC00A9E356 /* places@3x.png in Resources */,
 				215156E21B69298200654CEA /* LaunchScreen.xib in Resources */,
@@ -551,6 +591,7 @@
 				21103F601B9776CE00273976 /* add@2x.png in Resources */,
 				21367DBC1B7B62AC00A9E356 /* places@2x.png in Resources */,
 				21103F571B97467100273976 /* schedule_toolbar@2x.png in Resources */,
+				21B82E731B9B9C11004C05B5 /* requirement_rings.png in Resources */,
 				21103F561B97467100273976 /* schedule_toolbar.png in Resources */,
 				21491FA01B7960B6006A7FBE /* Localizable.strings in Resources */,
 				21A83B051B6B92F70095DFB8 /* muscle.png in Resources */,
@@ -559,20 +600,25 @@
 				21B82E651B9B914F004C05B5 /* requirement_bar@3x.png in Resources */,
 				21367DBB1B7B62AC00A9E356 /* places.png in Resources */,
 				21B82E5E1B9B8FDA004C05B5 /* requirement_running@2x.png in Resources */,
+				21B82E701B9B9C11004C05B5 /* requirement_kettlebell.png in Resources */,
 				21103F541B97467100273976 /* schedule_tab@2x.png in Resources */,
+				21B82E781B9B9C11004C05B5 /* requirement_rope@3x.png in Resources */,
 				21103F611B9776CE00273976 /* add@3x.png in Resources */,
 				21103F531B97467100273976 /* schedule_tab.png in Resources */,
+				21B82E751B9B9C11004C05B5 /* requirement_rings@3x.png in Resources */,
 				21367DB31B7B5CB100A9E356 /* home@2x.png in Resources */,
 				21A83B061B6B92F70095DFB8 /* muscle@2x.png in Resources */,
 				21A83B071B6B92F70095DFB8 /* muscle@3x.png in Resources */,
 				21367DB41B7B5CB100A9E356 /* home@3x.png in Resources */,
 				21B82E631B9B914F004C05B5 /* requirement_bar.png in Resources */,
+				21B82E711B9B9C11004C05B5 /* requirement_kettlebell@2x.png in Resources */,
 				211440BA1B70BD1B00609D60 /* GooglePlus.bundle in Resources */,
 				21A83B0B1B6B94440095DFB8 /* chart.png in Resources */,
 				215156DF1B69298200654CEA /* Images.xcassets in Resources */,
 				21367DB21B7B5CB100A9E356 /* home.png in Resources */,
 				21B82E641B9B914F004C05B5 /* requirement_bar@2x.png in Resources */,
 				21A83B0D1B6B94440095DFB8 /* chart@3x.png in Resources */,
+				21B82E721B9B9C11004C05B5 /* requirement_kettlebell@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,7 +645,9 @@
 				21103F401B96092D00273976 /* ProgressViewController.m in Sources */,
 				21103F431B960BBD00273976 /* HistoryViewController.m in Sources */,
 				215156D41B69298200654CEA /* main.m in Sources */,
+				21B82E7B1B9BA149004C05B5 /* WorkoutDetailViewController.m in Sources */,
 				21A1A96B1B9905AC00F34BDE /* Record.m in Sources */,
+				21B82E7E1B9BC686004C05B5 /* SessionViewController.m in Sources */,
 				21B9E78E1B6F5EA40067C4D8 /* WorkoutsViewController.m in Sources */,
 				21A83AFD1B6B69C60095DFB8 /* MainViewController.m in Sources */,
 				21103F3A1B95F63700273976 /* ScheduleViewController.m in Sources */,

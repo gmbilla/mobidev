@@ -18,7 +18,7 @@
 - (void)populateFromWorkout:(Workout *)workout {
     self.nameLabel.text = workout.name;
     self.exerciseNrLabel.text = [NSString stringWithFormat:@"%@ exercises", workout.nrOfExercise.stringValue];
-    self.durationLabel.text = [Constants secondsToString:workout.estimatedDuration.intValue];
+    self.durationLabel.text = [NSString stringWithFormat:@"~%@", [Constants secondsToString:workout.estimatedDuration.intValue]];
     
     requirements = workout.requirements;
     if ([requirements count] == 0) {
