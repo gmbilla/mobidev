@@ -350,6 +350,8 @@ public class PublicAPI {
      * @param when         when the session was taken -- new Date() if null
      * @param where        where the session has been taken -- may be null
      * @param userVote     user rank for the session -- may be null
+     * @param duration     duration of the session
+     * @param completion   completion of completion of the workout
      * @throws NotFoundException
      */
     @ApiMethod(
@@ -361,7 +363,9 @@ public class PublicAPI {
                                 @Named("workout") Long workoutId,
                                 @Named("date") @Nullable Date when,
                                 @Named("place") @Nullable Long where,
-                                @Named("vote") @Nullable Constants.Rank userVote)
+                                @Named("vote") @Nullable Constants.Rank userVote,
+                                Integer duration,
+                                Integer completion)
             throws NotFoundException {
         // Check if user exists
         if (!userExists(userId))
@@ -385,6 +389,8 @@ public class PublicAPI {
 
         session.setWhere(where);
         session.setVote(userVote);
+        session.setDuration(duration);
+        session.setCompletion(completion);
 
         ofy().save().entity(session).now();
 

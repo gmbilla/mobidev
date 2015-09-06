@@ -36,5 +36,13 @@ public class Session {
      * Vote given by the user on her session performances.
      */
     Rank vote;
+    /**
+     * Duration of session
+     */
+    Integer duration;
+    /**
+     * Percentage of completion
+     */
+    Integer completion;
 
 }
