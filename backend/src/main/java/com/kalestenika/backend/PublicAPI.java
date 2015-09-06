@@ -364,8 +364,8 @@ public class PublicAPI {
                                 @Named("date") @Nullable Date when,
                                 @Named("place") @Nullable Long where,
                                 @Named("vote") @Nullable Constants.Rank userVote,
-                                Integer duration,
-                                Integer completion)
+                                @Named("duration") @Nullable Integer duration,
+                                @Named("percentage") @Nullable Integer completion)
             throws NotFoundException {
         // Check if user exists
         if (!userExists(userId))
