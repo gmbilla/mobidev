@@ -8,6 +8,7 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "User.h"
+#import "Session.h"
 #import "PersistentStack.h"
 
 
@@ -26,6 +27,7 @@ static User *_current = nil;
 @dynamic sns;
 @dynamic userId;
 @dynamic workoutList;
+@dynamic sessionList;
 
 #pragma mark - Constructors
 

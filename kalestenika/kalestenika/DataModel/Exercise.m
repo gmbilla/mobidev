@@ -18,10 +18,10 @@
 @dynamic estimatedDuration;
 
 - (void)populateFromDictionary:(NSDictionary *)dictionary {
-    self.name = [dictionary valueForKey:@"name"];
-    self.exerciseDescription = [dictionary valueForKey:@"description"];
-    self.requirement = [dictionary valueForKey:@"requirement"];
-    self.estimatedDuration = [dictionary valueForKey:@"estDuration"];
+    self.name = [dictionary valueForKey:kExerciseName];
+    self.exerciseDescription = [dictionary valueForKey:kExerciseDescription];
+    self.requirement = [dictionary valueForKey:kExerciseRequirement];
+    self.estimatedDuration = [dictionary valueForKey:kExerciseEstimatedDuration];
     
 //    NSLog(@"New values:\n\tname: %@\n\tdescription: %@\n\trequirement: %@\n\testDur: %@", self.name, self.exerciseDescription, self.requirement, self.estimatedDuration);
 }

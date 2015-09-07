@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@class Record, User;
+@class Record, Session, User;
 
 @interface Workout : NSManagedObject
 
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) id schedule;
 @property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) NSOrderedSet *exerciseList;
+@property (nonatomic, retain) NSSet *sessionList;
 
 @end
 
@@ -37,6 +38,10 @@
 - (void)removeExerciseListObject:(Record *)value;
 - (void)addExerciseList:(NSOrderedSet *)values;
 - (void)removeExerciseList:(NSOrderedSet *)values;
+- (void)addSessionListObject:(Session *)value;
+- (void)removeSessionListObject:(Session *)value;
+- (void)addSessionList:(NSSet *)values;
+- (void)removeSessionList:(NSSet *)values;
 
 @end
 

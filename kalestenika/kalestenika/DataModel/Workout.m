@@ -7,6 +7,8 @@
 //
 
 #import "Workout.h"
+#import "Record.h"
+#import "Session.h"
 #import "User.h"
 
 
@@ -20,6 +22,7 @@
 @dynamic schedule;
 @dynamic creator;
 @dynamic exerciseList;
+@dynamic sessionList;
 
 @end
 

@@ -7,16 +7,28 @@
 //
 
 #import "SessionViewController.h"
+#import "SaveSessionViewController.h"
 #import "Constants.h"
 #import "Workout.h"
+#import "Session.h"
 #import "Record.h"
+#import "User.h"
+#import "NSManagedObject+Local.h"
 
+
+@class Exercise;
+
+static NSString *const kExerciseDuration = @"duration";
 
 @implementation SessionViewController {
+    Session *session;
     NSMutableArray *doneExercise, *upcomingExercise;
     Record *currentExercise;
     UIColor *doneBackgroundColor, *currentBackgroundColor, *upcomingBackgroundColor;
     UIFont *doneFont, *currentFont, *upcomingFont;
+    NSTimer *workoutTimer;
+    int currentExerciseDuration, currentExerciseHits, totalDuration;
+    BOOL started, playing;
 }
 
 - (void)viewDidLoad {
@@ -35,30 +47,64 @@
     upcomingExercise = [NSMutableArray arrayWithArray:[self.workout.exerciseList array]];
     currentExercise = [upcomingExercise objectAtIndex:0];
     [upcomingExercise removeObjectAtIndex:0];
+    started = NO;
+    playing = NO;
+    [self.nextExerciseBarButton setEnabled:NO];
     
     // Setup view
     [self.workoutNameLabel setText:self.workout.name];
-    [self updateTimer];
+}
 
-    NSLog(@"SessionViewController viewDidLoad");
+- (void)viewDidAppear:(BOOL)animated {
+    if (playing)
+        [self play];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // If the session is ongoing, pause it and post a notification to get back to it
+    if (playing) {
+        [self pause];
+        
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.fireDate = [NSDate date];
+        notification.alertBody = [NSString stringWithFormat:@"%@ %@ remaining", currentExercise.exercise.name, (currentExerciseDuration > 0 ? [NSString stringWithFormat:@"%d sec", currentExerciseDuration] : currentExercise.hitsPerRep)];
+        notification.alertTitle = self.workout.name;
+        notification.alertAction = @"get back to work!";
+        
+        // Post notification
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:SaveSessionSegueId])
+        ((SaveSessionViewController *) segue.destinationViewController).session = session;
 }
 
 #pragma mark - Interface Builder actions
 
 - (IBAction)playPauseBarButtonPressed:(UIBarButtonItem *)sender {
+    if (playing)
+        [self pause];
+    else
+        [self play];
 }
 
 - (IBAction)nextBarButtonPressed:(UIBarButtonItem *)sender {
-    if (![self nextExercise]) {
-        NSLog(@"END!!");
-        [self animateDone];
-    } else {
-        [self updateTimer];
-    }
+    [self nextExercise];
 }
 
 - (IBAction)stopBarButtonPressed:(UIBarButtonItem *)sender {
-    [[[UIAlertView alloc] initWithTitle:@"Stop" message:@"Are you sure you wanna stop the session? All you progress will be lost." delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Yes", nil] show];
+    if (!started) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
+    // Pause workout and ask user what to do
+    [self pause];
+    [[[UIAlertView alloc] initWithTitle:@"Stop" message:[NSString stringWithFormat:@"Are you sure you wanna stop the session? Current progress %d%%.", [self completionPercentage]] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Yes", @"Discard session", nil] show];
 }
 
 #pragma mark - UITableView data source
@@ -168,20 +214,31 @@
 #pragma mark - UIAlertViewDelegate
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (1 == buttonIndex)
+    if (0 == buttonIndex) {
+        // Nope, keep working!
+        [self play];
+    } else if (1 == buttonIndex) {
+        // Stop session, save progress
+        [self workoutDone];
+    } else if (2 == buttonIndex) {
+        // Discard session
         [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Private methods
 
-- (void)animateDone {
-    CGRect frame = CGRectMake(self.exerciseTableView.frame.origin.x, self.exerciseTableView.frame.size.height, self.exerciseTableView.frame.size.width, 0);
+/**
+ * According to the missing exercises return an estimation of the completion percentage of the workout
+ */
+- (int)completionPercentage {
+    // Check if workout is complete
+    if ([self isWorkoutComplete])
+        return 100;
     
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        // Collapse exercise List
-        self.exerciseTableView.frame = frame;
-        self.exerciseTableView.alpha = 0.0;
-    } completion:nil];
+    int percentage = totalDuration * 100 / self.workout.estimatedDuration.intValue;
+    // TODO consider number of exercise for a better estimation
+    return percentage < 100 ? percentage : 100;
 }
 
 - (UILabel *)createHeaderLabelWithText:(NSString *)text {
@@ -196,40 +253,141 @@
     return headerLabel;
 }
 
-- (BOOL)nextExercise {
-    if ([upcomingExercise count] == 0)
-        return NO;
+- (BOOL)isWorkoutComplete {
+    // Check if there are any more exercise and if current was completed
+    return [upcomingExercise count] == 0 && currentExercise == nil;
+}
+
+- (void)nextExercise {
+    if ([upcomingExercise count] == 0) {
+        currentExercise = nil;
+        currentExerciseDuration = -1;
+        currentExerciseHits = -1;
+        [self workoutDone];
+        return;
+    }
     
     Record *new = [upcomingExercise objectAtIndex:0];
     [upcomingExercise removeObjectAtIndex:0];
     [doneExercise addObject:currentExercise];
     currentExercise = new;
     
+    if (0 != currentExercise.hitsPerRep.intValue) {
+        currentExerciseDuration = -1;
+        currentExerciseHits = currentExercise.hitsPerRep.intValue;
+    } else {
+        currentExerciseDuration = currentExercise.duration.intValue;
+        currentExerciseHits = -1;
+    }
+    
     [self.exerciseTableView reloadData];
     
     [self.exerciseTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     
-    return YES;
+    NSLog(@"going to next exercise");
+    [self updateView];
 }
 
-- (void)updateTimer {
-    if (0 != currentExercise.hitsPerRep.intValue) {
-        [self.timerColonLabel setHidden:YES];
-        [self.timerSecondLabel setText:@"x"];
-        [self.timerMinuteLabel setText:currentExercise.hitsPerRep.stringValue];
-    } else {
-        [self.timerColonLabel setHidden:NO];
-        int duration = currentExercise.duration.intValue;
-        if (duration > 60)
-            [self.timerMinuteLabel setText:[self addLeadingZero:duration / 60]];
+- (void)pause {
+    NSLog(@"PAUSE");
+    playing = NO;
+    // Stops timer
+    [workoutTimer invalidate];
+    // Update toolbar icon
+    self.playPauseBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPauseBarButtonPressed:)];
+}
+
+- (void)play {
+    NSLog(@"PLAY");
+    // Only the first time set the session started
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        started = YES;
+        
+        if (0 != currentExercise.hitsPerRep.intValue) {
+            currentExerciseDuration = -1;
+            currentExerciseHits = currentExercise.hitsPerRep.intValue;
+        } else {
+            currentExerciseDuration = currentExercise.duration.intValue;
+            currentExerciseHits = -1;
+        }
+    });
+    
+    // Start workout
+    playing = YES;
+    [self updateView];
+    // Start timer
+    workoutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                    target:self
+                                                  selector:@selector(timerTriggered:)
+                                                  userInfo:nil
+                                                   repeats:YES];
+    // Update toolbar icon
+    self.playPauseBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(playPauseBarButtonPressed:)];
+}
+
+- (void)timerTriggered:(NSTimer*)timer {
+    // Check if countdown terminated
+    if (currentExerciseDuration == 0) {
+        NSLog(@"Countdown for exercise finished");
+        [self nextExercise];
+    } else if (currentExerciseDuration > 0) {
+        // Update duration
+        currentExerciseDuration--;
+        NSLog(@"countdown: %d", currentExerciseDuration);
+        
+        // Update view
+        if (currentExerciseDuration > 60)
+            [self.timerMinuteLabel setText:[Constants addLeadingZero:currentExerciseDuration / 60]];
         else
             [self.timerMinuteLabel setText:@"00"];
-        [self.timerSecondLabel setText:[self addLeadingZero:duration % 60]];
+        [self.timerSecondLabel setText:[Constants addLeadingZero:currentExerciseDuration % 60]];
+    }
+    
+    // Increase total duration
+    totalDuration++;
+    [self.totalDurationLabel setText:[Constants secondsToHhMmSs:totalDuration]];
+}
+
+- (void)updateView {
+    if (currentExerciseDuration == -1 && currentExerciseHits > 0) {
+        NSLog(@"HITS exercise");
+        [self.timerColonLabel setHidden:YES];
+        [self.timerSecondLabel setText:@(currentExerciseHits).stringValue]; //currentExercise.hitsPerRep.stringValue];
+        [self.timerMinuteLabel setText:@"x"];
+        
+        [self.nextExerciseBarButton setEnabled:YES];
+    } else {
+        NSLog(@"TIME exercise");
+        [self.timerColonLabel setHidden:NO];
+        int duration = currentExerciseDuration; // currentExercise.duration.intValue;
+        if (duration > 60)
+            [self.timerMinuteLabel setText:[Constants addLeadingZero:duration / 60]];
+        else
+            [self.timerMinuteLabel setText:@"00"];
+        [self.timerSecondLabel setText:[Constants addLeadingZero:duration % 60]];
+        
+        // Set current exercise duration for count down
+//        currentExerciseDuration = currentExercise.duration.intValue;
+        
+        [self.nextExerciseBarButton setEnabled:NO];
     }
 }
 
-- (NSString *)addLeadingZero:(int)base60 {
-    return [NSString stringWithFormat:@"%@%d", base60 < 10 ? @"0" : @"", base60];
+- (void)workoutDone {
+    // Pause workout
+    [self pause];
+    
+    // Save session
+    session = [Session new];
+    session.workout = self.workout;
+    session.duration = [NSNumber numberWithInt:totalDuration];
+    session.completion = [NSNumber numberWithInt:[self completionPercentage]];
+    session.when = [NSDate date];
+    session.user = [User fetchCurrentUser];
+    
+    // Show SaveSessionVC to insert vote and place
+    [self performSegueWithIdentifier:SaveSessionSegueId sender:self];
 }
 
 @end

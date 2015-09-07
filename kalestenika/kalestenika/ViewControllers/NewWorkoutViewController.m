@@ -170,9 +170,20 @@
 //    return @[deleteAction];
 //}
 
+#pragma mark - UITextField delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if ([self.saveButton isEnabled])
+        [self saveButtonPressed:textField];
+    
+    return NO;
+}
+
 #pragma mark - UIAlertView delegate
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         int duration = [[addRestAlert textFieldAtIndex:0].text intValue];
         NSLog(@"Rest with duration *duration");

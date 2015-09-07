@@ -11,7 +11,10 @@
 #import "ApiDelegate.h"
 
 
-static NSString *const KeyName = @"name";
+static NSString *const kExerciseName = @"name";
+static NSString *const kExerciseDescription = @"description";
+static NSString *const kExerciseRequirement = @"requirement";
+static NSString *const kExerciseEstimatedDuration = @"estDuration";
 static NSString *const IdRest = @"Rest";
 
 @interface Exercise : NSManagedObject <ApiDelegate>

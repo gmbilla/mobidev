@@ -10,6 +10,15 @@
 
 @implementation Constants
 
++ (NSString *)addLeadingZero:(int)base60int {
+    return [NSString stringWithFormat:@"%@%d", base60int < 10 ? @"0" : @"", base60int];
+}
+
++ (NSString *)secondsToHhMmSs:(int)seconds {
+    return [NSString stringWithFormat:@"%@:%@:%@",
+            [self addLeadingZero:seconds / 3600], [self addLeadingZero:seconds / 60], [self addLeadingZero:seconds % 60]];
+}
+
 + (NSString *)secondsToString:(int)seconds {
     int min = (int)(seconds / 60);
     int sec = seconds % 60;

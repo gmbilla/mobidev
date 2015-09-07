@@ -13,6 +13,8 @@
 
 @interface Constants : NSObject
 
++ (NSString *)addLeadingZero:(int)base60int;
++ (NSString *)secondsToHhMmSs:(int)seconds;
 + (NSString *)secondsToString:(int)seconds;
 
 @end

@@ -21,9 +21,3 @@
 - (IBAction)addPlaceBarButtonPressed:(UIBarButtonItem *)sender;
 
 @end
-
-@interface PlaceAnnotation : NSObject <MKAnnotation>
-
-- (instancetype)initWithPlace:(Place *)place;
-
-@end

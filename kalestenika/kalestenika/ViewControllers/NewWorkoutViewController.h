@@ -12,7 +12,7 @@
 
 static NSString *const NewWorkoutSegueId = @"AddWorkout";
 
-@interface NewWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, WaitingData>
+@interface NewWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate, WaitingData>
 
 @property (weak, nonatomic) UIViewController <WaitingData> *origin;
 

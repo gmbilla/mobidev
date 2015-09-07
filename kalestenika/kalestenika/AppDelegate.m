@@ -13,6 +13,7 @@
 #import "PersistentStack.h"
 #import "User.h"
 #import "Exercise.h"
+#import "Place.h"
 #import "NSManagedObject+Local.h"
 #import "NSManagedObject+Remote.h"
 
@@ -34,7 +35,7 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
     [Exercise fetchAsync:^(NSArray *items) {
         int newExercises = 0;
         for (NSDictionary *item in items) {
-            if ([Exercise fetchEntityWithFormat:[NSString stringWithFormat:@"name = '%@'", [item valueForKey:KeyName]]] == nil) {
+            if ([Exercise fetchEntityWithFormat:[NSString stringWithFormat:@"name = '%@'", [item valueForKey:kExerciseName]]] == nil) {
                 // Create new entity to be inserted in local db
                 Exercise *exercise = [Exercise new];
                 [exercise populateFromDictionary:item];
@@ -43,6 +44,18 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
         }
         
         NSLog(@"Saving %d new exercise(s)", newExercises);
+        [[PersistentStack sharedInstance] saveContext];
+    }];
+    
+    // Fetch new places
+    [Place fetchAsync:^(NSArray *items) {
+        for (NSDictionary *item in items) {
+            if ([Place fetchEntityWithFormat:[NSString stringWithFormat:@"name = %@", [item valueForKey:kPlaceName]]] == nil) {
+                Place *place = [Place new];
+                [place populateFromDictionary:item];
+            }
+        }
+        
         [[PersistentStack sharedInstance] saveContext];
     }];
     

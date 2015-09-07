@@ -50,6 +50,12 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)unwindToWorkoutList:(UIStoryboardSegue *)unwindSegue {
+    NSLog(@"Unwind");
+    // Change selected VC to dashboard
+    [self.tabBarController setSelectedIndex:1];
+}
+
 #pragma mark - Table view stuff
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

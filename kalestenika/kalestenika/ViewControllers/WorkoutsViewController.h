@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *workoutTableView;
 @property (weak, nonatomic) IBOutlet UIView *emptyView;
 
+- (IBAction)unwindToWorkoutList:(UIStoryboardSegue *)unwindSegue;
+
 @end

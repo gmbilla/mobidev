@@ -9,6 +9,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AddressBook/AddressBook.h>
 #import "PlacesViewController.h"
+#import "PlaceAnnotation.h"
 #import "Place.h"
 #import "User.h"
 #import "NSManagedObject+Local.h"
@@ -16,7 +17,6 @@
 
 static float DistanceThreshold = 0.001;
 static int tAddPlaceAlertView = 113;
-static NSString *const PlaceAnnotationId = @"PlaceAnnotationId";
 
 @interface PlacesViewController ()
 
@@ -96,10 +96,7 @@ static NSString *const PlaceAnnotationId = @"PlaceAnnotationId";
     [self updateUserLocationWithLastLocation];
 }
 
-- (IBAction)addPlaceBarButtonPressed:(UIBarButtonItem *)sender {
-    if (lastLocation == nil)
-        return;
-    
+- (IBAction)addPlaceBarButtonPressed:(UIBarButtonItem *)sender {    
     CLGeocoder *geocoder = [CLGeocoder new];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -249,36 +246,6 @@ static NSString *const PlaceAnnotationId = @"PlaceAnnotationId";
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 250.0, 250.0);
     [self.mapView setRegion:region animated:YES];
-}
-
-@end
-
-@implementation PlaceAnnotation {
-    CLLocationCoordinate2D _position;
-    Place *_place;
-}
-
-- (instancetype)initWithPlace:(Place *)place {
-    self = [super init];
-    
-    if (self) {
-        _position = CLLocationCoordinate2DMake(place.latitude.doubleValue, place.longitude.doubleValue);
-        _place = place;
-    }
-    
-    return self;
-}
-
-- (CLLocationCoordinate2D)coordinate {
-    return _position;
-}
-
-- (NSString *)title {
-    return _place.name;
-}
-
-- (NSString *)subtitle {
-    return _place.address;
 }
 
 @end

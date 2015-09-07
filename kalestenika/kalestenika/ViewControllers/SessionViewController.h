@@ -21,6 +21,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *workoutNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDurationLabel;
 @property (weak, nonatomic) IBOutlet UITableView *exerciseTableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *playPauseBarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextExerciseBarButton;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timerHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *workoutNameTrailingConstraint;
 
 - (IBAction)playPauseBarButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)nextBarButtonPressed:(UIBarButtonItem *)sender;

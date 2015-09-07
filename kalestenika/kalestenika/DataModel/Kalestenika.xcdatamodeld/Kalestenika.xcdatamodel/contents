@@ -17,7 +17,16 @@
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="hitsPerRep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Exercise" syncable="YES"/>
-        <relationship name="workout" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Workout" inverseName="exerciseList" inverseEntity="Workout" syncable="YES"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="exerciseList" inverseEntity="Workout" syncable="YES"/>
+    </entity>
+    <entity name="Session" representedClassName="Session" syncable="YES">
+        <attribute name="completion" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="when" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="place" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Place" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sessionList" inverseEntity="User" syncable="YES"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="sessionList" inverseEntity="Workout" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,6 +34,7 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sns" optional="YES" attributeType="Integer 16" valueTransformerName="sns" defaultValueString="0" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="sessionList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="user" inverseEntity="Session" syncable="YES"/>
         <relationship name="workoutList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Workout" inverseName="creator" inverseEntity="Workout" syncable="YES"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES">
@@ -34,14 +44,16 @@
         <attribute name="nrOfExercise" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="requirements" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="schedule" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="creator" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="workoutList" inverseEntity="User" syncable="YES"/>
-        <relationship name="exerciseList" optional="YES" toMany="YES" deletionRule="No Action" ordered="YES" destinationEntity="Record" inverseName="workout" inverseEntity="Record" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="workoutList" inverseEntity="User" syncable="YES"/>
+        <relationship name="exerciseList" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Record" inverseName="workout" inverseEntity="Record" syncable="YES"/>
+        <relationship name="sessionList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="workout" inverseEntity="Session" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="9" positionY="135" width="128" height="105"/>
-        <element name="Place" positionX="117" positionY="54" width="128" height="120"/>
-        <element name="Record" positionX="232" positionY="126" width="128" height="103"/>
-        <element name="User" positionX="34" positionY="-90" width="128" height="133"/>
-        <element name="Workout" positionX="207" positionY="-90" width="128" height="163"/>
+        <element name="Exercise" positionX="9" positionY="135" width="128" height="30"/>
+        <element name="Place" positionX="-99" positionY="-18" width="128" height="120"/>
+        <element name="Record" positionX="232" positionY="126" width="128" height="30"/>
+        <element name="User" positionX="34" positionY="-90" width="128" height="30"/>
+        <element name="Workout" positionX="207" positionY="-90" width="128" height="30"/>
+        <element name="Session" positionX="126" positionY="63" width="128" height="150"/>
     </elements>
 </model>

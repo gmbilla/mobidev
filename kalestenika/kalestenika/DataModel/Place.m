@@ -10,6 +10,8 @@
 #import "User.h"
 
 
+static NSString *const Separator = @",";
+
 @implementation Place
 
 @dynamic name;
@@ -17,5 +19,18 @@
 @dynamic address;
 @dynamic longitude;
 @dynamic creator;
+
+- (void)populateFromDictionary:(NSDictionary *)dictionary {
+    self.name = [dictionary valueForKey:kPlaceName];
+    self.address = [dictionary valueForKey:kPlaceAddress];
+    self.creator = [User fetchUserWithUserId:[dictionary valueForKey:kPlaceCreateor]];
+    NSArray *components = [[dictionary valueForKey:kPlacePosition] componentsSeparatedByString:Separator];
+    if ([components count] == 2) {
+        NSNumberFormatter *formatter = [NSNumberFormatter new];
+        formatter.numberStyle = NSNumberFormatterDecimalStyle;
+        self.latitude = [formatter numberFromString:components[0]];
+        self.longitude = [formatter numberFromString:components[1]];
+    }
+}
 
 @end

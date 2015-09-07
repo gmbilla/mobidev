@@ -16,7 +16,7 @@ typedef enum {
     googlePlus = 2
 } SNS;
 
-@class Workout;
+@class Session, Workout;
 
 @interface User : NSManagedObject
 
@@ -26,6 +26,7 @@ typedef enum {
 @property (nonatomic, retain) NSNumber *sns;
 @property (nonatomic, retain) NSString *userId;
 @property (nonatomic, retain) NSSet *workoutList;
+@property (nonatomic, retain) NSSet *sessionList;
 
 /**
  * Fetch user from the stored user objectID
@@ -61,5 +62,10 @@ typedef enum {
 - (void)removeWorkoutListObject:(Workout *)value;
 - (void)addWorkoutList:(NSSet *)values;
 - (void)removeWorkoutList:(NSSet *)values;
+
+- (void)addSessionListObject:(Session *)value;
+- (void)removeSessionListObject:(Session *)value;
+- (void)addSessionList:(NSSet *)values;
+- (void)removeSessionList:(NSSet *)values;
 
 @end

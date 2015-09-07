@@ -55,6 +55,17 @@
     [self enableDoneBarButton];
 }
 
+#pragma mark - UITextField delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.tag < 2)
+        [self.restEditText becomeFirstResponder];
+    else
+        [textField resignFirstResponder];
+    
+    return NO;
+}
+
 #pragma mark - Interface Builder actions
 
 - (IBAction)cancelBarButtonPressed:(id)sender {
@@ -121,7 +132,8 @@
 /** Check required fields to enable/disable "Done" bar button */
 - (void)enableDoneBarButton {
     if ([self.exercisePicker selectedRowInComponent:0] > 0
-        && (self.hitsPerRepEditText.text.length > 0 || self.durationEditText.text.length > 0)) {
+        && ((self.hitsPerRepEditText.text.length > 0 && self.hitsPerRepEditText.text.intValue > 0)
+            || (self.durationEditText.text.length > 0 && self.durationEditText.text.length > 0))) {
         [self.doneBarButton setEnabled:YES];
     } else {
         [self.doneBarButton setEnabled:NO];
