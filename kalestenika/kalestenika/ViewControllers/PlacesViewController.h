@@ -7,7 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface PlacesViewController : UIViewController
+
+@class Place;
+
+@interface PlacesViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UIAlertViewDelegate>
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *userPositionBarButton;
+
+- (IBAction)userPositionBarButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)addPlaceBarButtonPressed:(UIBarButtonItem *)sender;
+
+@end
+
+@interface PlaceAnnotation : NSObject <MKAnnotation>
+
+- (instancetype)initWithPlace:(Place *)place;
 
 @end

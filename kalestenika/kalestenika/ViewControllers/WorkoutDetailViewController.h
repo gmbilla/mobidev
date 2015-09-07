@@ -11,6 +11,8 @@
 
 @class Workout;
 
+static NSString *const WorkoutDetailSegueId = @"WorkoutDetailSegue";
+
 @interface WorkoutDetailViewController : UIViewController <UITableViewDataSource, UITabBarDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, weak) Workout *workout;

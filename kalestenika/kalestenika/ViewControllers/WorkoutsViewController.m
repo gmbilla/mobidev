@@ -79,7 +79,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     selectedWorkout = workouts[indexPath.row];
-    [self performSegueWithIdentifier:@"WorkoutDetail" sender:self];
+    [self performSegueWithIdentifier:WorkoutDetailSegueId sender:self];
 }
 
 #pragma mark Table view editing
@@ -164,12 +164,11 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"AddWorkout"])
+    if ([segue.identifier isEqualToString:NewWorkoutSegueId])
         // Set origin to have back data
         ((NewWorkoutViewController *)[[segue destinationViewController] topViewController]).origin = self;
-    else if ([segue.identifier isEqualToString:@"WorkoutDetail"])
+    else if ([segue.identifier isEqualToString:WorkoutDetailSegueId])
         ((WorkoutDetailViewController *)[segue destinationViewController]).workout = selectedWorkout;
-        
 }
 
 #pragma mark - Private methods

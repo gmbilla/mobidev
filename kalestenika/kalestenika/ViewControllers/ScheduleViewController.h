@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTCalendar.h"
 
-@interface ScheduleViewController : UIViewController
+@interface ScheduleViewController : UIViewController <JTCalendarDelegate, UITableViewDataSource>
+
+@property (nonatomic, weak) IBOutlet JTHorizontalCalendarView *calendarView;
+@property (weak, nonatomic) IBOutlet UITableView *workoutTableView;
+
+@property (nonatomic, strong) JTCalendarManager *calendarManager;
 
 @end

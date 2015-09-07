@@ -10,6 +10,8 @@
 #import "WaitingData.h"
 
 
+static NSString *const NewWorkoutSegueId = @"AddWorkout";
+
 @interface NewWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, WaitingData>
 
 @property (weak, nonatomic) UIViewController <WaitingData> *origin;

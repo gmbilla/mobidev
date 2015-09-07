@@ -132,15 +132,19 @@
     // Store once main view frame for animation
     static dispatch_once_t predicate;
     static CGRect mainViewFrame;
+    static BOOL animate;
     dispatch_once(&predicate, ^{
         mainViewFrame = self.view.frame;
+        animate = [UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad;
     });
-    // Animate view origin Y according to current field
-    int y = field.tag < 2 ? 80 : 140;
-    [UIView animateWithDuration:0.3 animations:^{
-        mainViewFrame.origin.y = up ? -y : 0.0;
-        self.view.frame = mainViewFrame;
-    }];
+    if (animate) {
+        // Animate view origin Y according to current field
+        int y = field.tag < 2 ? 80 : 140;
+        [UIView animateWithDuration:0.3 animations:^{
+            mainViewFrame.origin.y = up ? -y : 0.0;
+            self.view.frame = mainViewFrame;
+        }];
+    }
 }
 
 - (void)viewTouched {
