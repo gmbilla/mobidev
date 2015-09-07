@@ -27,7 +27,8 @@
 //    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
 //    segmentsViewControllers = @[[sb instantiateViewControllerWithIdentifier:@"TestVC"], [ProgressViewController new], [HistoryViewController new]];
-    segmentsViewControllers = @[[ProgressViewController new], [HistoryViewController new]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    segmentsViewControllers = @[[ProgressViewController new], [storyboard instantiateViewControllerWithIdentifier:kHistoryViewControllerId]];
     NSLog(@"VC list created");
     
     [self swapVCWithIndex:0];

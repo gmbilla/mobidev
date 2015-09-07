@@ -22,10 +22,10 @@
 @dynamic user;
 @dynamic place;
 
-- (void)setRankFromInt:(NSInteger)rank {
+/*- (void)setRankFromInt:(NSInteger)rank {
     self.rank = @(rank == RankVeryBad ? VERY_BAD : rank == RankBad ? BAD : rank == RankNormal ? NORMAL : rank == RankGood ? GOOD : VERY_GOOD);
     
     NSLog(@"Setting rank to %@ (%d)", self.rank, (int)rank);
-}
+}*/
 
 @end

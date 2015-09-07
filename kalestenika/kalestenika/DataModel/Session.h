@@ -22,16 +22,16 @@ typedef NS_ENUM(NSInteger, Rank) {
     RankVeryBad, RankBad, RankNormal, RankGood, RankVeryGood
 };
 
+static NSString *const kSessionWhen = @"when";
+
 @interface Session : NSManagedObject
 
 @property (nonatomic, retain) NSDate *when;
 @property (nonatomic, retain) NSNumber *duration;
 @property (nonatomic, retain) NSNumber *completion;
-@property (nonatomic, retain) NSString *rank;
+@property (nonatomic, retain) NSNumber *rank;
 @property (nonatomic, retain) Workout *workout;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) Place *place;
-
-- (void)setRankFromInt:(NSInteger)rank;
 
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Gian Marco Sibilla. All rights reserved.
 //
 
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "SaveSessionViewController.h"
 #import "HCSStarRatingView.h"
 #import "PlaceAnnotation.h"
@@ -34,7 +35,7 @@
 
     
     // Init annotation callout button
-    calloutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    calloutButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     [calloutButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     
     // Load all stored places and add a pin for each
@@ -54,9 +55,35 @@
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
-    [self.session setRankFromInt:(int)self.ratingView.value - 1];
+    [self.session setRank:[NSNumber numberWithInt:(int)self.ratingView.value - 1]];
+    [self.session setPlace:selectedPlace];
     
     // TODO Share on socials
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+/*
+        if ([FBSDKAccessToken currentAccessToken]) {
+            [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+             startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                 if (!error) {
+                     NSLog(@"fetched user:%@", result);
+                 }
+             }];
+        }
+        
+        NSURL *imageURL = [NSURL URLWithString:@"https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png"];
+        FBSDKSharePhoto *photo = [FBSDKSharePhoto photoWithImageURL:imageURL userGenerated:NO];
+        NSDictionary *properties = @{
+                                     @"og:type": @"kalestenika:workout",
+                                     @"og:title": @"Sample Workout",
+                                     @"og:description": @"",
+                                     @"og:url": @"http://samples.ogp.me/1612572859016400",
+                                     @"og:image": @[photo]
+                                     };
+        FBSDKShareOpenGraphObject *object = [FBSDKShareOpenGraphObject objectWithProperties:properties];
+        FBSDKShareAPI *shareAPI = [[FBSDKShareAPI alloc] init];
+        [shareAPI createOpenGraphObject:object];
+*/
+    });
     
     [self.session save];
 }

@@ -294,7 +294,7 @@ static NSString *const kExerciseDuration = @"duration";
     // Stops timer
     [workoutTimer invalidate];
     // Update toolbar icon
-    self.playPauseBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPauseBarButtonPressed:)];
+    [self.playPauseBarButton setImage:[UIImage imageNamed:@"play"]];
 }
 
 - (void)play {
@@ -323,7 +323,7 @@ static NSString *const kExerciseDuration = @"duration";
                                                   userInfo:nil
                                                    repeats:YES];
     // Update toolbar icon
-    self.playPauseBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(playPauseBarButtonPressed:)];
+    [self.playPauseBarButton setImage:[UIImage imageNamed:@"pause"]];
 }
 
 - (void)timerTriggered:(NSTimer*)timer {
@@ -353,22 +353,19 @@ static NSString *const kExerciseDuration = @"duration";
     if (currentExerciseDuration == -1 && currentExerciseHits > 0) {
         NSLog(@"HITS exercise");
         [self.timerColonLabel setHidden:YES];
-        [self.timerSecondLabel setText:@(currentExerciseHits).stringValue]; //currentExercise.hitsPerRep.stringValue];
+        [self.timerSecondLabel setText:@(currentExerciseHits).stringValue];
         [self.timerMinuteLabel setText:@"x"];
         
         [self.nextExerciseBarButton setEnabled:YES];
     } else {
         NSLog(@"TIME exercise");
         [self.timerColonLabel setHidden:NO];
-        int duration = currentExerciseDuration; // currentExercise.duration.intValue;
+        int duration = currentExerciseDuration;
         if (duration > 60)
             [self.timerMinuteLabel setText:[Constants addLeadingZero:duration / 60]];
         else
             [self.timerMinuteLabel setText:@"00"];
         [self.timerSecondLabel setText:[Constants addLeadingZero:duration % 60]];
-        
-        // Set current exercise duration for count down
-//        currentExerciseDuration = currentExercise.duration.intValue;
         
         [self.nextExerciseBarButton setEnabled:NO];
     }

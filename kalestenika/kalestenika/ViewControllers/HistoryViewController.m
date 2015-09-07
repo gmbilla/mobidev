@@ -7,8 +7,14 @@
 //
 
 #import "HistoryViewController.h"
+#import "HistoryCell.h"
+#import "Session.h"
+#import "NSManagedObject+Local.h"
 
-@interface HistoryViewController ()
+
+@interface HistoryViewController () <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -17,6 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Load sessions with NSFetchedResultsController
+    self.fetchedResultsController = [Session fetchResultsControllerWithDelegate:self sortingBy:kSessionWhen ascending:NO];
+    if (self.fetchedResultsController == nil) {
+        [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"There was an error fetching session" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        // TODO don't use abort() in prod!!!
+        abort();
+    }
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -29,29 +43,64 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - NSFetchedResultsController delegate
+
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
+
+-(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    switch (type) {
+        case NSFetchedResultsChangeInsert: {
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+        case NSFetchedResultsChangeDelete: {
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+        case NSFetchedResultsChangeUpdate: {
+            [((HistoryCell *)[self.tableView cellForRowAtIndexPath:indexPath]) populateFromSession:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+            break;
+        }
+        case NSFetchedResultsChangeMove: {
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    NSArray *sections = [self.fetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    HistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:kHistoryCellId];
     
-    // Configure the cell...
+    [cell populateFromSession:[self.fetchedResultsController objectAtIndexPath:indexPath]];
     
     return cell;
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 130.0;
+}
 
 /*
 // Override to support conditional editing of the table view.

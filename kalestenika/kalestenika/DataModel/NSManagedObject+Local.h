@@ -25,6 +25,14 @@
 + (instancetype)fetchEntityWithFormat:(NSString *)format;
 //+ (instancetype)fetchEntityWithPredicate:(NSPredicate *)predicate;
 
+/**
+ * Return an instance of NSFetchedResultsController for a fetch request fetching 
+ * all the current entities, sorted on the given key and order.
+ * After instantiating the NSFetchResultsController set the delegate and start 
+ * the query.
+ */
++ (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate sortingBy:(NSString *)key ascending:(BOOL)ascending;
+
 // /** Discard all changes to object and destroy it */
 // - (void)discardChanges;
 - (void)delete;

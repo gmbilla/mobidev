@@ -69,7 +69,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WorkoutCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WorkoutCell"];
+    WorkoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kWorkoutCellId];
     
     if (cell == nil) {
         cell = [WorkoutCell new];

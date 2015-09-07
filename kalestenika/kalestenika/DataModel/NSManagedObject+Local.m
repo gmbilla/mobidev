@@ -80,6 +80,29 @@
     return [entities lastObject];
 }
 
++ (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate sortingBy:(NSString *)key ascending:(BOOL)ascending {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
+    
+    // Add sort descriptors
+    [request setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:key ascending:ascending]]];
+    
+    // Initialize fetched results controller
+    NSFetchedResultsController *resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[PersistentStack sharedInstance].managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    // Set controller delegate
+    [resultsController setDelegate:delegate];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [resultsController performFetch:&error];
+    if (error) {
+        NSLog(@"Error fetching %@ (with results controller): %@\n(%@)", [self entityName], error, error.localizedDescription);
+        return nil;
+    }
+    
+    return resultsController;
+}
+
 //- (void)discardChanges {
 //    [self.managedObjectContext refreshObject:self mergeChanges:NO];
 //}

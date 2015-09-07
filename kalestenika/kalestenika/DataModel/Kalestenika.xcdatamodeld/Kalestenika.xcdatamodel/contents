@@ -22,7 +22,7 @@
     <entity name="Session" representedClassName="Session" syncable="YES">
         <attribute name="completion" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="rank" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="when" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="place" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Place" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sessionList" inverseEntity="User" syncable="YES"/>
@@ -52,8 +52,8 @@
         <element name="Exercise" positionX="9" positionY="135" width="128" height="30"/>
         <element name="Place" positionX="-99" positionY="-18" width="128" height="120"/>
         <element name="Record" positionX="232" positionY="126" width="128" height="30"/>
+        <element name="Session" positionX="126" positionY="63" width="128" height="150"/>
         <element name="User" positionX="34" positionY="-90" width="128" height="30"/>
         <element name="Workout" positionX="207" positionY="-90" width="128" height="30"/>
-        <element name="Session" positionX="126" positionY="63" width="128" height="150"/>
     </elements>
 </model>

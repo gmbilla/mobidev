@@ -11,6 +11,8 @@
 
 @class Workout;
 
+static NSString *const kWorkoutCellId = @"WorkoutCell";
+
 @interface WorkoutCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
