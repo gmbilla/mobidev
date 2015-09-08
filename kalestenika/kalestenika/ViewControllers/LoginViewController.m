@@ -33,15 +33,6 @@
     googlePlusSignIn.delegate = self;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark IB actions
 
 - (IBAction)continueAsGuestButtonPressed:(UIButton *)sender {
@@ -75,7 +66,6 @@
         if ([result.grantedPermissions containsObject:@"public_profile"]) {
             // Store the user object and show home
             [User createUserFromFacebookProfile:nil];
-//            [self performSegueWithIdentifier:@"HomeSegue" sender:self];
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"AlertTitleFacebookLoginError", nil)
@@ -92,10 +82,10 @@
     NSLog(@"User logged out");
 }
 
-#pragma mark Google+ sign in delegate
+#pragma mark - Google+ sign in delegate
 
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *) error {
-    NSLog(@"Received error %@ and auth object %@", error, auth);
+    NSLog(@"Received error %@ and auth object %@", error.localizedDescription, auth);
     
     if (error) {
         NSLog(@"Google+ sign in failed with error: %@", error);
@@ -104,25 +94,13 @@
                                     message:@"There was an error in the Google+ sign in procedure! Please try again."
                                    delegate:nil
                           cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil]
-         show];
+                          otherButtonTitles:nil] show];
+        
+        return;
     }
-}
-
-#pragma mark - private methods
-
-- (BOOL) checkIfUserIsLoggedIn {
-    // TODO try to fetch locally stored user
     
-    // Check Facebook token
-    if ([FBSDKAccessToken currentAccessToken])
-        return YES;
-    
-    // Check Google+ token
-    // Try to login the user if she's already authorized the app
-    [[GPPSignIn sharedInstance] trySilentAuthentication];
-    
-    return NO;
+    [User createUserFromGooglePlusProfile:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

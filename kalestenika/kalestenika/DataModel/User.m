@@ -7,6 +7,8 @@
 //
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
+#import <GooglePlus/GooglePlus.h>
 #import "User.h"
 #import "Session.h"
 #import "PersistentStack.h"
@@ -143,6 +145,36 @@ static User *_current = nil;
              }
          }];
     }
+}
+
++ (void)createUserFromGooglePlusProfile:(void (^)(User *))created {
+    // Retrieve user info
+    GPPSignIn *googlePlusSignIn = [GPPSignIn sharedInstance];
+    
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:googlePlusSignIn.authentication];
+    GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+    
+    [plusService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, GTLPlusPerson *person, NSError *error) {
+        if (error) {
+            NSLog(@"Error fetching user profile: %@", error);
+            [[[UIAlertView alloc] initWithTitle:@"Google+ error"
+                                        message:@"There was an error fetching your Google+ profile! Please try again."
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            return;
+        }
+        
+        // Save logged in user
+        User *user = [User insertUserWithUserId:person.identifier firstName:person.name.givenName lastName:person.name.familyName signUpSns:googlePlus imageURL:[person.image.url stringByReplacingOccurrencesOfString:@"photo.jpg?sz=50" withString:@"photo.jpg?sz=200"] thenSaveIt:YES];
+        
+        NSLog(@"[DEBUG] Saving user to disk: %@", user);
+        
+        if (created)
+            created(user);
+    }];
 }
 
 # pragma mark - Public methods

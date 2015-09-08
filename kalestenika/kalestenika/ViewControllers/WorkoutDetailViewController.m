@@ -21,11 +21,11 @@
     // Setup view
     [self.nameLabel setText:self.workout.name];
     NSMutableArray *scheduledDays = [NSMutableArray new];
-    NSArray *weekdays = @[@"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Sat"];
+    NSArray *weekdays = @[@"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat"];
     for (int i = 0; i < 7; i++)
         if (((NSNumber *)self.workout.schedule[i]).boolValue)
             [scheduledDays addObject:weekdays[i]];
-    [self.scheduleLabel setText:[scheduledDays componentsJoinedByString:@", "]];
+    [self.scheduleLabel setText:[scheduledDays count] == 7 ? @"Everyday" : [scheduledDays componentsJoinedByString:@", "]];
     [self.exerciseNumberLabel setText:[NSString stringWithFormat:@"%d exercises", self.workout.nrOfExercise.intValue]];
     [self.durationLabel setText:[NSString stringWithFormat:@"~%@", [Constants secondsToString:self.workout.estimatedDuration.intValue]]];
     // Register data source cell classes

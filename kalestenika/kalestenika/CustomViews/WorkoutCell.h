@@ -16,10 +16,11 @@ static NSString *const kWorkoutCellId = @"WorkoutCell";
 @interface WorkoutCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startWorkoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *exerciseNrLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *requirementsCollectionView;
 
-- (void)populateFromWorkout:(Workout *)workout;
+- (void)populateFromWorkout:(Workout *)workout atIndexPath:(NSIndexPath *)indexPath;
 
 @end

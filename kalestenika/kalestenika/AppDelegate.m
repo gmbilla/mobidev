@@ -9,6 +9,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "AppDelegate.h"
 #import "PersistentStack.h"
 #import "User.h"
@@ -33,30 +34,29 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
     // Fetch new exercises
     // TODO check for modification in exercise
     [Exercise fetchAsync:^(NSArray *items) {
-        int newExercises = 0;
         for (NSDictionary *item in items) {
             if ([Exercise fetchEntityWithFormat:[NSString stringWithFormat:@"name = '%@'", [item valueForKey:kExerciseName]]] == nil) {
                 // Create new entity to be inserted in local db
                 Exercise *exercise = [Exercise new];
                 [exercise populateFromDictionary:item];
-                newExercises++;
+                NSLog(@"Got new exercise '%@'!", exercise.name);
             }
         }
         
-        NSLog(@"Saving %d new exercise(s)", newExercises);
         [[PersistentStack sharedInstance] saveContext];
     }];
     
     // Fetch new places
     [Place fetchAsync:^(NSArray *items) {
         for (NSDictionary *item in items) {
-            if ([Place fetchEntityWithFormat:[NSString stringWithFormat:@"name = %@", [item valueForKey:kPlaceName]]] == nil) {
+            if ([Place fetchEntityWithFormat:[NSString stringWithFormat:@"name = '%@'", [item valueForKey:kPlaceName]]] == nil) {
                 Place *place = [Place new];
                 [place populateFromDictionary:item];
+                NSLog(@"Got new place '%@'!", place.name);
             }
         }
         
-        [[PersistentStack sharedInstance] saveContext];
+//        [[PersistentStack sharedInstance] saveContext];
     }];
     
     // Check once in app lifetime to have Rest record in db
@@ -78,17 +78,10 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
     // Set status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    // TEST list inserted user
-    NSManagedObjectContext *context = [PersistentStack sharedInstance].managedObjectContext;
-    NSArray *users = [context executeFetchRequest:[NSFetchRequest fetchRequestWithEntityName:@"User"] error:nil];
-    for (User *u in users) {
-        NSLog(@"%@", u);
-    }
-    
     // Config Google+ sign in
     GPPSignIn *googlePlusSignIn = [GPPSignIn sharedInstance];
     googlePlusSignIn.clientID = GooglePlusClientId;
-    googlePlusSignIn.scopes = @[@"profile"];
+    googlePlusSignIn.scopes = @[kGTLAuthScopePlusLogin];
     
 //    return YES;
     return [[FBSDKApplicationDelegate sharedInstance] application:application

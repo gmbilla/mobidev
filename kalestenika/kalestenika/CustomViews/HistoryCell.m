@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "Session.h"
 #import "Workout.h"
+#import "Place.h"
 
 
 @implementation HistoryCell
@@ -18,19 +19,18 @@
 - (void)populateFromSession:(Session *)session {
     [self.workoutNameLabel setText:session.workout.name];
     [self.durationLabel setText:[Constants secondsToHhMmSs:session.duration.intValue]];
+    
     [self.completionLabel setText:[NSString stringWithFormat:@"%@%%", session.completion.stringValue]];
     // Change completion text color for 100%
-    if (session.completion.intValue == 100)
-        [self.completionLabel setTextColor:[UIColor orangeColor]];
-    else
-        [self.completionLabel setTextColor:[UIColor lightGrayColor]];
-    self.ratingView.value = session.rank.floatValue;
+    [self.completionLabel setTextColor:100 == session.completion.intValue ? [UIColor orangeColor] : [UIColor lightGrayColor]];
+
+    // Set rating
+    [self.ratingView setValue:session.rank.floatValue];
+    [self.ratingView setTintColor:RankNone != session.rank.intValue ? [UIColor orangeColor] : [UIColor lightGrayColor]];
     
     // Change marker tint according to defined place
-    if (session.place)
-        [self.placeImage setTintColor:[UIColor orangeColor]];
-    else
-        [self.placeImage setTintColor:[UIColor lightGrayColor]];
+    [self.placeImage setImage:[self.placeImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [self.placeImage setTintColor:session.place ? [UIColor orangeColor] : [UIColor lightGrayColor]];
 }
 
 @end

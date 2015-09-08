@@ -14,6 +14,8 @@
 static NSString *const kPlaceName = @"name";
 static NSString *const kPlaceAddress = @"address";
 static NSString *const kPlacePosition = @"position";
+static NSString *const kPlaceLatitude = @"latitude";
+static NSString *const kPlaceLongitude = @"longitude";
 static NSString *const kPlaceCreateor = @"creator";
 @class User;
 

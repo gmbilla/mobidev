@@ -49,6 +49,8 @@ typedef enum {
  */
 + (void)createUserFromFacebookProfile:(void (^)(User *))created;
 
++ (void)createUserFromGooglePlusProfile:(void (^)(User *))created;
+
 /**
  * Save the current user objectID
  */

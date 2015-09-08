@@ -25,4 +25,17 @@
     return [NSString stringWithFormat:@"%@%@", min > 0 ? [NSString stringWithFormat:@" %dm", min] : @"", sec > 0 ? [NSString stringWithFormat:@" %ds", sec] : @""];
 }
 
++ (NSDateFormatter *)weekDayFormatter {
+    static dispatch_once_t predicate;
+    static NSDateFormatter *weekDayFormatter;
+    dispatch_once(&predicate, ^{
+        NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"us_US"];
+        weekDayFormatter = [NSDateFormatter new];
+        [weekDayFormatter setDateFormat:@"e"];
+        [weekDayFormatter setLocale:locale];
+    });
+    
+    return weekDayFormatter;
+}
+
 @end

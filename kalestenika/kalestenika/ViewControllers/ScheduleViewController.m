@@ -25,7 +25,6 @@ static NSString *const WorkoutCellId = @"WorkoutNameCell";
     NSArray *scheduledDays;
     NSMutableArray *haveSchedule;
     NSDate *today, *dateSelected, *minDate, *maxDate;
-    NSDateFormatter *weekDayFormatter;
     Workout *selectedWorkout;
 }
 
@@ -56,15 +55,12 @@ static NSString *const WorkoutCellId = @"WorkoutNameCell";
     today = [NSDate date];
     dateSelected = today;
     NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"us_US"];
-    weekDayFormatter = [NSDateFormatter new];
-    [weekDayFormatter setDateFormat:@"e"];
-    [weekDayFormatter setLocale:locale];
     
     // Set min/Max date
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:today];
-//    NSLog(@"Frist day: %d - %d", (int)components.day, (int)(components.day + [weekDayFormatter stringFromDate:today].integerValue));
+//    NSLog(@"Frist day: %d - %d", (int)components.day, (int)(components.day + [[Constants weekDayFormatter] stringFromDate:today].integerValue));
     // Min date will be first Sunday in the first week of the current month
-    minDate = [today dateByAddingTimeInterval:-(components.day + [weekDayFormatter stringFromDate:today].intValue) * DAYS];
+    minDate = [today dateByAddingTimeInterval:-(components.day + [[Constants weekDayFormatter] stringFromDate:today].intValue) * DAYS];
     // 5 weeks after first day
     maxDate = [minDate dateByAddingTimeInterval:5 * 7 * DAYS];
     NSLog(@"DATES: %@ -- %@", minDate, maxDate);
@@ -173,7 +169,7 @@ static NSString *const WorkoutCellId = @"WorkoutNameCell";
 #pragma mark - Private methods
 
 - (int)weekdayForDate:(NSDate *)date {
-    return [[weekDayFormatter stringFromDate:date] intValue] - 1;
+    return [[[Constants weekDayFormatter] stringFromDate:date] intValue] - 1;
 }
 
 /**

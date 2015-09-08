@@ -76,6 +76,8 @@
 		219C123A1B9E291E00BE3D28 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 219C12371B9E291E00BE3D28 /* settings.png */; };
 		219C123B1B9E291E00BE3D28 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 219C12381B9E291E00BE3D28 /* settings@2x.png */; };
 		219C123C1B9E291E00BE3D28 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 219C12391B9E291E00BE3D28 /* settings@3x.png */; };
+		219C123E1B9E448400BE3D28 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219C123D1B9E448400BE3D28 /* FBSDKShareKit.framework */; };
+		219C12521B9E65B200BE3D28 /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219C12511B9E65B200BE3D28 /* ProgressCell.m */; };
 		21A1A9681B989F1900F34BDE /* NSManagedObject+Local.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1A9671B989F1900F34BDE /* NSManagedObject+Local.m */; };
 		21A1A96B1B9905AC00F34BDE /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1A96A1B9905AC00F34BDE /* Record.m */; };
 		21A1A9711B99116700F34BDE /* Workout.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1A9701B99116700F34BDE /* Workout.m */; };
@@ -139,6 +141,8 @@
 		21B9E7921B6F94450067C4D8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9E7911B6F94450067C4D8 /* FBSDKLoginKit.framework */; };
 		21BA94A21B7620050025AC97 /* PersistentStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BA94A11B7620050025AC97 /* PersistentStack.m */; };
 		21BA94AB1B7643EB0025AC97 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BA94AA1B7643EB0025AC97 /* User.m */; };
+		21EB9CDB1B9ED46800962FCB /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EB9CD51B9ED0E800962FCB /* Charts.framework */; };
+		21EB9CDC1B9ED46800962FCB /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21EB9CD51B9ED0E800962FCB /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,7 +153,35 @@
 			remoteGlobalIDString = 215156CD1B69298200654CEA;
 			remoteInfo = kalestenika;
 		};
+		21EB9CD41B9ED0E800962FCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21EB9CD01B9ED0E800962FCB /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BA8EC401A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
+		21EB9CDD1B9ED46800962FCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21EB9CD01B9ED0E800962FCB /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BA8EC3F1A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		21EB9CDF1B9ED46900962FCB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				21EB9CDC1B9ED46800962FCB /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		21103F381B95F63700273976 /* ScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
@@ -242,6 +274,9 @@
 		219C12371B9E291E00BE3D28 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		219C12381B9E291E00BE3D28 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		219C12391B9E291E00BE3D28 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
+		219C123D1B9E448400BE3D28 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		219C12501B9E65B200BE3D28 /* ProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressCell.h; sourceTree = "<group>"; };
+		219C12511B9E65B200BE3D28 /* ProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressCell.m; sourceTree = "<group>"; };
 		21A1A9661B989F1900F34BDE /* NSManagedObject+Local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Local.h"; sourceTree = "<group>"; };
 		21A1A9671B989F1900F34BDE /* NSManagedObject+Local.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Local.m"; sourceTree = "<group>"; };
 		21A1A9691B9905AC00F34BDE /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
@@ -342,6 +377,7 @@
 		21BA94A11B7620050025AC97 /* PersistentStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStack.m; sourceTree = "<group>"; };
 		21BA94A91B7643EB0025AC97 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		21BA94AA1B7643EB0025AC97 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		21EB9CD01B9ED0E800962FCB /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../lib/ios-charts-master/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,8 +385,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219C123E1B9E448400BE3D28 /* FBSDKShareKit.framework in Frameworks */,
 				211440C71B70D2D000609D60 /* AddressBook.framework in Frameworks */,
 				211440C81B70D2D000609D60 /* AssetsLibrary.framework in Frameworks */,
+				21EB9CDB1B9ED46800962FCB /* Charts.framework in Frameworks */,
 				21AE93251B9C8C91000D28BE /* MapKit.framework in Frameworks */,
 				211440C91B70D2D000609D60 /* CoreLocation.framework in Frameworks */,
 				211440CA1B70D2D000609D60 /* CoreMotion.framework in Frameworks */,
@@ -400,6 +438,7 @@
 		211440B81B70BCA800609D60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				219C123D1B9E448400BE3D28 /* FBSDKShareKit.framework */,
 				21AE93241B9C8C91000D28BE /* MapKit.framework */,
 				211440BD1B70D2D000609D60 /* AddressBook.framework */,
 				211440BE1B70D2D000609D60 /* AssetsLibrary.framework */,
@@ -443,6 +482,7 @@
 		215156C51B69298200654CEA = {
 			isa = PBXGroup;
 			children = (
+				21EB9CD01B9ED0E800962FCB /* Charts.xcodeproj */,
 				211440B81B70BCA800609D60 /* Frameworks */,
 				215156D01B69298200654CEA /* kalestenika */,
 				215156EA1B69298200654CEA /* kalestenikaTests */,
@@ -599,6 +639,8 @@
 				211B85B21B6BC3B5006411BE /* WorkoutCell.m */,
 				214B38791B9DF145005B8E24 /* HistoryCell.h */,
 				214B387A1B9DF145005B8E24 /* HistoryCell.m */,
+				219C12501B9E65B200BE3D28 /* ProgressCell.h */,
+				219C12511B9E65B200BE3D28 /* ProgressCell.m */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -747,6 +789,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		21EB9CD11B9ED0E800962FCB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				21EB9CD51B9ED0E800962FCB /* Charts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -757,10 +807,12 @@
 				215156CA1B69298200654CEA /* Sources */,
 				215156CB1B69298200654CEA /* Frameworks */,
 				215156CC1B69298200654CEA /* Resources */,
+				21EB9CDF1B9ED46900962FCB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				21EB9CDE1B9ED46800962FCB /* PBXTargetDependency */,
 			);
 			name = kalestenika;
 			productName = kalestenika;
@@ -820,6 +872,12 @@
 			mainGroup = 215156C51B69298200654CEA;
 			productRefGroup = 215156CF1B69298200654CEA /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 21EB9CD11B9ED0E800962FCB /* Products */;
+					ProjectRef = 21EB9CD01B9ED0E800962FCB /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				215156CD1B69298200654CEA /* kalestenika */,
@@ -827,6 +885,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		21EB9CD51B9ED0E800962FCB /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = 21EB9CD41B9ED0E800962FCB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		215156CC1B69298200654CEA /* Resources */ = {
@@ -952,6 +1020,7 @@
 				21AE93611B9DA6BF000D28BE /* PlaceAnnotation.m in Sources */,
 				21103F7D1B97B8A300273976 /* NSManagedObject+Remote.m in Sources */,
 				21B82EA31B9C31E7004C05B5 /* JTCalendarManager.m in Sources */,
+				219C12521B9E65B200BE3D28 /* ProgressCell.m in Sources */,
 				21103F801B97BD7600273976 /* Exercise.m in Sources */,
 				21B300AC1B7250A800CB18B6 /* Kalestenika.xcdatamodeld in Sources */,
 				21BA94AB1B7643EB0025AC97 /* User.m in Sources */,
@@ -983,6 +1052,11 @@
 			isa = PBXTargetDependency;
 			target = 215156CD1B69298200654CEA /* kalestenika */;
 			targetProxy = 215156E81B69298200654CEA /* PBXContainerItemProxy */;
+		};
+		21EB9CDE1B9ED46800962FCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = 21EB9CDD1B9ED46800962FCB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1104,6 +1178,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/gmbilla/Documents/FacebookSDK,
@@ -1124,6 +1199,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/gmbilla/Documents/FacebookSDK,

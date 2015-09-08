@@ -12,6 +12,8 @@
 
 @class Record, Session, User;
 
+static NSString *const kWorkoutDateCreated = @"dateCreated";
+
 @interface Workout : NSManagedObject
 
 @property (nonatomic, retain) NSDate *dateCreated;

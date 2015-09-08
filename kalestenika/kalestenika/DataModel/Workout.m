@@ -24,6 +24,13 @@
 @dynamic exerciseList;
 @dynamic sessionList;
 
+/*- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[Workout class]])
+        return NO;
+    
+    return (nil != self.name && nil != ((Workout *) object).name && [self.name isEqualToString:((Workout *) object).name]);
+}*/
+
 @end
 
 @implementation MutableList

@@ -26,13 +26,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     // Set UITabBar tint color to orange
     self.tabBar.tintColor = [UIColor orangeColor];
-    
-//    UIImage *selectedImage = self.tabBar.selectedItem.image;
-//    self.tabBar.selectedItem.image = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-//    for (UITabBarItem *item in self.tabBar.items) {
-//        NSLog(@"%@: %@", item.title, item.image);
-//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

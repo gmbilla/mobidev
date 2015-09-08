@@ -14,7 +14,7 @@
 
 static NSString *const SaveSessionSegueId = @"SaveSessionSegue";
 
-@interface SaveSessionViewController : UIViewController <MKMapViewDelegate>
+@interface SaveSessionViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, weak) Session *session;
 
@@ -27,7 +27,7 @@ static NSString *const SaveSessionSegueId = @"SaveSessionSegue";
 @property (weak, nonatomic) IBOutlet UILabel *chosenPlaceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *removePlaceButton;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
 
 - (IBAction)removeButtonPressed:(id)sender;
 - (IBAction)saveButtonPressed:(id)sender;

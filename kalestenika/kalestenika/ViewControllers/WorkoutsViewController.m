@@ -9,6 +9,8 @@
 #import "WorkoutsViewController.h"
 #import "NewWorkoutViewController.h"
 #import "WorkoutDetailViewController.h"
+#import "SessionViewController.h"
+#import "Constants.h"
 #import "WorkoutCell.h"
 #import "User.h"
 #import "Workout.h"
@@ -32,17 +34,15 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     [super viewDidLoad];
     
     workouts = [NSMutableArray arrayWithArray:[Workout fetchAllSortingBy:@"dateCreated" ascending:NO]];
+    [self swapTodayWorkout];
     
     [self hideShowEmptyView];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,7 +74,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     if (cell == nil) {
         cell = [WorkoutCell new];
     }
-    [cell populateFromWorkout:workouts[indexPath.row]];
+    [cell populateFromWorkout:workouts[indexPath.row] atIndexPath:indexPath];
     
     return cell;
 }
@@ -86,6 +86,8 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     selectedWorkout = workouts[indexPath.row];
     [self performSegueWithIdentifier:WorkoutDetailSegueId sender:self];
+    
+    [self.workoutTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark Table view editing
@@ -97,19 +99,12 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([tableView isEditing])
-        return UITableViewCellEditingStyleNone;
-    else
-        return UITableViewCellEditingStyleDelete;
+    return UITableViewCellEditingStyleDelete;
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        NSLog(@"Edit action");
-        [tableView setEditing:YES animated:YES];
-    }];
-    
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+// Override to support editing the table view -- must be there otherwise the actions method isn't working
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         Workout *workout = workouts[indexPath.row];
         [workout delete];
         [workout save];
@@ -118,23 +113,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         [self hideShowEmptyView];
-    }];
-    
-    return @[deleteAction, editAction];
-}
-
-// Override to support editing the table view -- must be there otherwise the actions method isn't working
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    NSLog(@"tableView commitEditingStyle for row %lu", indexPath.row);
-    //    if (editingStyle == UITableViewCellEditingStyleDelete) {
-    //        NSLog(@"Delete cell %lu", indexPath.row);
-    //        [workouts removeObjectAtIndex:indexPath.row];
-    //        // Delete the row from the data source
-    //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    //    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-    //        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    //        NSLog(@"Insert");
-    //    }
+    }
 }
 
 // Override to support rearranging the table view.
@@ -167,6 +146,8 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     [self.workoutTableView beginUpdates];
     [self.workoutTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
     [self.workoutTableView endUpdates];
+    
+    [self swapTodayWorkout];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -175,6 +156,8 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
         ((NewWorkoutViewController *)[[segue destinationViewController] topViewController]).origin = self;
     else if ([segue.identifier isEqualToString:WorkoutDetailSegueId])
         ((WorkoutDetailViewController *)[segue destinationViewController]).workout = selectedWorkout;
+    else if ([segue.identifier isEqualToString:SessionSegueId])
+        ((SessionViewController *)[segue destinationViewController]).workout = workouts[0];
 }
 
 #pragma mark - Private methods
@@ -209,6 +192,32 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
         // Enable the right gesture
         [self updateGestures];
     });
+}
+
+/**
+ * Check if there's a workout scheduled for today and put it in the first position
+ */
+- (void)swapTodayWorkout {
+    NSMutableArray *schedule;
+    int weekDay = [[Constants weekDayFormatter] stringFromDate:[NSDate date]].intValue - 1;
+    NSLog(@"Searching workout scheduled for %d", weekDay);
+    for (int i = 0; i < [workouts count]; i++) {
+        schedule = ((Workout *)workouts[i]).schedule;
+        NSLog(@"'%@' schedule: %@ -> %@", ((Workout *)workouts[i]).name, [schedule componentsJoinedByString:@", "], [schedule[weekDay] stringValue]);
+        if ([schedule[weekDay] boolValue]) {
+            NSLog(@"Workout '%@' schedule for today!", ((Workout *)workouts[i]).name);
+            if (i > 0) {
+                NSLog(@"Switching %@ with %@", ((Workout *)workouts[0]).name, ((Workout *)workouts[i]).name);
+                Workout *tmp = workouts[0];
+                workouts[0] = workouts[i];
+                workouts[i] = tmp;
+
+                // Refresh the list
+                [self.workoutTableView reloadData];
+            }
+            break;
+        }
+    }
 }
 
 /**

@@ -109,11 +109,11 @@ static NSString *const kExerciseDuration = @"duration";
 
 #pragma mark - UITableView data source
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
             return [doneExercise count] == 0 ? 1 : [doneExercise count];
@@ -131,7 +131,7 @@ static NSString *const kExerciseDuration = @"duration";
     }
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
             return [self createHeaderLabelWithText:@"Done"];
@@ -236,7 +236,14 @@ static NSString *const kExerciseDuration = @"duration";
     if ([self isWorkoutComplete])
         return 100;
     
-    int percentage = totalDuration * 100 / self.workout.estimatedDuration.intValue;
+    // Compute duration of remaining exercises
+    int estimatedDuration = totalDuration;
+    for (Record *r in upcomingExercise)
+        estimatedDuration += (0 != r.hitsPerRep.intValue) ? r.hitsPerRep.intValue * r.exercise.estimatedDuration.intValue : r.duration.intValue;
+    
+    int percentage = totalDuration * 100 / estimatedDuration;
+    
+    NSLog(@"stimated duration %@ -> %f%%", [Constants secondsToString:estimatedDuration], percentage);
     // TODO consider number of exercise for a better estimation
     return percentage < 100 ? percentage : 100;
 }
@@ -382,6 +389,8 @@ static NSString *const kExerciseDuration = @"duration";
     session.completion = [NSNumber numberWithInt:[self completionPercentage]];
     session.when = [NSDate date];
     session.user = [User fetchCurrentUser];
+    // Add new session to workout's sessions
+    [self.workout addSessionListObject:session];
     
     // Show SaveSessionVC to insert vote and place
     [self performSegueWithIdentifier:SaveSessionSegueId sender:self];

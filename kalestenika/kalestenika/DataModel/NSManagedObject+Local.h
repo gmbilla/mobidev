@@ -21,8 +21,9 @@
 + (NSString *)entityName;
 + (NSArray *)fetchAll;
 + (NSArray *)fetchAllSortingBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray *)fetchEntitiesWithFormat:(NSString *)format sortingBy:(NSString *)key ascending:(BOOL)ascending;
 + (id)fetchEntityForId:(NSManagedObjectID *)objectId;
-+ (instancetype)fetchEntityWithFormat:(NSString *)format;
++ (NSArray *)fetchEntityWithFormat:(NSString *)format;
 //+ (instancetype)fetchEntityWithPredicate:(NSPredicate *)predicate;
 
 /**
@@ -32,6 +33,7 @@
  * the query.
  */
 + (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate sortingBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate queryPredicateFormat:(NSString *)format sortingBy:(NSString *)key ascending:(BOOL)ascending limit:(NSNumber *)limit;
 
 // /** Discard all changes to object and destroy it */
 // - (void)discardChanges;

@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
+#define NONE ""
 #define VERY_BAD "VERY_BAD"
 #define BAD "BAD"
 #define NORMAL "NORMAL"
@@ -19,7 +20,7 @@
 @class Place, User, Workout;
 
 typedef NS_ENUM(NSInteger, Rank) {
-    RankVeryBad, RankBad, RankNormal, RankGood, RankVeryGood
+    RankNone, RankVeryBad, RankBad, RankNormal, RankGood, RankVeryGood
 };
 
 static NSString *const kSessionWhen = @"when";

@@ -11,6 +11,8 @@
 
 @class Workout;
 
+static NSString *const SessionSegueId = @"StartSessionSegue";
+
 @interface SessionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) Workout *workout;

@@ -15,8 +15,12 @@
     NSArray *requirements;
 }
 
-- (void)populateFromWorkout:(Workout *)workout {
+- (void)populateFromWorkout:(Workout *)workout atIndexPath:(NSIndexPath *)indexPath {
     self.nameLabel.text = workout.name;
+    [self.startWorkoutButton setHidden:indexPath.row != 0];
+        
+    [self.startWorkoutButton setBackgroundColor:[UIColor orangeColor]];
+    self.startWorkoutButton.layer.cornerRadius = 16.0;
     self.exerciseNrLabel.text = [NSString stringWithFormat:@"%@ exercises", workout.nrOfExercise.stringValue];
     self.durationLabel.text = [NSString stringWithFormat:@"~%@", [Constants secondsToString:workout.estimatedDuration.intValue]];
     

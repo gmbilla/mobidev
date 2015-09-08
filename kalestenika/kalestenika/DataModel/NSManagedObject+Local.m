@@ -55,6 +55,24 @@
     return entities;
 }
 
++ (NSArray *)fetchEntitiesWithFormat:(NSString *)format sortingBy:(NSString *)key ascending:(BOOL)ascending {
+    NSLog(@"Fetching %@ with format: %@", [self entityName], format);
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
+    if (format)
+        [request setPredicate:[NSPredicate predicateWithFormat:format]];
+    if (key)
+        [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:key ascending:ascending]]];
+    NSError *error;
+    NSArray *entities = [[PersistentStack sharedInstance] executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"Error fetching %@ with format '%@': %@", [self entityName], format, error);
+        return nil;
+    }
+    
+    return entities;
+}
+
 + (id)fetchEntityForId:(NSManagedObjectID *)objectId {
     NSError *error;
     id entity = [[PersistentStack sharedInstance] fetchObjectFromId:objectId error:&error];
@@ -65,7 +83,7 @@
     return entity;
 }
 
-+ (instancetype)fetchEntityWithFormat:(NSString *)format {
++ (NSArray *)fetchEntityWithFormat:(NSString *)format {
     NSLog(@"Fetching %@ with format: %@", [self entityName], format);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     [request setPredicate:[NSPredicate predicateWithFormat:format]];
@@ -81,7 +99,17 @@
 }
 
 + (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate sortingBy:(NSString *)key ascending:(BOOL)ascending {
+    return [self fetchResultsControllerWithDelegate:delegate queryPredicateFormat:nil sortingBy:key ascending:ascending limit:nil];
+}
+
++ (NSFetchedResultsController *)fetchResultsControllerWithDelegate:(id<NSFetchedResultsControllerDelegate>)delegate queryPredicateFormat:(NSString *)format sortingBy:(NSString *)key ascending:(BOOL)ascending limit:(NSNumber *)limit {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
+    
+    // Add query predicate
+    if (format)
+        [request setPredicate:[NSPredicate predicateWithFormat:format]];
+    if (limit)
+        [request setFetchLimit:limit.unsignedIntegerValue];
     
     // Add sort descriptors
     [request setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:key ascending:ascending]]];
@@ -96,7 +124,7 @@
     NSError *error = nil;
     [resultsController performFetch:&error];
     if (error) {
-        NSLog(@"Error fetching %@ (with results controller): %@\n(%@)", [self entityName], error, error.localizedDescription);
+        NSLog(@"Error fetching %@ (with results controller): %@", [self entityName], error.localizedDescription);
         return nil;
     }
     

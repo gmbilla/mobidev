@@ -16,5 +16,6 @@
 + (NSString *)addLeadingZero:(int)base60int;
 + (NSString *)secondsToHhMmSs:(int)seconds;
 + (NSString *)secondsToString:(int)seconds;
++ (NSDateFormatter *)weekDayFormatter;
 
 @end

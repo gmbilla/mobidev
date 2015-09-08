@@ -14,7 +14,7 @@
 
 @interface HistoryViewController () <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -26,7 +26,7 @@
     // Load sessions with NSFetchedResultsController
     self.fetchedResultsController = [Session fetchResultsControllerWithDelegate:self sortingBy:kSessionWhen ascending:NO];
     if (self.fetchedResultsController == nil) {
-        [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"There was an error fetching session" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"There was an error fetching session." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         // TODO don't use abort() in prod!!!
         abort();
     }

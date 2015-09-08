@@ -132,9 +132,9 @@ static int tAddPlaceAlertView = 113;
     [searchBar resignFirstResponder];
     
     if (fabs(lastLocation.coordinate.latitude - self.mapView.centerCoordinate.latitude) < DistanceThreshold / 100 && fabs(lastLocation.coordinate.longitude - self.mapView.centerCoordinate.longitude) < DistanceThreshold / 100) {
-        [self.userPositionBarButton setTintColor:[UIColor whiteColor]];
-    } else {
         [self.userPositionBarButton setTintColor:[UIColor orangeColor]];
+    } else {
+        [self.userPositionBarButton setTintColor:[UIColor whiteColor]];
     }
 }
 

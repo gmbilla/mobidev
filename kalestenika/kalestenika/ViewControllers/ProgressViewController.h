@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+static NSString *const kProgressViewControllerId = @"ProgressViewController";
+
 @interface ProgressViewController : UITableViewController
 
 @end
