@@ -48,6 +48,7 @@
 		21367DBC1B7B62AC00A9E356 /* places@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21367DB61B7B62AC00A9E356 /* places@2x.png */; };
 		21367DBD1B7B62AC00A9E356 /* places@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21367DB71B7B62AC00A9E356 /* places@3x.png */; };
 		21491FA01B7960B6006A7FBE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21491FA21B7960B6006A7FBE /* Localizable.strings */; };
+		2149F0001B9F8086007FA18F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2149EFFF1B9F8086007FA18F /* AudioToolbox.framework */; };
 		214B38701B9DEFB1005B8E24 /* marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 214B386D1B9DEFB1005B8E24 /* marker.png */; };
 		214B38711B9DEFB1005B8E24 /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 214B386E1B9DEFB1005B8E24 /* marker@2x.png */; };
 		214B38721B9DEFB1005B8E24 /* marker@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 214B386F1B9DEFB1005B8E24 /* marker@3x.png */; };
@@ -240,6 +241,7 @@
 		21491FA51B796212006A7FBE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		21491FA61B796212006A7FBE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		21491FA71B796212006A7FBE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2149EFFF1B9F8086007FA18F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		214B386D1B9DEFB1005B8E24 /* marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker.png; sourceTree = "<group>"; };
 		214B386E1B9DEFB1005B8E24 /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		214B386F1B9DEFB1005B8E24 /* marker@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@3x.png"; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2149F0001B9F8086007FA18F /* AudioToolbox.framework in Frameworks */,
 				219C123E1B9E448400BE3D28 /* FBSDKShareKit.framework in Frameworks */,
 				211440C71B70D2D000609D60 /* AddressBook.framework in Frameworks */,
 				211440C81B70D2D000609D60 /* AssetsLibrary.framework in Frameworks */,
@@ -438,6 +441,7 @@
 		211440B81B70BCA800609D60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2149EFFF1B9F8086007FA18F /* AudioToolbox.framework */,
 				219C123D1B9E448400BE3D28 /* FBSDKShareKit.framework */,
 				21AE93241B9C8C91000D28BE /* MapKit.framework */,
 				211440BD1B70D2D000609D60 /* AddressBook.framework */,

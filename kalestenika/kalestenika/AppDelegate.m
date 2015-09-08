@@ -56,7 +56,7 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
             }
         }
         
-//        [[PersistentStack sharedInstance] saveContext];
+        [[PersistentStack sharedInstance] saveContext];
     }];
     
     // Check once in app lifetime to have Rest record in db
@@ -75,6 +75,11 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    // TODO support notifications
+    //if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+    //    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    //}
+    
     // Set status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -83,7 +88,6 @@ static NSString *const GooglePlusClientId = @"750859415890-k7jmp6ipckklqb0t7qd9e
     googlePlusSignIn.clientID = GooglePlusClientId;
     googlePlusSignIn.scopes = @[kGTLAuthScopePlusLogin];
     
-//    return YES;
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }

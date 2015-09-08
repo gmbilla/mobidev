@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Gian Marco Sibilla. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import "SessionViewController.h"
 #import "SaveSessionViewController.h"
 #import "Constants.h"
@@ -29,6 +31,8 @@ static NSString *const kExerciseDuration = @"duration";
     NSTimer *workoutTimer;
     int currentExerciseDuration, currentExerciseHits, totalDuration;
     BOOL started, playing;
+    CFURLRef soundFileURLRef;
+    SystemSoundID soundFileObject;
 }
 
 - (void)viewDidLoad {
@@ -53,6 +57,9 @@ static NSString *const kExerciseDuration = @"duration";
     
     // Setup view
     [self.workoutNameLabel setText:self.workout.name];
+    
+    // Play audio also with screen locked
+    [self enableSound:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,8 +68,11 @@ static NSString *const kExerciseDuration = @"duration";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    // If the session is ongoing, pause it and post a notification to get back to it
-    if (playing) {
+    // Disable sount
+    [self enableSound:NO];
+    
+    // TODO If the session is ongoing, pause it and post a notification to get back to it
+    /*if (playing) {
         [self pause];
         
         UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -73,7 +83,7 @@ static NSString *const kExerciseDuration = @"duration";
         
         // Post notification
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    }
+    }*/
 }
 
 #pragma mark - Navigation
@@ -241,7 +251,7 @@ static NSString *const kExerciseDuration = @"duration";
     for (Record *r in upcomingExercise)
         estimatedDuration += (0 != r.hitsPerRep.intValue) ? r.hitsPerRep.intValue * r.exercise.estimatedDuration.intValue : r.duration.intValue;
     
-    int percentage = totalDuration * 100 / estimatedDuration;
+    int percentage = (int)totalDuration * 100 / estimatedDuration;
     
     NSLog(@"stimated duration %@ -> %f%%", [Constants secondsToString:estimatedDuration], percentage);
     // TODO consider number of exercise for a better estimation
@@ -258,6 +268,35 @@ static NSString *const kExerciseDuration = @"duration";
     [headerLabel setText:text];
 
     return headerLabel;
+}
+
+- (void)enableSound:(BOOL)on {
+    NSError *setCategoryErr = nil;
+    NSError *activationErr  = nil;
+    
+    if (on) {
+        [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryErr];
+        [[AVAudioSession sharedInstance] setActive: YES error: &activationErr];
+        
+        if (setCategoryErr)
+            NSLog(@"Error setting background sound category: %@", setCategoryErr.localizedDescription);
+        if (activationErr)
+            NSLog(@"Error enabling sounds: %@", activationErr.localizedDescription);
+        
+        // Setup sounds
+        NSURL *tapSound = [[NSBundle mainBundle] URLForResource: @"tap" withExtension: @"aif"];
+        
+        // Store the URL as a CFURLRef instance
+        soundFileURLRef = (__bridge CFURLRef) tapSound;
+        
+        // Create a system sound object representing the sound file.
+        AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
+    } else {
+        [[AVAudioSession sharedInstance] setActive: NO error: &activationErr];
+        
+        if (activationErr)
+            NSLog(@"Error disabling sounds: %@", activationErr.localizedDescription);
+    }
 }
 
 - (BOOL)isWorkoutComplete {
@@ -318,6 +357,16 @@ static NSString *const kExerciseDuration = @"duration";
             currentExerciseDuration = currentExercise.duration.intValue;
             currentExerciseHits = -1;
         }
+        
+        NSLog(@"Post notif");
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.fireDate = [NSDate date];
+        notification.alertBody = [NSString stringWithFormat:@"%@ %@ remaining", currentExercise.exercise.name, (currentExerciseDuration > 0 ? [NSString stringWithFormat:@"%d sec", currentExerciseDuration] : currentExercise.hitsPerRep)];
+        notification.alertTitle = self.workout.name;
+        notification.alertAction = @"get back to work!";
+        
+        // Post notification
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     });
     
     // Start workout
@@ -337,6 +386,9 @@ static NSString *const kExerciseDuration = @"duration";
     // Check if countdown terminated
     if (currentExerciseDuration == 0) {
         NSLog(@"Countdown for exercise finished");
+        AudioServicesPlaySystemSound(soundFileObject);
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        
         [self nextExercise];
     } else if (currentExerciseDuration > 0) {
         // Update duration

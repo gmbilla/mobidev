@@ -148,6 +148,7 @@ static NSString * const WorkoutCellIdentifier = @"WorkoutCell";
     [self.workoutTableView endUpdates];
     
     [self swapTodayWorkout];
+    [self.workoutTableView reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

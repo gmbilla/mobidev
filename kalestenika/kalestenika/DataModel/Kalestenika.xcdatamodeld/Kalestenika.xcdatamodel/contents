@@ -49,11 +49,11 @@
         <relationship name="sessionList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="workout" inverseEntity="Session" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="9" positionY="135" width="128" height="30"/>
-        <element name="Place" positionX="-99" positionY="-18" width="128" height="120"/>
-        <element name="Record" positionX="232" positionY="126" width="128" height="30"/>
-        <element name="Session" positionX="126" positionY="63" width="128" height="150"/>
-        <element name="User" positionX="34" positionY="-90" width="128" height="30"/>
-        <element name="Workout" positionX="207" positionY="-90" width="128" height="30"/>
+        <element name="Exercise" positionX="160" positionY="306" width="128" height="43"/>
+        <element name="Place" positionX="252" positionY="-117" width="128" height="120"/>
+        <element name="Record" positionX="369" positionY="248" width="128" height="103"/>
+        <element name="Session" positionX="126" positionY="108" width="128" height="150"/>
+        <element name="User" positionX="72" positionY="-121" width="128" height="148"/>
+        <element name="Workout" positionX="369" positionY="29" width="128" height="178"/>
     </elements>
 </model>

@@ -50,8 +50,8 @@
     NSArray *entities = [[PersistentStack sharedInstance] executeFetchRequest:request error:&error];
     
     if (error)
-        NSLog(@"Error fetching Workouts: %@", error);
-    
+        NSLog(@"Error fetching %@: %@", [self entityName], error);
+
     return entities;
 }
 
