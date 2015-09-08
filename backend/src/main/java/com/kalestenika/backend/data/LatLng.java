@@ -1,8 +1,11 @@
 package com.kalestenika.backend.data;
 
+import lombok.Data;
+
 /**
  * Simple wrapper class to present a latitude, longitude couple
  */
+@Data
 public class LatLng {
 
     private static final String SEPARATOR = ",";
