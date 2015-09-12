@@ -1,4 +1,5 @@
 target/
 .idea/dictionaries/
+.idea/vcs.xml
 pom.xml
 src/main/webapp/WEB-INF/appengine-web.xml
